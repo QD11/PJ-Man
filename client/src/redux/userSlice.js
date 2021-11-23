@@ -2,9 +2,9 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 
 export const fetchMe = createAsyncThunk(
     'user/fetchMe',
-    async ({dispatch}) => {
+    async (API, {dispatch}) => {
         return (
-            await fetch('/me', {
+            await fetch(API, {
                 credentials: 'include'
             })
             .then(resp => {
@@ -48,7 +48,7 @@ const userSlice = createSlice({
             return {...action.payload}
         },
         logOutUser(state, action) {
-            return {}
+            return null
         }
     },
 })

@@ -33,7 +33,9 @@ const LoginForm = () => {
             }).then((r) => {
                 setIsLoading(false);
                 if (r.ok) {
-                r.json().then((user) => dispatch(getUser(user)));
+                r.json().then((user) => {
+                    dispatch(getUser(user))
+                });
                 } else {
                 r.json().then((error) => setErrors(error.error));
                 }

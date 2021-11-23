@@ -17,6 +17,22 @@ export const fetchMe = createAsyncThunk(
     }
 )
 
+export const fetchLogOut = createAsyncThunk(
+    'user/fetchLogOut',
+    async (API, {dispatch}) => {
+        return (
+            await fetch(API, {
+                method: 'DELETE'
+            })
+            .then(resp => {
+                if (resp.ok) {
+                    dispatch(logOutUser());
+                }
+            })
+        )
+    }
+)
+
 // export const loginUser = createAsyncThunk(
 //     'user/loginUser',
 //     async (loginForm, {dispatch}) => {

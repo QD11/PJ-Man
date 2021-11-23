@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 
-import {fetchMe, logOutUser} from '../src/redux/userSlice'
+import {fetchMe, fetchLogOut} from '../src/redux/userSlice'
 
 import LoginForm from './components/auth/LoginForm'
 import SignupForm from './components/auth/SignupForm'
@@ -29,13 +29,7 @@ function App() {
     )
 
     const handleLogOut = () => {
-        fetch('/logout', {
-            method: 'DELETE'
-        }).then(r => {
-            if(r.ok){
-                dispatch(logOutUser);
-            }
-        })
+        dispatch(fetchLogOut('/logout'))
     }
 
 

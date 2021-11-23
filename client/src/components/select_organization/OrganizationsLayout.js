@@ -18,7 +18,7 @@ const OrganizationsLayout = () => {
     return (
         <div>
             <button onClick={()=>setNewOrgForm(bool => !bool)}>New Form</button>
-            {newOrgForm ? <NewOrganization setOrganizations={setOrganizations}/> : organizations.map(organization => <OrganizationCard key={organization.id} organization={organization}/>)}
+            {newOrgForm ? <NewOrganization setOrganizations={setOrganizations} setNewOrgForm={setNewOrgForm}/> : organizations.map(organization => <OrganizationCard key={organization.id} organization={organization} />)}
         </div>
     )
 }

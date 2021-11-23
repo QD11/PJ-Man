@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 
-const NewOrganization = ({setOrganizations}) => {
+const NewOrganization = ({setOrganizations, setNewOrgForm}) => {
     const user = useSelector(state => state.user)
     const [errors, setErrors] = useState([])
     const [orgForm, setOrgForm] = useState({
@@ -30,6 +30,7 @@ const NewOrganization = ({setOrganizations}) => {
                 r.json()
                 .then((data) => {
                     setOrganizations(orgs => [...orgs, data])
+                    setNewOrgForm(false)
                 });
             } 
             else {

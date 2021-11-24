@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import { AnimateSharedLayout, motion } from "framer-motion"
 import styled from 'styled-components'
+import {fetchMe, fetchLogOut} from '../../redux/userSlice'
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 import TeamCard from './TeamCard'
 import NewTeam from './NewTeam'
 
 const TeamsLayout = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const user = useSelector(state => state.user)
     const [newTeamForm, setNewTeamForm] = useState(false)
     const [teams, setTeams] = useState([])
@@ -26,8 +30,14 @@ const TeamsLayout = () => {
         .then(data => setTeams(data))
     }, [user])
 
+    const handleClick = () => {
+        dispatch(fetchLogOut('/logout'))
+        navigate('/')
+    }
+
     return (
         <div>
+            <button onClick={handleClick}>Log Out</button>
             <button onClick={()=>setNewTeamForm(bool => !bool)}>New Team</button>
             {newTeamForm ? <NewTeam setTeams={setTeams} setNewTeamForm={setNewTeamForm}/> 
                 : <AnimateSharedLayout>

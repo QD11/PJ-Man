@@ -29,7 +29,7 @@ function App() {
 
     return(
         <>
-            {user && <button onClick={handleClick}>Log Out</button>}
+            {/* {user && <button onClick={handleClick}>Log Out</button>} */}
             <Routes>
                 <Route exact path="/" element={user? <TeamsLayout /> : <LoginForm />} />
                 <Route exact path="/signup" element={<SignupForm />} />

@@ -36,7 +36,7 @@ const SignupForm = () => {
             }).then((r) => {
             setIsLoading(false);
             if (r.ok) {
-                r.json().then(user => console.log(user));
+                navigate('/');
             } else {
                 r.json().then((err) => setErrors(err.errors));
             }

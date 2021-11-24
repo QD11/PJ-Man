@@ -11,8 +11,19 @@ class SessionsController < ApplicationController
         end
     end
 
+    # def org_create
+    #     org = Organization.find_by(id: params[:organization_id])
+    #     if org
+    #         session[:organization_id] = org.id
+    #         render json: org
+    #     else
+    #         render json: {error: "Invalid organization"}, status: :unauthorized
+    #     end
+    # end
+
     def destroy
-        session.delete :user_id  
+        session.delete :user_id
+        # session.delete :organization_id
         head :no_content
     end
 end

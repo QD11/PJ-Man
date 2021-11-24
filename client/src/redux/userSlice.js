@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {logOutTeam} from './teamSlice'
 
 export const fetchMe = createAsyncThunk(
     'user/fetchMe',
@@ -27,6 +28,7 @@ export const fetchLogOut = createAsyncThunk(
             .then(resp => {
                 if (resp.ok) {
                     dispatch(logOutUser());
+                    dispatch(logOutTeam());
                 }
             })
         )

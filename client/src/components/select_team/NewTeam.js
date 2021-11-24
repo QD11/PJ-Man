@@ -1,36 +1,37 @@
 import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 
-const NewOrganization = ({setOrganizations, setNewOrgForm}) => {
+
+const NewTeam = ({setTeams, setNewTeamForm}) => {
     const user = useSelector(state => state.user)
     const [errors, setErrors] = useState([])
-    const [orgForm, setOrgForm] = useState({
+    const [teamForm, setTeamForm] = useState({
         name: '',
         description: '',
         user_id: user.id
     })
 
     const handleChange = (e) => {
-        setOrgForm({
-            ...orgForm,
+        setTeamForm({
+            ...teamForm,
             [e.target.name]: e.target.value
         })
     }
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch("/organizations", {
+        fetch("/teams", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 },
-                body: JSON.stringify(orgForm),
+                body: JSON.stringify(teamForm),
         }).then((r) => {
             if (r.ok) {
                 r.json()
                 .then((data) => {
-                    setOrganizations(orgs => [...orgs, data])
-                    setNewOrgForm(false)
+                    setTeams(orgs => [...orgs, data])
+                    setNewTeamForm(false)
                 });
             } 
             else {
@@ -43,7 +44,7 @@ const NewOrganization = ({setOrganizations, setNewOrgForm}) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label>Name of the Organization: </label>
+                <label>Name of the Team: </label>
                 <input type="text" name="name" onChange={handleChange}></input>
                 <label>Description: </label>
                 <input type="text" name="description" onChange={handleChange}></input>
@@ -54,4 +55,4 @@ const NewOrganization = ({setOrganizations, setNewOrgForm}) => {
     )
 }
 
-export default NewOrganization
+export default NewTeam

@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-    has_many :organization_users
-    has_many :organizations, through: :organization_users
+    has_many :team_users
+    has_many :teams, through: :team_users
 
     has_secure_password
 

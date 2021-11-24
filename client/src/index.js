@@ -5,6 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import actionCable from 'actioncable'
 import store from '../src/redux/store'
+import { BrowserRouter } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 
 const CableApp = {}
@@ -14,7 +15,9 @@ export const ActionCableContext = createContext()
 ReactDOM.render(
   <Provider store={store}> 
     <ActionCableContext.Provider value={CableApp.cable}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ActionCableContext.Provider>
   </Provider>,
   document.getElementById('root')

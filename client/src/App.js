@@ -1,59 +1,45 @@
 import {useEffect} from 'react'
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 
 import {fetchMe, fetchLogOut} from '../src/redux/userSlice'
+import {fetchTeam } from './redux/teamSlice'
 
 import LoginForm from './components/auth/LoginForm'
 import SignupForm from './components/auth/SignupForm'
-import OrganizationsLayout from './components/select_organization/OrganizationsLayout'
+import TeamsLayout from './components/select_team/TeamsLayout'
+import MainPage from './components/main/MainPage'
 
 function App() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(fetchMe('/me'))
     }, [dispatch])
 
     const user = useSelector(store => store.user)
-
-    if (!user) return(
-        <Router>
-            <Routes>
-                <Route path="/" element={<LoginForm />} />
-            </Routes>
-            <Routes>
-                <Route path="/signup" element={<SignupForm />} />
-            </Routes>
-        </Router>
-    )
-
-    const handleLogOut = () => {
+    const team = useSelector(store => store.team)
+    
+    const handleClick = () => {
         dispatch(fetchLogOut('/logout'))
+        navigate('/')
     }
 
 
     return(
         <>
-            <button onClick={handleLogOut}>Log Out</button>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<OrganizationsLayout />} />
-                </Routes>
-            </Router>
+            {user && <button onClick={handleClick}>Log Out</button>}
+            <Routes>
+                <Route exact path="/" element={user? <TeamsLayout /> : <LoginForm />} />
+                <Route exact path="/signup" element={<SignupForm />} />
+                {user && team &&
+                    <Route path='/:team' element={<MainPage/>}/>
+                }
+            </Routes>
         </>
     )
 
-    // return (
-    //     <Router>
-    //         <Routes>
-    //             <Route path="/" element={<LoginForm />} />
-    //         </Routes>
-    //         <Routes>
-    //             <Route path="/signup" element={<SignupForm />} />
-    //         </Routes>
-    //     </Router>
-    // );
 }
 
 export default App;

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :projects
   resources :team_users
   resources :teams
   resources :users
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   get '/:user_id/teams/', to: "teams#teams_specific_to_user"
 
   Rails.application.routes.draw do
+  resources :projects
     mount ActionCable.server => '/cable'
   end
 end

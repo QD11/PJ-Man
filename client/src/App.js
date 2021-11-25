@@ -31,10 +31,10 @@ function App() {
         <>
             {/* {user && <button onClick={handleClick}>Log Out</button>} */}
             <Routes>
-                <Route exact path="/" element={user? <TeamsLayout /> : <LoginForm />} />
-                <Route exact path="/signup" element={<SignupForm />} />
+                <Route path="/" element={user? <TeamsLayout /> : <LoginForm />} />
+                <Route path="/signup" element={<SignupForm />} />
                 {user && team &&
-                    <Route path='/:team' element={<MainPage/>}/>
+                    <Route path='/:team/*' element={<MainPage/>}/>
                 }
             </Routes>
         </>

@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { AnimateSharedLayout, motion } from "framer-motion"
 import styled from 'styled-components'
 import {fetchMe, fetchLogOut} from '../../redux/userSlice'
+import {isAdmin} from '../../redux/adminSlice'
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
 import TeamCard from './TeamCard'
@@ -32,6 +33,7 @@ const TeamsLayout = () => {
 
     const handleClick = () => {
         dispatch(fetchLogOut('/logout'))
+        dispatch(isAdmin(false))
         navigate('/')
     }
 

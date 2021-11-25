@@ -13,7 +13,7 @@ const TeamCard = ({team}) => {
 
     return (
         <>
-            <MotionCard layout onClick={toggleOpen} initial={{ borderRadius: 10 }}>
+            <MotionCard onClick={toggleOpen} initial={false}>
                 <Avatar name={team.name} round={true} size="80" textSizeRatio={1.75}/>
                 <motion.span> {team.name}</motion.span>
                 <AnimatePresence>{isOpen && <Content team={team}/>}</AnimatePresence>

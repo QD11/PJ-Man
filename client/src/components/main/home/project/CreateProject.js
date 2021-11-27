@@ -54,7 +54,6 @@ const CreateProject = () => {
             }})
     }
 
-    console.log(createForm)
     return (
         <CreateDiv>
             <motion.div onClick={() => setCreateOpen(createOpen => !createOpen)}>
@@ -62,7 +61,7 @@ const CreateProject = () => {
                 <ItemSpan>Add Project</ItemSpan>
             </motion.div>
             <AnimatePresence initial={false}>
-                    {createOpen && <motion.form
+                    {createOpen && <ClickedForm
                         onSubmit ={handleSubmit}
                         key="content"
                         initial="collapsed"
@@ -88,7 +87,7 @@ const CreateProject = () => {
                         <div>
                             <motion.span>{responseMsg}</motion.span>
                         </div>
-                    </motion.form>
+                    </ClickedForm>
                     }
                 </AnimatePresence>
 
@@ -212,13 +211,12 @@ const ItemSpan = styled(motion.span)`
     // margin-bottom: -10px;
 `
 
-const ClickedDiv = styled(motion.div)`
-
-
+const ClickedForm = styled(motion.form)`
+    // position: absolute;
 `
 
 const CreateDiv = styled(motion.div)`
-    position: absolute;
+    // position: absolute;
     flex-direction: column;
     display:flex;
     width: 170px;

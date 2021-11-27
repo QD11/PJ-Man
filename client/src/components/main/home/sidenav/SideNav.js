@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {AnimateSharedLayout, motion, AnimatePresence} from 'framer-motion'
 
 import SideItem from './SideItem'
-import { RiTeamLine, RiDashboardLine, RiTodoLine, RiCalendarTodoFill } from 'react-icons/ri'
+import { RiTeamLine, RiDashboardLine, RiTodoLine, RiCalendarTodoFill, RiDiscussLine } from 'react-icons/ri'
 import { BsPeople } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 
@@ -30,6 +30,11 @@ const SideNav = () => {
         icon: < RiCalendarTodoFill />,
         url: `/${team.name}/calendar`,
     },
+    {
+        name: "MessageBoard",
+        icon: < RiDiscussLine />,
+        url: `/${team.name}/messageboard`,
+    },
     ]
 
     const container = {
@@ -47,17 +52,21 @@ const SideNav = () => {
     return (
         <SideDiv>
             {/* {items.map(item => <SideItem key={item.name} item={item} />)} */}
-            <motion.ul 
+            <SideList 
                 initial="hidden"
                 animate="show"
                 // exit="hidden"
                 variants={container}
             >
                 {items.map(item => <SideItem key={item.name} item={item} />)}
-            </motion.ul>
+            </SideList>
         </SideDiv>
     )
 }
+
+const SideList = styled(motion.ul)`
+    padding-inline-start: 20px;
+`
 
 const SideDiv = styled.div`
     display: flex;

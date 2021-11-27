@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
 import {BsPencilSquare} from 'react-icons/bs'
 import {useNavigate} from 'react-router-dom'
+
 import CreateProject from './CreateProject'
+import ProjectList from './ProjectList'
 
 const Projects = () => {
     const navigate = useNavigate()
@@ -16,6 +18,7 @@ const Projects = () => {
     return (
         <div>
             {isAdmin && <CreateProject />}
+            <ProjectList />
         </div>
     )
 }

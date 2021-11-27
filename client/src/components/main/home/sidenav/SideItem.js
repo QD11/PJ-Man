@@ -74,7 +74,7 @@ const ItemDiv = styled(motion.li)`
     height: 25px;
     align-items: center;
     width: fit-content;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-size: 25px;
     cursor: pointer;
     border-radius: 10px;

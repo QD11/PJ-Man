@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate, Route, Routes} from 'react-router-dom'
 import { logOutTeam } from '../../redux/teamSlice'
 import { isAdmin } from '../../redux/adminSlice'
+import { fetchProjects } from '../../redux/projectSlice'
 
 import Home from './home/Home'
 
@@ -12,8 +13,20 @@ const MainPage = () => {
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const user = useSelector(state => state.user)
+    const MINUTE_MS = 60000; //one minute
     //where fetch projects happens
     dispatch(isAdmin(team.team_users.find(team_user => team_user.id === user.id).admin))
+
+    useEffect(() => {
+        dispatch(fetchProjects(`/${team.id}/projects`))
+
+        //fetch projects every 30 seconds
+        const interval = setInterval(() => {
+            dispatch(fetchProjects(`/${team.id}/projects`))
+        }, MINUTE_MS/2);
+        
+        return () => clearInterval(interval);
+    }, [team])
 
     return (
         <>

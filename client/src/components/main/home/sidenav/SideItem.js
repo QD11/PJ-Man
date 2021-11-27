@@ -7,7 +7,6 @@ import {useNavigate} from 'react-router-dom'
 const SideItem = ({item}) => {
     const navigate = useNavigate()
     const [onHover, setOnHover] = useState(false)
-    console.log(onHover)
 
     return (
             <ItemDiv

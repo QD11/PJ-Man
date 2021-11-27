@@ -1,4 +1,4 @@
 class ProjectSerializer < ActiveModel::Serializer
   attributes :id, :name, :priority
-  has_one :team
+  # has_one :team
 end

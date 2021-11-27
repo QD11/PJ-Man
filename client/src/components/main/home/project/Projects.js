@@ -13,8 +13,6 @@ const Projects = () => {
     const [createHover, setCreateHover] = useState(false)
     const [createOpen, setCreateOpen] = useState(false)
 
-    console.log(createOpen)
-
     return (
         <div>
             {isAdmin && <CreateProject />}

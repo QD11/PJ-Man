@@ -1,18 +1,30 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {RiFileAddLine} from 'react-icons/ri'
 import {useNavigate} from 'react-router-dom'
+import { addProject } from '../../../../redux/projectSlice'
 
 const CreateProject = () => {
+    const dispatch = useDispatch()
     const team = useSelector(state => state.team)
+    const [responseMsg, setResponseMsg] = useState(null)
     const [createOpen, setCreateOpen] = useState(false)
     const [createForm, setCreateForm] = useState({
         name: '',
         priority: 'low',
         team_id: team.id,
     })
+    useEffect(() => {
+        setCreateForm({
+            ...createForm,
+            name: '',
+            priority: 'low',
+            team_id: team.id
+        })
+        setResponseMsg(null)
+    }, [createOpen === false])
 
     const handleChange = (e) => {
         setCreateForm(createForm => ({
@@ -23,25 +35,28 @@ const CreateProject = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(createForm)
-        setCreateForm({
-            ...createForm,
-            name: '',
-            priority: 'low',
-            team_id: team.id
-        })
-        setCreateOpen(false)
+        fetch("/projects", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(createForm),
+        }).then((r) => {
+            if (r.ok) {
+                console.log('hi')
+                r.json()
+                .then(project => {
+                    dispatch(addProject(project))
+                    setResponseMsg(`${project.name} created`)
+                })
+            } else {
+                r.json().then((err) => setResponseMsg(err.errors));
+            }})
     }
 
     console.log(createForm)
     return (
-        <CreateDiv
-            layout
-            // onMouseEnter ={() => setOnHover(true)}
-            // onMouseLeave ={() => setOnHover(false)}
-            // whileHover={{scale: 1.1 }}
-            // whileTap={{scale: 0.9 }}
-        >
+        <CreateDiv>
             <motion.div onClick={() => setCreateOpen(createOpen => !createOpen)}>
                 <RiFileAddLine/>
                 <ItemSpan>Add Project</ItemSpan>
@@ -59,14 +74,20 @@ const CreateProject = () => {
                         }}
                         transition={{ duration: 0.8, ease: [0.04, 0.62, 0.83, 0.98] }}
                     >
-                        <InputMotion priority={createForm.priority} type="text" placeholder="Name" onChange={handleChange} name="name"></InputMotion>
-                        <motion.select onChange={handleChange} name="priority">
-                            <option value="low">Low</option>
-                            <option value="medium">Med</option>
-                            <option value="high">High</option>
-                        </motion.select>
-                        <SubmitMotion type="submit" disabled={createForm.name? false : true}>Create</SubmitMotion>
-
+                        <div>
+                            <InputMotion priority={createForm.priority} type="text" placeholder="Name" onChange={handleChange} name="name"></InputMotion>
+                        </div>
+                        <div>
+                            <motion.select onChange={handleChange} name="priority">
+                                <option value="low">Low</option>
+                                <option value="medium">Med</option>
+                                <option value="high">High</option>
+                            </motion.select>
+                            <SubmitMotion type="submit" disabled={createForm.name? false : true}>Create</SubmitMotion>
+                        </div>
+                        <div>
+                            <motion.span>{responseMsg}</motion.span>
+                        </div>
                     </motion.form>
                     }
                 </AnimatePresence>
@@ -197,11 +218,9 @@ const ClickedDiv = styled(motion.div)`
 `
 
 const CreateDiv = styled(motion.div)`
+    position: absolute;
     flex-direction: column;
-    //border:1px solid black;
-    // font-size: 20px;
     display:flex;
-    // align-items: center;
     width: 170px;
     margin-bottom: 20px;
     font-size: 25px;

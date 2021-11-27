@@ -3,22 +3,29 @@ import {useNavigate, Route, Routes} from 'react-router-dom'
 import styled from 'styled-components'
 
 import SideNav from './sidenav/SideNav'
-import ProjectMain from './project/ProjectMain'
+import ProjectRoutes from './project/ProjectRoutes'
 
 const Home = () => {
     return (
         <PageDiv>
             < SideNav />
-            <Routes>
-                <Route path="/" element={<div><h1>Dashboard</h1></div>} />
-                <Route path="/project/*" element={<ProjectMain/>} />
-            </Routes>
+            <RightDiv>
+                <Routes>
+                    <Route path="/" element={<div><h1>Dashboard</h1></div>} />
+                    <Route path="/project/*" element={<ProjectRoutes/>} />
+                </Routes>
+            </RightDiv>
         </PageDiv>
     )
 }
 
 const PageDiv = styled.div`
     display: flex;
+`
+
+const RightDiv = styled.div`
+    display: flex;
+    margin: 10px 0px 0px 20px
 `
 
 

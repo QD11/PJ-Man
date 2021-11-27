@@ -16,7 +16,23 @@ const TeamCard = ({team}) => {
             <MotionCard onClick={toggleOpen} initial={false}>
                 <Avatar name={team.name} round={true} size="80" textSizeRatio={1.75}/>
                 <motion.span> {team.name}</motion.span>
-                <AnimatePresence>{isOpen && <Content team={team}/>}</AnimatePresence>
+                <AnimatePresence initial={false}>
+                    {isOpen && <motion.section
+                        key="content"
+                        initial="collapsed"
+                        animate="open"
+                        exit="collapsed"
+                        variants={{
+                        open: { opacity: 1, height: "auto" },
+                        collapsed: { opacity: 0, height: 0 }
+                        }}
+                        transition={{ duration: 0.8, ease: [0.04, 0.62, 0.83, 0.98] }}
+                    >
+                        <Content team={team}/>
+                    
+                    </motion.section>
+                    }
+                </AnimatePresence>
             </MotionCard>
         </>
     )
@@ -68,8 +84,7 @@ const AvatarContainer = styled.div`
     display: flex;
 `
 
-const MotionCard = styled(motion.li)`
-    list-style: none;
+const MotionCard = styled(motion.div)`
     margin: 0;
     padding: 0;
     background-color: rgba(214, 214, 214, 0.5);

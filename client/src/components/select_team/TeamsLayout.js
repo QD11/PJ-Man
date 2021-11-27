@@ -42,11 +42,10 @@ const TeamsLayout = () => {
             <button onClick={handleClick}>Log Out</button>
             <button onClick={()=>setNewTeamForm(bool => !bool)}>New Team</button>
             {newTeamForm ? <NewTeam setTeams={setTeams} setNewTeamForm={setNewTeamForm}/> 
-                : <AnimateSharedLayout>
-                    <MotionUl layout>
-                        {teams.map(team => <TeamCard key={team.id} team={team} />)}
-                    </MotionUl>
-                    </AnimateSharedLayout> 
+                : 
+                <>
+                    {teams.map(team => <TeamCard key={team.id} team={team} />)}
+                </> 
             }
         </div>
     )

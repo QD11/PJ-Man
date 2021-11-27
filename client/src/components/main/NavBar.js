@@ -39,7 +39,9 @@ const NavBar = () => {
 const NavDiv = styled.div`
     display: flex;
     justify-content: space-between;
-    background-color: #36a1d7;
+    background-color: #434343;
+    height: 40px;
+    box-shadow: 0 0px 30px -6px rgba(0,0,0,0.9);
 `
 
 export default NavBar

@@ -20,7 +20,6 @@ const MainPage = () => {
             <NavBar />
             <Routes>
                 <Route path="/*" element={<Home />} />
-                {/* <Route path="/project" element={<div><h1>Dashboard</h1></div>} /> */}
             </Routes>
         </>
     )

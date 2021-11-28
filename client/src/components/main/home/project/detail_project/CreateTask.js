@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
 
-const CreateTask = ({projectName}) => {
+const CreateTask = ({projectInfo}) => {
     const team = useSelector(state => state.team)
     const [showCreate, setShowCreate] = useState(false)
     const [responseMsg, setResponseMsg] = useState(null)
@@ -11,10 +11,12 @@ const CreateTask = ({projectName}) => {
         section: "",
         description: "",
         // completed: false,
-        projectName: projectName,
-        team_id: team.id,
+        project_id: projectInfo.id,
+        // team_id: team.id,
         member: 1,
     })    
+
+    console.log(taskForm)
 
     const handleChange = (e) => {
         setTaskForm({
@@ -25,7 +27,6 @@ const CreateTask = ({projectName}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(taskForm)
         fetch("/tasks", {
             method: "POST",
             headers: {
@@ -60,12 +61,7 @@ const CreateTask = ({projectName}) => {
                         <input list="sections" name="section" onChange={handleChange}/>  
                     </label>   
                     <datalist id="sections">
-                        <option value="Chrome" />
-                        <option value="Firefox" />
-                        <option value="Internet Explorer" />
-                        <option value="Opera" />
-                        <option value="Safari" />
-                        <option value="Microsoft Edge" />   
+                        {projectInfo.sections.map(section => {<option value={`${section.name}`} >{`${section.name}`}</option>} )}
                     </datalist>
                 </div>
                 <DivDesc>

@@ -1,4 +1,4 @@
 class SectionSerializer < ActiveModel::Serializer
   attributes :id, :name
-  has_one :project_id
+  has_many :tasks, serializer: TaskSerializer
 end

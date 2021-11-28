@@ -31,9 +31,9 @@ const SideNav = () => {
         url: `/${team.name}/calendar`,
     },
     {
-        name: "MessageBoard",
+        name: "Forum",
         icon: < RiDiscussLine />,
-        url: `/${team.name}/messageboard`,
+        url: `/${team.name}/forum`,
     },
     ]
 
@@ -66,13 +66,15 @@ const SideNav = () => {
 
 const SideList = styled(motion.ul)`
     padding-inline-start: 20px;
+    position: sticky;
+    top: 30px;
 `
 
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;
     width: 12em;
-    margin: 20px 20px 20px 0px;
+    margin: 20px 60px 20px 0px;
 `
 
 export default SideNav

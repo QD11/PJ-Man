@@ -16,10 +16,10 @@ const Projects = () => {
     const [createOpen, setCreateOpen] = useState(false)
 
     return (
-        <div>
+        <>
             {isAdmin && <CreateProject />}
             <ProjectList />
-        </div>
+        </>
     )
 }
 

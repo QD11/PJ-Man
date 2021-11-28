@@ -25,7 +25,6 @@ const projectSlice = createSlice({
             return [...state, action.payload]
         },
         getAllProjects(state, action) {
-            console.log(action)
             return [...action.payload]
         },
     },

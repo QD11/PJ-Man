@@ -10,30 +10,35 @@ const ProjectList = () => {
 
 
     return (
-        <ProjectUL 
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            variants={{
-                hidden: { opacity: 0 },
-                show: {
-                    opacity: 1,
-                    transition: {
-                        delayChildren: 5,
-                        staggerChildren: 0.9,
-                        staggerDirection: 1
+        <>
+            <ProjectUL 
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                        opacity: 1,
+                        transition: {
+                            delayChildren: 5,
+                            staggerChildren: 0.9,
+                            staggerDirection: 1
+                        }
                     }
-                }
-            }}
-        >
-            {projects.map(project => <ProjectItem key={project.key} project={project}/>)}
-        </ProjectUL>
+                }}
+            >
+                {projects.map(project => <ProjectItem key={project.key} project={project}/>)}
+            </ProjectUL>
+        </>
     )
 }
 
 const ProjectUL = styled(motion.ul)`
-    width: 300px;
+    width: 1000px;
     padding-inline-start: 0px;
+    display:flex;
+    margin-top: 70px;
+    flex-wrap: wrap;
 `
 
 export default ProjectList

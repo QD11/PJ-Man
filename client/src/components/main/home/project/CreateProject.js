@@ -43,7 +43,6 @@ const CreateProject = () => {
             body: JSON.stringify(createForm),
         }).then((r) => {
             if (r.ok) {
-                console.log('hi')
                 r.json()
                 .then(project => {
                     dispatch(addProject(project))
@@ -58,7 +57,7 @@ const CreateProject = () => {
         <CreateDiv>
             <motion.div onClick={() => setCreateOpen(createOpen => !createOpen)}>
                 <RiFileAddLine/>
-                <ItemSpan>Add Project</ItemSpan>
+                <ItemSpan>Add Project*</ItemSpan>
             </motion.div>
             <AnimatePresence initial={false}>
                     {createOpen && <ClickedForm
@@ -216,7 +215,9 @@ const ClickedForm = styled(motion.form)`
 `
 
 const CreateDiv = styled(motion.div)`
-    // position: absolute;
+    position: absolute;
+    z-index: 100;
+    top: 72px;
     flex-direction: column;
     display:flex;
     width: 170px;
@@ -226,7 +227,8 @@ const CreateDiv = styled(motion.div)`
     cursor: pointer;
     border-radius: 10px;
     padding: 10px 10px;
-    box-shadow: 0 0px 20px -6px rgb(127 0 231)
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 70%);
+    background: rgb(248 248 248 / 100%);
 `
 
 

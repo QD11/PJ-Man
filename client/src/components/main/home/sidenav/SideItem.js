@@ -26,7 +26,7 @@ const SideItem = ({item}) => {
                             open: { opacity: 1, width: "auto",
                                 transition:{ 
                                     duration: 0.3, 
-                                    ease: [0.04, 0.62, 0.83, 0.98],
+                                    ease: [0.04, 0.62, 0.83, 0.99],
                                 }},
                             collapsed: { opacity: 0, width: 0,
                                 transition:{ 
@@ -80,6 +80,7 @@ const ItemDiv = styled(motion.li)`
     border-radius: 10px;
     padding: 10px 10px;
     box-shadow: 0 0px 20px -6px rgba(0,0,0,0.7);
+    background: rgb(248 248 248 / 100%);
 `
 
 export default SideItem

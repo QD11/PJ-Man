@@ -1,3 +1,4 @@
 class Section < ApplicationRecord
-  belongs_to :project_id
+  belongs_to :project
+  has_many :tasks, :dependent => :destroy
 end

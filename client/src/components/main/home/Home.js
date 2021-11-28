@@ -26,6 +26,7 @@ const PageDiv = styled.div`
 const RightDiv = styled.div`
     display: flex;
     margin: 10px 0px 0px 20px
+    width: 1000px;
 `
 
 

@@ -16,8 +16,6 @@ const CreateTask = ({projectInfo}) => {
         member: 1,
     })    
 
-    console.log(taskForm)
-
     const handleChange = (e) => {
         setTaskForm({
             ...taskForm,

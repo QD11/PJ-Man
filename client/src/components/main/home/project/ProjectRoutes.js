@@ -6,7 +6,8 @@ import {useNavigate, Route, Routes} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
 import Projects from './Projects'
-import ProjectInfo from './detail_project/ProjectInfo'
+// import ProjectInfo from './detail_project/ProjectInfo'
+import ProjRoutes from './detail_project/ProjRoutes'
 
 const ProjectRoutes = () => {
     const isAdmin = useSelector(state => state.isAdmin)
@@ -14,7 +15,7 @@ const ProjectRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Projects/>} />
-            <Route path="/:project" element={<ProjectInfo />} />
+            <Route path="/:project/*" element={<ProjRoutes />} />
             {/* {isAdmin && <Route path="/create" element={<CreateProject/>} />} */}
         </Routes>
     )

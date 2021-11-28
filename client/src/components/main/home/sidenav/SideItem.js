@@ -65,6 +65,7 @@ const SideItem = ({item}) => {
 const ItemSpan = styled(motion.span)`
     font-weight: bold;
     font-weight: 500;
+    margin-left: 5px;
     // margin-bottom: -10px;
 `
 

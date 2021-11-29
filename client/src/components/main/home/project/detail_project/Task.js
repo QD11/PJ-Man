@@ -8,8 +8,8 @@ const Task = () => {
     const params = useParams()
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
-    const taskInfo = useSelector(state => state.projects).find(project => project.name === params.project).sections.find(section => section.name === params.section).tasks.find(task => task.name === params.task)
-    
+    const taskInfo = useSelector(state => state.projects).find(project => project.id === parseInt(params.project_id)).sections.find(section => section.id === parseInt(params.section_id)).tasks.find(task => task.id === parseInt(params.task_id))
+
     const handleStatusChange = (e) => {
         fetch(`/${taskInfo.id}/status_update`, {
             method: "PATCH",
@@ -19,6 +19,7 @@ const Task = () => {
         })
         .then(resp => resp.json())
         .then(data => dispatch(getAllProjects(data))
+        //add error
             // dispatch(updateTaskStatus([{
             //     ...data},
             //     {project_name: params.project, section_name: params.section}

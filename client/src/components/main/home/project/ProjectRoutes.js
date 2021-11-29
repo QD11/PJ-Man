@@ -15,7 +15,7 @@ const ProjectRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Projects/>} />
-            <Route path="/:project/*" element={<ProjRoutes />} />
+            <Route path="/:project_id/*" element={<ProjRoutes />} />
             {/* {isAdmin && <Route path="/create" element={<CreateProject/>} />} */}
         </Routes>
     )

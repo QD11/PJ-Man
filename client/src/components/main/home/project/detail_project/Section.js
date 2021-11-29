@@ -1,17 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useNavigate, Route, Routes} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 
-const Section = ({section, project}) => {
+const Section = ({section}) => {
     const navigate = useNavigate()
-    const team = useSelector(state => state.team)
     
     return (
         <div>
             <h4>{section.name}</h4>
             {section.tasks.map(task => 
-                <TaskDiv onClick={() => navigate(`${section.name}/${task.name}`)} key={task.id}>
+                <TaskDiv onClick={() => navigate(`${section.id}/${task.id}`)} key={task.id}>
                     <h6>{task.name}</h6>
                     <h6>{task.completed ? "Completed" : "Not Completed"}</h6>
                     {task.users.map(user => <span key={user.id}>{user.first_name} {user.last_name}</span>)}

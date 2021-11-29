@@ -1,8 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
-import { motion } from 'framer-motion'
 // import CreateProject from './CreateProject'
-import {useNavigate, Route, Routes, useParams} from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
 // import Projects from './Projects'
@@ -11,12 +9,11 @@ import Task from './Task'
 
 const ProjRoutes = () => {
     const isAdmin = useSelector(state => state.isAdmin)
-    const {project} = useParams()
-
+    
     return (
         <Routes>
-            <Route path="/" element={<ProjectInfo project={project}/>} />
-            <Route path="/:section/:task" element={<Task />} />
+            <Route path="/" element={<ProjectInfo />} />
+            <Route path="/:section_id/:task_id" element={<Task />} />
         </Routes>
     )
 }

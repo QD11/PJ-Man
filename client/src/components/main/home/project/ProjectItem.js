@@ -1,22 +1,54 @@
 import React, {useState} from 'react'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {motion, AnimatePresence} from 'framer-motion'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import {BsThreeDots} from 'react-icons/bs'
+import {RiDeleteBin2Line, RiArchiveLine} from 'react-icons/ri'
+import {getAllProjects} from '../../../../redux/projectSlice'
 
 const ProjectItem = ({project}) => {
+    const dispatch = useDispatch()
     const [option, setOption] = useState(false)
+    const [respMsg, setRespMsg] = useState(null)
+    const team = useSelector(state => state.team)
     const [updateForm, setUpdateForm] = useState({
         name: project.name,
-        priority: project.priority
+        priority: project.priority,
+        team_id: team.id
     })
-    const team = useSelector(state => state.team)
     const navigate = useNavigate()
     const handleClick = () => {
-        navigate(`/${team.name}/project/${project.name}`)
+        navigate(`${project.id}`)
     }
-    console.log(option)
+
+    const updateChange = (e) => {
+        setUpdateForm({
+            ...updateForm,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    const updateSubmit = (e) => {
+        e.preventDefault()
+        fetch(`/projects/${project.id}`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"
+            },
+            body: JSON.stringify(updateForm) 
+        })
+        .then(resp => {
+            if (resp.ok) {
+                resp.json()
+                .then(data => dispatch(getAllProjects(data)))
+            }
+            else {
+                resp.json()
+                .then(err => setRespMsg(err.errors))
+            }
+        })  
+    }
+
     return (
         <ProjectLI priority={project.priosity}>
             <div className="card card-top-right" onClick={handleClick}>
@@ -28,17 +60,18 @@ const ProjectItem = ({project}) => {
                                 // whileHover={{scale: 1.1 }}
                                 // onClick={() => console.log('hey')}
                             >
-                                <BsThreeDots onClick={e => {
+                                <DotsIcon onClick={e => {
                                     e.stopPropagation()
                                     setOption(option => !option)
                                 }}/>
                                 <AnimatePresence initial={false}>
                                     {option && <DotsForm
+                                            onSubmit={updateSubmit}
                                             initial="collapsed"
                                             animate="open"
                                             exit="collapsed"
                                             variants={{
-                                                open: { opacity: 1, width: "auto", height: "auto",
+                                                open: { opacity: 1, width: "auto", height: 110,
                                                     transition:{ 
                                                         duration: 0.3, 
                                                         ease: [0.04, 0.62, 0.83, 0.99],
@@ -52,16 +85,23 @@ const ProjectItem = ({project}) => {
                                                 }
                                             }}
                                         >
-                                            <NameMotion type="text" value={updateForm.name}></NameMotion>
-                                            <motion.div>
-                                                <label>Priority</label>
-                                                <motion.select defaultValue={updateForm.priority} name="priority">
-                                                    <option value="low">Low</option>
-                                                    <option value="medium">Med</option>
-                                                    <option value="high">High</option>
-                                                </motion.select>
-                                            </motion.div>
-                                            <button type="submit">Update</button>
+                                            <NameMotion onChange={updateChange} type="text" value={updateForm.name} name="name"></NameMotion>
+                                            <PriorityUpdateDiv>
+                                                <div>
+                                                    <label>Priority: </label>
+                                                    <motion.select onChange={updateChange} name="priority" defaultValue={updateForm.priority} name="priority">
+                                                        <option value="low">Low</option>
+                                                        <option value="medium">Med</option>
+                                                        <option value="high">High</option>
+                                                    </motion.select>
+                                                </div>
+                                                <UpdateBut type="submit">Update</UpdateBut>
+                                            </PriorityUpdateDiv>
+                                            <DelDiv>
+                                                <ArchiveIcon onClick={() => console.log("QQQQ")}/>
+                                                <span>{respMsg}</span>
+                                                <DelIcon onClick={() => console.log("QQQQ")}/>
+                                            </DelDiv>
                                         </DotsForm>
                                     }   
                                 </AnimatePresence>
@@ -71,7 +111,10 @@ const ProjectItem = ({project}) => {
                     <div className="card-body">
                         <span>Show priority</span>
                         <div>
-                        <span>Tasks #/#</span>
+                            <span>Tasks #/#</span>
+                        </div>
+                        <div>
+                            <span>Members?</span>
                         </div>
                     </div>
                 </div>
@@ -79,6 +122,47 @@ const ProjectItem = ({project}) => {
         </ProjectLI>
     )
 }
+
+const UpdateBut = styled.button`
+    // margin-top: 5px;
+    // margin-left: 10px;
+    font-size: 20px;
+`
+
+const PriorityUpdateDiv = styled(motion.div)`
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+`
+const DelIcon = styled(RiDeleteBin2Line)`
+    transition: transform .2s;
+    color: red;
+    &:hover {
+        transform: scale(1.5);
+    }
+`
+
+const ArchiveIcon = styled(RiArchiveLine)`
+    transition: transform .2s;
+    &:hover {
+        transform: scale(1.5);
+    }
+`
+
+const DotsIcon = styled(BsThreeDots)`
+    transition: transform .2s;
+    &:hover {
+        transform: scale(1.5);
+    }
+`
+
+
+const DelDiv = styled(motion.div)`
+    display: flex;
+    justify-content: space-between;
+`
 
 const NameMotion = styled(motion.input)`
     width: 200px;
@@ -103,7 +187,8 @@ const DotsDiv = styled(motion.div)`
     outline: 1px solid #e2d9d5;
     z-index: 2;
     padding: 5px;
-    background-color: #fde5e5
+    background-color: #ffe0a8;
+    border-radius: 5px;
 `
 
 const TitleDiv = styled.div`

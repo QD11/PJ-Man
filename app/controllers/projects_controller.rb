@@ -11,6 +11,12 @@ class ProjectsController < ApplicationController
         render json: project, status: :created
     end
 
+    def update
+        project = Project.find_by(id: params[:id])
+        project.update!(name: params[:name], priority: params[:priority])
+        projects_specific_to_team
+    end
+
     private
 
     def project_params

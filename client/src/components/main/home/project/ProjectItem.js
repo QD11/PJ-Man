@@ -33,40 +33,21 @@ const ProjectItem = ({project}) => {
                                     setOption(option => !option)
                                 }}/>
                                 <AnimatePresence initial={false}>
-                                    {option && <FormDiv
-                                        onClick={e => e.stopPropagation()}
-                                        initial="collapsed"
-                                        animate="open"
-                                        exit="collapsed"
-                                        variants={{
-                                            open: { opacity: 1, width: "auto",
-                                                transition:{ 
-                                                    duration: 0.3, 
-                                                    ease: [0.04, 0.62, 0.83, 0.99],
-                                                }},
-                                            collapsed: { opacity: 0, width: 0, height: 0,
-                                                transition:{ 
-                                                    duration: 0.3, 
-                                                    ease: [0.04, 0.82, 0.83, 0.99],
-                                                    delay: 0.1,
-                                                }
-                                            }
-                                        }}
-                                    >
-                                        <DotsForm
-                                            layout
+                                    {option && <DotsForm
+                                            initial="collapsed"
+                                            animate="open"
+                                            exit="collapsed"
                                             variants={{
                                                 open: { opacity: 1, width: "auto", height: "auto",
-                                                transition:{
-                                                    type: 'tween',
-                                                    duration: 0.3, 
-                                                    ease: "easeInOut",
-                                                    delay: 1
-                                                }},
+                                                    transition:{ 
+                                                        duration: 0.3, 
+                                                        ease: [0.04, 0.62, 0.83, 0.99],
+                                                    }},
                                                 collapsed: { opacity: 0, width: 0, height: 0,
                                                     transition:{ 
-                                                        duration: 0.2, 
-                                                        ease: [0.04, 0.62, 0.83, 0.99],
+                                                        duration: 0.3, 
+                                                        ease: [0.04, 0.82, 0.83, 0.99],
+                                                        delay: 0.1,
                                                     }
                                                 }
                                             }}
@@ -82,7 +63,7 @@ const ProjectItem = ({project}) => {
                                             </motion.div>
                                             <button type="submit">Update</button>
                                         </DotsForm>
-                                    </FormDiv>}
+                                    }   
                                 </AnimatePresence>
                             </DotsDiv>
                     </TitleDiv>
@@ -90,7 +71,7 @@ const ProjectItem = ({project}) => {
                     <div className="card-body">
                         <span>Show priority</span>
                         <div>
-                        <span>show all the members</span>
+                        <span>Tasks #/#</span>
                         </div>
                     </div>
                 </div>

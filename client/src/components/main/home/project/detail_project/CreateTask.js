@@ -10,9 +10,7 @@ const CreateTask = ({projectInfo}) => {
         name: "",
         section: "",
         description: "",
-        // completed: false,
         project_id: projectInfo.id,
-        // team_id: team.id,
         member: 1,
     })    
 

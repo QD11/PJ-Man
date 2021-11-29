@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  patch '/:task_id/status_update', to: 'tasks#status_update'
+
   get '/:user_id/teams/', to: "teams#teams_specific_to_user"
   get '/:team_id/projects', to: "projects#projects_specific_to_team"
   # get '/:team_id/:project_name/

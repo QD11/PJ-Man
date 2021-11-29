@@ -13,4 +13,11 @@ class TasksController < ApplicationController
         end
         render json: task, status: :created
     end
+
+    def status_update
+        task = Task.find_by(id: params[:task_id])
+        task.update!(completed: params[:completed])
+        projects_specific_to_team
+        # render json: task
+    end
 end

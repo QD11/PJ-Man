@@ -1,30 +1,137 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
-import {motion} from 'framer-motion'
+import {motion, AnimatePresence} from 'framer-motion'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
+import {BsThreeDots} from 'react-icons/bs'
 
 const ProjectItem = ({project}) => {
+    const [option, setOption] = useState(false)
+    const [updateForm, setUpdateForm] = useState({
+        name: project.name,
+        priority: project.priority
+    })
     const team = useSelector(state => state.team)
     const navigate = useNavigate()
     const handleClick = () => {
         navigate(`/${team.name}/project/${project.name}`)
     }
-
+    console.log(option)
     return (
         <ProjectLI priority={project.priosity}>
-            <div class="card card-top-right" onClick={handleClick}>
-                <div class="card-inner">
-                <h2 class="card-title">{project.name}</h2>
-                <div class="card-body">Lorem ipsum dolor sit amhe;;pzzzzzzzzzzet, consectetur adipisicing elit.</div>
+            <div className="card card-top-right" onClick={handleClick}>
+                <div className="card-inner">
+                    <TitleDiv>
+                        {/* <h2 className="card-title">{project.name}</h2> */}
+                            <DotsDiv
+                                onClick={e => e.stopPropagation()}
+                                // whileHover={{scale: 1.1 }}
+                                // onClick={() => console.log('hey')}
+                            >
+                                <BsThreeDots onClick={e => {
+                                    e.stopPropagation()
+                                    setOption(option => !option)
+                                }}/>
+                                <AnimatePresence initial={false}>
+                                    {option && <FormDiv
+                                        onClick={e => e.stopPropagation()}
+                                        initial="collapsed"
+                                        animate="open"
+                                        exit="collapsed"
+                                        variants={{
+                                            open: { opacity: 1, width: "auto",
+                                                transition:{ 
+                                                    duration: 0.3, 
+                                                    ease: [0.04, 0.62, 0.83, 0.99],
+                                                }},
+                                            collapsed: { opacity: 0, width: 0, height: 0,
+                                                transition:{ 
+                                                    duration: 0.3, 
+                                                    ease: [0.04, 0.82, 0.83, 0.99],
+                                                    delay: 0.1,
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        <DotsForm
+                                            layout
+                                            variants={{
+                                                open: { opacity: 1, width: "auto", height: "auto",
+                                                transition:{
+                                                    type: 'tween',
+                                                    duration: 0.3, 
+                                                    ease: "easeInOut",
+                                                    delay: 1
+                                                }},
+                                                collapsed: { opacity: 0, width: 0, height: 0,
+                                                    transition:{ 
+                                                        duration: 0.2, 
+                                                        ease: [0.04, 0.62, 0.83, 0.99],
+                                                    }
+                                                }
+                                            }}
+                                        >
+                                            <NameMotion type="text" value={updateForm.name}></NameMotion>
+                                            <motion.div>
+                                                <label>Priority</label>
+                                                <motion.select defaultValue={updateForm.priority} name="priority">
+                                                    <option value="low">Low</option>
+                                                    <option value="medium">Med</option>
+                                                    <option value="high">High</option>
+                                                </motion.select>
+                                            </motion.div>
+                                            <button type="submit">Update</button>
+                                        </DotsForm>
+                                    </FormDiv>}
+                                </AnimatePresence>
+                            </DotsDiv>
+                    </TitleDiv>
+                    <h2 className="card-title">{project.name}</h2>
+                    <div className="card-body">
+                        <span>Show priority</span>
+                        <div>
+                        <span>show all the members</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </ProjectLI>
     )
 }
 
+const NameMotion = styled(motion.input)`
+    width: 200px;
+`
+
+const DotsForm = styled(motion.form)`
+    width: fit-content;
+`
+
+const FormDiv = styled(motion.form)`
+    // position: relative;
+`
+
+const DotsDiv = styled(motion.div)`
+    position: absolute;
+    // right: 40px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    // width: fit-content;
+    height: fit-content;
+    outline: 1px solid #e2d9d5;
+    z-index: 2;
+    padding: 5px;
+    background-color: #fde5e5
+`
+
+const TitleDiv = styled.div`
+    display:flex;
+    justify-content: flex-end;
+`
+
 const ProjectLI = styled(motion.li)`
-    height: 350px;
+    height: 265px;
     width: 250px;
     list-style: none;
     margin-right: 80px;

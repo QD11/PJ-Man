@@ -16,7 +16,7 @@ const ProjRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<ProjectInfo project={project}/>} />
-            <Route path="/:section/:task" element={<Task project={project}/>} />
+            <Route path="/:section/:task" element={<Task />} />
         </Routes>
     )
 }

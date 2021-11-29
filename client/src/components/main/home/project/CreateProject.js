@@ -57,7 +57,7 @@ const CreateProject = () => {
         <CreateDiv>
             <motion.div onClick={() => setCreateOpen(createOpen => !createOpen)}>
                 <RiFileAddLine/>
-                <ItemSpan>Add Project*</ItemSpan>
+                <ItemSpan> Add Project</ItemSpan>
             </motion.div>
             <AnimatePresence initial={false}>
                     {createOpen && <ClickedForm

@@ -31,7 +31,7 @@ code {
 
 .card {
   position: relative;
-  cursor: pointer;
+  /* cursor: pointer; */
   max-width: 400px;
   margin: 60px auto;
 }
@@ -62,7 +62,7 @@ code {
 
 .card-inner {
   position: relative;
-  padding: 3rem;
+  padding: 1em;
 }
 
 .card-top-right::before {

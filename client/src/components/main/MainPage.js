@@ -20,10 +20,10 @@ const MainPage = () => {
     useEffect(() => {
         dispatch(fetchProjects(`/${team.id}/projects`))
 
-        //fetch projects every 30 seconds
+        //fetch projects every 15 seconds
         const interval = setInterval(() => {
             dispatch(fetchProjects(`/${team.id}/projects`))
-        }, MINUTE_MS/2);
+        }, MINUTE_MS/1);
         
         return () => clearInterval(interval);
     }, [team])

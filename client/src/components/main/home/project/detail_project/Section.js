@@ -11,10 +11,10 @@ const Section = ({section, project}) => {
         <div>
             <h4>{section.name}</h4>
             {section.tasks.map(task => 
-                <TaskDiv onClick={() => navigate(`${section.name}/${task.name}`)}>
+                <TaskDiv onClick={() => navigate(`${section.name}/${task.name}`)} key={task.id}>
                     <h6>{task.name}</h6>
                     <h6>{task.completed ? "Completed" : "Not Completed"}</h6>
-                    {task.users.map(user => <span>{user.first_name} {user.last_name}</span>)}
+                    {task.users.map(user => <span key={user.id}>{user.first_name} {user.last_name}</span>)}
                 </TaskDiv>
             )}
         </div>

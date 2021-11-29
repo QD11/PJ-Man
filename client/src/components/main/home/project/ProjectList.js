@@ -27,7 +27,7 @@ const ProjectList = () => {
                     }
                 }}
             >
-                {projects.map(project => <ProjectItem key={project.key} project={project}/>)}
+                {projects.map(project => <ProjectItem key={project.id} project={project}/>)}
             </ProjectUL>
         </>
     )
@@ -37,7 +37,7 @@ const ProjectUL = styled(motion.ul)`
     width: 1000px;
     padding-inline-start: 0px;
     display:flex;
-    margin-top: 70px;
+    margin-top: 100px;
     flex-wrap: wrap;
 `
 

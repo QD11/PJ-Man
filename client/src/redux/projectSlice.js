@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, current} from '@reduxjs/toolkit'
 
 export const fetchProjects = createAsyncThunk(
     'project/fetchProjects',
@@ -27,8 +27,15 @@ const projectSlice = createSlice({
         getAllProjects(state, action) {
             return [...action.payload]
         },
+        // updateTaskStatus(state, action) {
+        //     const currentState = [...current(state)]
+        //     console.log(action.payload)
+        //     const data = action.payload[0]
+        //     const identifier = action.payload[1]
+        //     currentState.find
+        // }
     },
 })
 
-export const { addProject, getAllProjects } = projectSlice.actions
+export const { addProject, getAllProjects, updateTaskStatus } = projectSlice.actions
 export default projectSlice.reducer

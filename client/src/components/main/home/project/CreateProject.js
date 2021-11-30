@@ -54,7 +54,7 @@ const CreateProject = () => {
     }
 
     return (
-        <CreateDiv>
+        <CreateDiv name="create-project-div">
             <motion.div onClick={() => setCreateOpen(createOpen => !createOpen)}>
                 <RiFileAddLine/>
                 <ItemSpan> Add Project</ItemSpan>
@@ -73,7 +73,7 @@ const CreateProject = () => {
                         transition={{ duration: 0.8, ease: [0.04, 0.62, 0.83, 0.98] }}
                     >
                         <div>
-                            <InputMotion priority={createForm.priority} type="text" placeholder="Name" onChange={handleChange} name="name"></InputMotion>
+                            <InputMotion priority={createForm.priority} type="text" autocomplete="off" placeholder="Name" onChange={handleChange} name="name"></InputMotion>
                         </div>
                         <div>
                             <motion.select onChange={handleChange} name="priority">
@@ -218,6 +218,7 @@ const CreateDiv = styled(motion.div)`
     position: absolute;
     z-index: 100;
     top: 72px;
+    left: 950px;
     flex-direction: column;
     display:flex;
     width: 170px;

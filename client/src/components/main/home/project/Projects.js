@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion} from 'framer-motion'
 import styled from 'styled-components'
-import {BsPencilSquare} from 'react-icons/bs'
 import {useNavigate} from 'react-router-dom'
 
 import CreateProject from './CreateProject'

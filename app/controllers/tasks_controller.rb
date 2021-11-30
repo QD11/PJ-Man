@@ -11,7 +11,8 @@ class TasksController < ApplicationController
         if task.valid?
             taskuser = TaskUser.create(task_id: task.id, user_id: params[:member])
         end
-        render json: task, status: :created
+        # render json: task, status: :created
+        projects_specific_to_team
     end
 
     def status_update

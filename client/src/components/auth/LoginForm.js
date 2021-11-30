@@ -50,11 +50,11 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Email</label>
-                        <input type="text" onChange={handleChange} name="email"></input>
+                        <input autocomplete="off" type="text" onChange={handleChange} name="email"></input>
                     </div>
                     <div>
                         <label>Password</label>
-                        <input type="password" onChange={handleChange} name="password"></input>
+                        <input autocomplete="off" type="password" onChange={handleChange} name="password"></input>
                     </div>
                     <button type="submit">{isLoading? "Loading..." : "Login"}</button>
                 </form>

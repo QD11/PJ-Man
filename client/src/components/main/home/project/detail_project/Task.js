@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import Avatar from 'react-avatar'
 import {getAllProjects} from '../../../../../redux/projectSlice'
+import styled from 'styled-components'
 
 const Task = () => {
     const params = useParams()
@@ -28,24 +29,52 @@ const Task = () => {
     }
 
     return (
-        <div>
+        <TaskDiv>
             <h2>{taskInfo.name}</h2>
-            <label for="status" >Status: </label>
-            <select id="status" defaultValue={taskInfo.completed} onChange={handleStatusChange}>
-                <option value={false} >Not Completed</option>
-                <option value={true}>Completed</option>
-            </select>
-            <div>
+            <div className="status-assign">
+                <div>
+                    <label>Assigned To: </label>
+                    {taskInfo.users.map(user => <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="20" textSizeRatio={1.75}/>)}
+                </div>
+                <div>
+                    <label for="status" >Status: </label>
+                    <select id="status" defaultValue={taskInfo.completed} onChange={handleStatusChange}>
+                        <option value={false} >Not Completed</option>
+                        <option value={true}>Completed</option>
+                    </select>
+                </div>
+            </div>
+            <div className="description-div">
                 <span>{taskInfo.description}</span>
             </div>
-            <div>
-                <label>Assigned To: </label>
-            </div>
-            <div>
-                {taskInfo.users.map(user => <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="20" textSizeRatio={1.75}/>)}
-            </div>
-        </div>
+        </TaskDiv>
     )
 }
+
+const TaskDiv = styled.div`
+    margin-top: 2em;
+    border: 2px solid #e2d9d5;
+    padding: 1em;
+    width: 50em;
+    display: flex;
+    flex-direction: column;
+    h2 {
+        display: flex;
+        justify-content: center
+    }
+    .status-assign {
+        display: flex;
+        justify-content: space-between;
+    }
+    .description-div {
+        width: 80;
+        border: 2px solid #e2d9d5;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 5px;
+        padding: 5px;
+        background-color: white;
+    }
+`
 
 export default Task

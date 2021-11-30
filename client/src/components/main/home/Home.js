@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <PageDiv>
             < SideNav />
-            <RightDiv>
+            <RightDiv name="right-div">
                 <Routes>
                     <Route path="/" element={<div><h1>Dashboard</h1></div>} />
                     <Route path="/project/*" element={<ProjectRoutes/>} />
@@ -25,7 +25,7 @@ const PageDiv = styled.div`
 
 const RightDiv = styled.div`
     display: flex;
-    margin: 10px 0px 0px 20px
+    margin: 10px 0px 0px 20px;
     width: 1000px;
 `
 

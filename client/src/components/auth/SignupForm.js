@@ -50,23 +50,23 @@ const SignupForm = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>First Name</label>
-                    <input onChange={handleChange} type="text" name="first_name"></input>
+                    <input autocomplete = "off" onChange={handleChange} type="text" name="first_name"></input>
                 </div>
                 <div>
                     <label>Last Name</label>
-                    <input onChange={handleChange} type="text" name="last_name"></input>
+                    <input autocomplete = "off" onChange={handleChange} type="text" name="last_name"></input>
                 </div>
                 <div>
                     <label>Email</label>
-                    <input onChange={handleChange} type="text" name="email"></input>
+                    <input autocomplete = "off" onChange={handleChange} type="text" name="email"></input>
                 </div>
                 <div>
                     <label>Password</label>
-                    <input onChange={handleChange} type="password" name="password"></input>
+                    <input autocomplete = "off" onChange={handleChange} type="password" name="password"></input>
                 </div>
                 <div>
                     <label>Confirm Password</label>
-                    <input onChange={handleChange} type="password" name="password_confirmation"></input>
+                    <input autocomplete = "off" onChange={handleChange} type="password" name="password_confirmation"></input>
                 </div>
                 <span>{errors}</span>
                 <button type="submit">{isLoading? "Loading...": "Signup"}</button>

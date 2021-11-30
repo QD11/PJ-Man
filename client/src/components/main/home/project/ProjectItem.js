@@ -67,6 +67,7 @@ const ProjectItem = ({project}) => {
                                 <AnimatePresence initial={false}>
                                     {option && <DotsForm
                                             onSubmit={updateSubmit}
+                                            autocomplete="off"
                                             initial="collapsed"
                                             animate="open"
                                             exit="collapsed"
@@ -85,11 +86,11 @@ const ProjectItem = ({project}) => {
                                                 }
                                             }}
                                         >
-                                            <NameMotion onChange={updateChange} type="text" value={updateForm.name} name="name"></NameMotion>
+                                            <NameMotion onChange={updateChange} type="text" autocomplete="off" value={updateForm.name} name="name"></NameMotion>
                                             <PriorityUpdateDiv>
                                                 <div>
                                                     <label>Priority: </label>
-                                                    <motion.select onChange={updateChange} name="priority" defaultValue={updateForm.priority} name="priority">
+                                                    <motion.select autocomplete="off" onChange={updateChange} name="priority" defaultValue={updateForm.priority} name="priority">
                                                         <option value="low">Low</option>
                                                         <option value="medium">Med</option>
                                                         <option value="high">High</option>

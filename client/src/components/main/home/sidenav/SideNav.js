@@ -73,7 +73,7 @@ const SideList = styled(motion.ul)`
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;
-    width: 12em;
+    width: 10em;
     margin: 20px 60px 20px 0px;
 `
 

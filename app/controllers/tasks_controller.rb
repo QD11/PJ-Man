@@ -1,5 +1,18 @@
 class TasksController < ApplicationController
 
+    def destroy
+        task = Task.find_by(id: params[:task_id])
+        if task
+            task.destroy
+            section = task.section
+            if section.tasks.empty?
+                section.destroy
+            end
+            projects_specific_to_team
+        # else
+        #     render json: { error: "Task not found" }, status: :not_found
+        end
+    end
 
     def create
         # project = Project.find_by(name: params[:projectName], team_id: params[:team_id])

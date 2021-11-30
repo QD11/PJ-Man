@@ -89,6 +89,7 @@ const CreateTask = ({projectInfo}) => {
                             items: []
                         },
                     })
+                    setTimeout(() => setShowCreate(false), 1000)
                     }
                 )} 
             else {

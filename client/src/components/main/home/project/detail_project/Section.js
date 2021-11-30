@@ -3,17 +3,39 @@ import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import Avatar from 'react-avatar'
 import { motion } from 'framer-motion'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllProjects } from '../../../../../redux/projectSlice'
 
 const Section = ({section}) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const isAdmin = useSelector(state => state.isAdmin)
+    const team = useSelector(state => state.team)
+
+    const deleteHandler = (e, task) => {
+        e.stopPropagation()
+        console.log(task)
+        fetch(`/tasks/${team.id}/${task.id}`, {
+            method: "DELETE"
+        })
+        .then((r) => {
+            if (r.ok) {
+                r.json()
+                .then(project => {
+                    dispatch(getAllProjects(project))
+                })
+            } else {
+                r.json().then((err) => console.log(err.errors));
+            }})
+    }
     
     return (
         <div>
             <h3>{section.name}</h3>
             {section.tasks.map(task => 
                 <TaskDiv
-                    whileHover={{scale: 1.03 }}
-                    whileTap={{scale: 0.98}}
+                    // whileHover={{scale: 1.03 }}
+                    //whileTap={{scale: 0.98}}
                     name="task-div" 
                     completed={task.completed} 
                     onClick={() => navigate(`${section.id}/${task.id}`)} 
@@ -24,9 +46,11 @@ const Section = ({section}) => {
                         <h4>{task.completed ? "Completed" : "Not Completed"}</h4>
                     </div>
                     <div className="avatar-assigned-to">
-                        <label>Assigned to: </label>
-                        {/* {task.users.map(user => <span key={user.id}>{user.first_name} {user.last_name}</span>)} */}
-                        {task.users.map(user => <Avatar key={user.id} name={user.first_name + " " + user.last_name} round={true} size="25" textSizeRatio={1} />)}
+                        <div>
+                            <label>Assigned to: </label>
+                            {task.users.map(user => <Avatar key={user.id} name={user.first_name + " " + user.last_name} round={true} size="25" textSizeRatio={1} />)}
+                        </div>
+                        { isAdmin && <button onClick={(e) => deleteHandler(e, task)}> Delete </button>}
                     </div>
                 </TaskDiv>
             )}
@@ -49,8 +73,11 @@ const TaskDiv = styled(motion.div)`
         margin: 0 30px 0 20px;
     }
     .avatar-assigned-to {
+        display: flex;
+        justify-content: space-between;
         margin-left: 1em;
         margin-bottom: 5px;
+        margin-right: 30px;
     }
     &:hover {
         box-shadow: 0 0px 10px -6px rgba(0,0,0,0.7);

@@ -15,9 +15,7 @@ const MainPage = () => {
     const user = useSelector(state => state.user)
     const MINUTE_MS = 60000; //one minute
     //where fetch projects happens
-    console.log('yay')
-    dispatch(isAdmin(team.team_users.find(team_user => team_user.id === user.id).admin))
-    console.log('bye')
+    dispatch(isAdmin(team.team_users.find(team_user => team_user.user_id === user.id).admin))
 
     useEffect(() => {
         dispatch(fetchProjects(`/${team.id}/projects`))

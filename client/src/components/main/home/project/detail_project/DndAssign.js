@@ -1,33 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
-
-const itemsFromBackend = [
-{ id: uuid(), content: "First task" },
-{ id: uuid(), content: "Second task" },
-{ id: uuid(), content: "Third task" },
-{ id: uuid(), content: "Fourth task" },
-{ id: uuid(), content: "Fifth task" }
-];
-
-const columnsFromBackend = {
-    [uuid()]: {
-        name: "Requested",
-        items: itemsFromBackend
-    },
-    [uuid()]: {
-        name: "To do",
-        items: []
-    },
-    // [uuid()]: {
-    //     name: "In Progress",
-    //     items: []
-    // },
-    // [uuid()]: {
-    //     name: "Done",
-    //     items: []
-    // }
-};
+import { useSelector } from "react-redux"
+import Avatar from "react-avatar"
+import styled from 'styled-components'
 
 const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -65,8 +41,33 @@ const onDragEnd = (result, columns, setColumns) => {
     }
 };
 
-function DndAssign() {
-    const [columns, setColumns] = useState(columnsFromBackend);
+function DndAssign({setColumns, columns}) {
+    // const members = useSelector(state => state.team).users
+
+    // const itemsFromBackend = members.map(member => {
+    //     return ({
+    //         ...member,
+    //         id : member.id.toString()
+    //     })
+    // })
+        
+    // const columnsFromBackend = {
+    //     ['members']: {
+    //         name: "Members",
+    //         items: itemsFromBackend
+    //     },
+    //     ['assigned_members']: {
+    //         name: "Assign To",
+    //         items: []
+    //     },
+    // };
+
+    // const [columns, setColumns] = useState(columnsFromBackend);
+    // useEffect(() => {
+    //     setColumns(columnsFromBackend)
+    // }, [])
+    
+
     return (
         <div name="A" style={{ display: "flex", justifyContent: "center", height: "100%" }}>
         <DragDropContext
@@ -101,7 +102,7 @@ function DndAssign() {
                             width: 290,
                             maxHeight: 300,
                             minHeight: 300,
-                            "overflow-y": "scroll",
+                            overflowY: "scroll",
                             }}
                         >
                             {column.items.map((item, index) => {
@@ -130,7 +131,10 @@ function DndAssign() {
                                         ...provided.draggableProps.style
                                         }}
                                     >
-                                        {item.content}
+                                        <ItemDiv>
+                                            <Avatar name={item.first_name + " " + item.last_name} round={true} size={40} textSizeRatio={1} />
+                                            {item.first_name + " " + item.last_name}
+                                        </ItemDiv>
                                     </div>
                                     );
                                 }}
@@ -150,5 +154,10 @@ function DndAssign() {
         </div>
     );
 }
+
+const ItemDiv = styled.div`
+    display: flex;
+    justify-content: space-between
+`
 
 export default DndAssign;

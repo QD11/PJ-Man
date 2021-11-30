@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {useSelector, useDispatch} from 'react-redux'
 import {getAllProjects} from '../../../../../redux/projectSlice'
@@ -16,9 +16,35 @@ const CreateTask = ({projectInfo}) => {
         section: "",
         description: "",
         project_id: projectInfo.id,
-        member: 1,
         team_id: team.id,
     })     
+    
+    useEffect(() => {
+        setResponseMsg(null)
+    }, [showCreate])
+
+    //dnd
+    const members = useSelector(state => state.team).users
+    const itemsFromBackend = members.map(member => {
+        return ({
+            ...member,
+            id : member.id.toString()
+        })
+    })
+        
+    const columnsFromBackend = {
+        ['members']: {
+            name: "Members",
+            items: itemsFromBackend
+        },
+        ['assigned_members']: {
+            name: "Assign To",
+            items: []
+        },
+    };
+
+    const [columns, setColumns] = useState(columnsFromBackend);
+    //
 
     const handleChange = (e) => {
         setTaskForm({
@@ -29,18 +55,40 @@ const CreateTask = ({projectInfo}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        const submitForm = {
+            ...taskForm,
+            member : columns.assigned_members.items
+        }
         fetch("/tasks", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(taskForm)
+            body: JSON.stringify(submitForm)
         })
         .then(resp => {
             if (resp.ok) {
                 resp.json()
                 .then(data => {
                     dispatch(getAllProjects(data))
+                    setResponseMsg("Task created successfully")
+                    setTaskForm({
+                        name: "",
+                        section: "",
+                        description: "",
+                        project_id: projectInfo.id,
+                        team_id: team.id
+                    })
+                    setColumns({
+                        ['members']: {
+                            name: "Members",
+                            items: itemsFromBackend
+                        },
+                        ['assigned_members']: {
+                            name: "Assign To",
+                            items: []
+                        },
+                    })
                     }
                 )} 
             else {
@@ -68,26 +116,31 @@ const CreateTask = ({projectInfo}) => {
                 collapsed: { opacity: 0, height: 0 }
                 }}
                 transition={{ duration: 0.8, ease: [0.04, 0.62, 0.83, 0.98] }}
-            >   <div>
+            >   
+                <div className="combine-div">
                     <div>
-                        <InputMotion required="required" placeholder="Task" type="text" name="name" autocomplete="off" onChange={handleChange}></InputMotion>
+                        <div>
+                            <InputMotion required="required" placeholder="Task" type="text" name="name" autocomplete="off" onChange={handleChange}></InputMotion>
+                        </div>
+                        <div>
+                            <InputMotion required="required" placeholder="Section" list="sections" autocomplete="off" name="section" onChange={handleChange}/>  
+                            <datalist id="sections">
+                                {projectInfo.sections.map(section => <option key={section.id} value={`${section.name}`} /> )}
+                            </datalist>
+                        </div>
+                        <DivDesc>
+                            <InputDesc required="required" placeholder="Description" type="text" cols="40" rows="10" wrap="physical" autocomplete="off" name="description" onChange={handleChange}></InputDesc>
+                        </DivDesc>
                     </div>
-                    <div>
-                        <InputMotion required="required" placeholder="Section" list="sections" autocomplete="off" name="section" onChange={handleChange}/>  
-                        <datalist id="sections">
-                            {projectInfo.sections.map(section => <option key={section.id} value={`${section.name}`} /> )}
-                        </datalist>
+                    <div className="assign-div">
+                        {/* <label>Assign To </label>
+                        <input required="required" type="text" autocomplete="off" onChange={handleChange}></input> */}
+                        <DndAssign setColumns={setColumns} columns={columns}/>
                     </div>
-                    <DivDesc>
-                        <InputDesc required="required" placeholder="Description" type="text" cols="40" rows="10" wrap="physical" autocomplete="off" name="description" onChange={handleChange}></InputDesc>
-                    </DivDesc>
+                </div>
+                <div>
                     <button type="submit">Create</button>
                     {responseMsg && <span>{responseMsg}</span>}
-                </div>
-                <div className="assign-div">
-                    {/* <label>Assign To </label>
-                    <input required="required" type="text" autocomplete="off" onChange={handleChange}></input> */}
-                    <DndAssign />
                 </div>
             </FormMotion>}
             </AnimatePresence>
@@ -95,9 +148,12 @@ const CreateTask = ({projectInfo}) => {
     )
 }
 const FormMotion = styled(motion.form)`
-    display:flex;
+    // display:flex;
     .assign-div {
         margin-left: 20px;
+    }
+    .combine-div {
+        display: flex;
     }
 `
 

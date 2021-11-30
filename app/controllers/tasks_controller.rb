@@ -9,7 +9,10 @@ class TasksController < ApplicationController
         end
         task = Task.create!(name: params[:name], description: params[:description], completed: false, section_id: section.id)
         if task.valid?
-            taskuser = TaskUser.create(task_id: task.id, user_id: params[:member])
+            params[:member].each do |user|
+                TaskUser.create(task_id: task.id, user_id: user["id"])
+            end
+            # taskuser = TaskUser.create(task_id: task.id, user_id: params[:member])
         end
         # render json: task, status: :created
         projects_specific_to_team

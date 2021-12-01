@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import Avatar from 'react-avatar'
-import {RiMessage3Line, RiArrowUpCircleLine, RiArrowDownCircleLine} from 'react-icons/ri'
+import {RiMessage3Line, RiArrowUpCircleLine, RiArrowDownCircleLine, RiUserUnfollowFill} from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { getTeam } from '../../redux/teamSlice'
 
-const Card = ({user, team_user, userInfo, teamUserCurrentInfo}) => {
+const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
     //userInfo points to logged in user
     //user refers to the card owner
     const dispatch = useDispatch()
@@ -28,6 +28,14 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo}) => {
             }
     })}
 
+    const removeUser = () => {
+        fetch(`/team_users/${team_user.id}`, {
+            method: "DELETE",
+        })
+        .then(r => r.json())
+        .then(data => console.log(data))
+    }
+
     return (
         <CardDiv>
             <div className="top-half">
@@ -39,6 +47,9 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo}) => {
                     </div>
                     <p>{team_user.title ? team_user.title : "---"}</p>
                 </div>
+                <div className="remove-user-div">
+                    {showRemove && < RiUserUnfollowFill />}
+                </div>
                 <div>
                 <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
                 </div>
@@ -49,16 +60,16 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo}) => {
                     <span>Message</span>
                 </div>
                 {!team_user.owner && teamUserCurrentInfo.admin &&
-                    <ProDemDiv>
+                    <ProDemDiv onClick={changeAdminHandler}>
                         {team_user.admin ? 
                         <div>
-                            <RiArrowDownCircleLine onClick={changeAdminHandler} />
-                            <span onClick={changeAdminHandler}>Demote</span> 
+                            <RiArrowDownCircleLine  />
+                            <span >Demote</span> 
                         </div>
                         : 
                         <div>
-                            <RiArrowUpCircleLine onClick={changeAdminHandler} />
-                            <span onClick={changeAdminHandler}>Promote</span> 
+                            <RiArrowUpCircleLine  />
+                            <span >Promote</span> 
                         </div>
                         }
                     </ProDemDiv>
@@ -102,6 +113,17 @@ const CardDiv = styled.div`
     background-color: #fff;
     font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     
+    .remove-user-div {
+        display: flex;
+        align-items: center;
+        font-size: 50px;
+        color: red;
+        width: fit-content;
+        height: fit-content;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
     .top-half {
         display: flex;
         justify-content: space-between;
@@ -159,6 +181,7 @@ const CardDiv = styled.div`
 
 
 const ProDemDiv = styled.div`
+    cursor: pointer;
     border-width: 1;
     border-style: solid;
     border-color: #e2e8f0;

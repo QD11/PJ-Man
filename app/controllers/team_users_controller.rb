@@ -11,6 +11,10 @@ class TeamUsersController < ApplicationController
         end
     end
 
+    def destroy
+        team_user = TeamUser.find_by(id: params[:id])
+    end
+
     private
 
     def team_user_params

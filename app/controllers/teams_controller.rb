@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
     def teams_specific_to_user
         user = User.find_by(id: params[:user_id])
         teams = Team.joins(:team_users).where(team_users: {user_id: user.id})
-        render json: teams
+        render json: teams#, include: ['team_user', 'team_users.user', 'users']
     end
 
     def create

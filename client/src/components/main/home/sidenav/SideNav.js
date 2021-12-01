@@ -23,7 +23,7 @@ const SideNav = () => {
     {
         name: "Members",
         icon: < RiTeamLine />,
-        url: `/${team.name}/member`,
+        url: `/${team.name}/members`,
     },
     {
         name: "Calendar",

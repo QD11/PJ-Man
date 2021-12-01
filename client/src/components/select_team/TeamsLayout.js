@@ -14,7 +14,11 @@ const TeamsLayout = () => {
     const navigate = useNavigate()
     const user = useSelector(state => state.user)
     const [newTeamForm, setNewTeamForm] = useState(false)
+    const [joinForm, setJoinForm] = useState(false) 
     const [teams, setTeams] = useState([])
+    const [code, setCode] = useState("")
+
+    console.log(teams)
 
     const MINUTE_MS = 60000;
 
@@ -37,10 +41,23 @@ const TeamsLayout = () => {
         navigate('/')
     }
 
+    const joinSubmit = (e) => {
+        e.preventDefault()
+
+    }
+
     return (
         <div>
             <button onClick={handleClick}>Log Out</button>
             <button onClick={()=>setNewTeamForm(bool => !bool)}>New Team</button>
+            <button onClick={()=>setJoinForm(joinForm => !joinForm)}>Join Team </button>
+            {joinForm && 
+                <form onSubmit={joinSubmit}>
+                    <label>Enter Code: </label>
+                    <input type="text" name="code" onChange={(e) => setCode(e.target.value)}></input>
+                    <button type="submit">Submit</button>
+                </form>
+                }
             {newTeamForm ? <NewTeam setTeams={setTeams} setNewTeamForm={setNewTeamForm}/> 
                 : 
                 <>

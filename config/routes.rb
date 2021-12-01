@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :recruitments
   resources :task_users
   resources :tasks
   resources :sections
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'
   # get '/org', to: 'organizations#show'
+
+  post '/join', to: 'recruitments#join'
 
   # post '/org_login', to: 'sessions#org_create'
   post '/login', to: 'sessions#create'

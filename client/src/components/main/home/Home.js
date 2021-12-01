@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import SideNav from './sidenav/SideNav'
 import ProjectRoutes from './project/ProjectRoutes'
+import MemberPage from '../../members/MemberPage'
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
                 <Routes>
                     <Route path="/" element={<div><h1>Dashboard</h1></div>} />
                     <Route path="/project/*" element={<ProjectRoutes/>} />
+                    <Route path="/members/*" element={<MemberPage/>} />
                 </Routes>
             </RightDiv>
         </PageDiv>
@@ -25,8 +27,9 @@ const PageDiv = styled.div`
 
 const RightDiv = styled.div`
     display: flex;
-    margin: 10px 0px 0px 20px;
+    // margin: 10px 0px 0px 20px;
     width: 1000px;
+    margin: 2rem 11rem;
 `
 
 

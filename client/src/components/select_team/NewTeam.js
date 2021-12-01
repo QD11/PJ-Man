@@ -8,7 +8,8 @@ const NewTeam = ({setTeams, setNewTeamForm}) => {
     const [teamForm, setTeamForm] = useState({
         name: '',
         description: '',
-        user_id: user.id
+        user_id: user.id,
+        email: user.email,
     })
 
     const handleChange = (e) => {

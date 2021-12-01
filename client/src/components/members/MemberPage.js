@@ -10,10 +10,16 @@ import { useEffect } from 'react/cjs/react.development';
 const MemberPage = () => {
     const userInfo = useSelector(state => state.user)
     const team = useSelector(state => state.team)
+    const isAdmin = useSelector(state => state.isAdmin)
     const filterUserTeam = team.users.filter(user => user.id !== userInfo.id)
     const [email, setEmail] = useState('')
     const [code, setCode] = useState('')
     const [showOpen, setShowOpen] = useState(false)
+    const [recruitResp, setRecruitResp] = useState("")
+
+    const teamUserCurrentInfo = team.team_users.find(user => user.user_id === userInfo.id)
+
+    
 
     useEffect(() => {
         setCode(uuid())
@@ -32,11 +38,18 @@ const MemberPage = () => {
                 team_id: team.id
             })
         })
+        .then((r) => {
+            if (r.ok) {
+                r.json()
+                .then(data => setRecruitResp("Success! Make sure to send him this code!"))
+            } else {
+                r.json().then((err) => setRecruitResp(err.errors));
+            }})
     }
 
     return (
         <MembersDiv>
-            <CreateDiv>
+            {isAdmin && <CreateDiv>
                 <div 
                     onClick={() => setShowOpen(showOpen => !showOpen)}
                 >
@@ -45,7 +58,7 @@ const MemberPage = () => {
                 </div>
                 {showOpen && 
                     <form onSubmit={handleSubmit}>
-                        <p>This will generate a unique code for your member to join this team. This code is specifically tied to the provided email. He/she will have 48 hours to join.</p>
+                        <p>This will generate a unique code for your member to join this team. This code is specifically tied to the provided email.</p>
                         <EmailDiv>
                             <label for="email-input">Email:</label>
                             <input type="email" id="email-input" name="email" onChange={(e) => setEmail(e.target.value)}/>
@@ -55,11 +68,12 @@ const MemberPage = () => {
                             <span> {code} </span>
                         </div>
                         <button type="submit">Submit</button>
+                        <span>{recruitResp}</span>
                     </form>}
-            </CreateDiv>
+            </CreateDiv>}
             <CardContainer>
                 <Card userInfo={userInfo} user={userInfo} team_user={team.team_users.find(team_user => team_user.user_id === userInfo.id)}/>
-                {filterUserTeam.map(user => <Card key={user.id} userInfo={userInfo} user={user} team_user={team.team_users.find(team_user => team_user.user_id === user.id)}/>)}
+                {filterUserTeam.map(user => <Card key={user.id} teamUserCurrentInfo={teamUserCurrentInfo} userInfo={userInfo} user={user} team_user={team.team_users.find(team_user => team_user.user_id === user.id)}/>)}
             </CardContainer>
         </MembersDiv>
     )
@@ -83,7 +97,7 @@ const CreateDiv = styled(motion.div)`
     flex-direction: column;
     display:flex;
     width: fit-content;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     font-size: 25px;
     height: fit-content;
     border-radius: 10px;
@@ -101,7 +115,10 @@ const MembersDiv = styled.div`
 `
 
 const CardContainer = styled.div`
-    margin-top: 20px;
+    // margin-top: 20px;
+    // .user-card {
+    //     margin-bottom: 40px;
+    // }
 `
 
 export default MemberPage

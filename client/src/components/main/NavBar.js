@@ -3,8 +3,8 @@ import {useNavigate} from 'react-router-dom'
 import { logOutTeam } from '../../redux/teamSlice'
 import { fetchLogOut } from '../../redux/userSlice'
 import { isAdmin } from '../../redux/adminSlice'
+import { emptyProjects } from '../../redux/projectSlice'
 import {useDispatch, useSelector} from 'react-redux'
-import { RiTodoLine } from 'react-icons/ri'
 import styled from 'styled-components'
 
 const NavBar = () => {
@@ -16,12 +16,14 @@ const NavBar = () => {
     const onClickTeams = () => {
         dispatch(logOutTeam())
         dispatch(isAdmin(false))
+        dispatch(emptyProjects())
         navigate('/')
     }
 
     const handleLogOut = () => {
         dispatch(fetchLogOut('/logout'))
         dispatch(isAdmin(false))
+        dispatch(emptyProjects())
         navigate('/')
     }
 

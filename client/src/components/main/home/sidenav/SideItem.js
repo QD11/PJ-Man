@@ -70,6 +70,7 @@ const ItemSpan = styled(motion.span)`
 `
 
 const ItemDiv = styled(motion.li)`
+    // display: 
     list-styled: none;
     display:flex;
     height: 25px;

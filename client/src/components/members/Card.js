@@ -1,17 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
 import Avatar from 'react-avatar'
-import {RiMessage3Line} from 'react-icons/ri'
+import {RiMessage3Line, RiArrowUpCircleLine, RiArrowDownCircleLine} from 'react-icons/ri'
+import { useDispatch } from 'react-redux'
+import { getTeam } from '../../redux/teamSlice'
 
-const Card = ({user, team_user, userInfo}) => {
+const Card = ({user, team_user, userInfo, teamUserCurrentInfo}) => {
+    //userInfo points to logged in user
+    //user refers to the card owner
+    const dispatch = useDispatch()
+    const changeAdminHandler = () => {
+        const currentAdmin = team_user.admin
+        const team_id = teamUserCurrentInfo.team_id
+
+        fetch(`/change_admin/${team_user.id}`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                team_id: team_id,
+                admin: !currentAdmin,
+            })
+        })
+        .then((r) => {
+            if (r.ok) {
+                r.json()
+                .then(data => dispatch(getTeam(data)))
+            }
+    })}
 
     return (
         <CardDiv>
             <div className="top-half">
                 <div>
-                    <div className="name-admin">
+                    <div className="name-admin" >
                         <h3>{user.first_name + " " + user.last_name}</h3>
-                        <span>{team_user.admin ? "Admin" : "Member" }</span>
+                        <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
+                        {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
                     </div>
                     <p>{team_user.title ? team_user.title : "---"}</p>
                 </div>
@@ -24,17 +48,57 @@ const Card = ({user, team_user, userInfo}) => {
                     < RiMessage3Line />
                     <span>Message</span>
                 </div>
+                {!team_user.owner && teamUserCurrentInfo.admin &&
+                    <ProDemDiv>
+                        {team_user.admin ? 
+                        <div>
+                            <RiArrowDownCircleLine onClick={changeAdminHandler} />
+                            <span onClick={changeAdminHandler}>Demote</span> 
+                        </div>
+                        : 
+                        <div>
+                            <RiArrowUpCircleLine onClick={changeAdminHandler} />
+                            <span onClick={changeAdminHandler}>Promote</span> 
+                        </div>
+                        }
+                    </ProDemDiv>
+                }
             </div>}
         </CardDiv>
     )
 }
 
+const OwnerStatus = styled.span`
+    display: inline-block;
+    color: red;
+    background-color: #f1e3e7;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: .75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+`
+
+const AdminStatus = styled.span`
+    display: inline-block;
+    color: ${props => props.admin ? "green" : "purple"};
+    background-color: ${props => props.admin ? "#e3f1f0": "#f7ecf6"};
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: .75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+`
+
 const CardDiv = styled.div`
     align-items:center;
     border-radius: 5px;
     border: 1px solid #e2e8f0;
+    margin-top: 40px;
     // height: 141px;
-    width: 370px;
+    width: 600px;
     background-color: #fff;
     font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     
@@ -64,22 +128,11 @@ const CardDiv = styled.div`
     .name-admin {
         display: flex;
         align-items: center;
-        & span {
-            display: inline-block;
-            color: green;
-            background-color: #e3f1f0;
-            border-radius: 9999px;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-left: .75rem;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-        }
     }
 
     .bottom-half {
         display: flex;
-        padding: 20px 0 20px 0;
+        // padding: 20px 0 20px 0;
         justify-content: space-around;
         box-sizing: border-box;
         border-width: 1;
@@ -92,11 +145,35 @@ const CardDiv = styled.div`
         align-items: center;
         .Message {
             font-size: 20px;
+            width: 50%;
+            text-align: center;
+            height: 100%;
+            padding: 20px 0 20px 0;
             & span {
                 margin-left: 10px;
                 color: #183063;
             }
         }
+    }
+`
+
+
+const ProDemDiv = styled.div`
+    border-width: 1;
+    border-style: solid;
+    border-color: #e2e8f0;
+    border-left-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    color: #183063;
+    font-size: 20px;
+    text-align: center;
+    width: 50%;
+    height: 100%;
+    padding: 20px 0 20px 0;
+    & span {
+        margin-left: 10px;
     }
 `
 

@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import { AnimateSharedLayout, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import styled from 'styled-components'
-import {fetchMe, fetchLogOut} from '../../redux/userSlice'
+import {fetchLogOut} from '../../redux/userSlice'
+import {emptyProjects} from '../../redux/projectSlice'
 import {isAdmin} from '../../redux/adminSlice'
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 import TeamCard from './TeamCard'
 import NewTeam from './NewTeam'
@@ -14,11 +15,11 @@ const TeamsLayout = () => {
     const navigate = useNavigate()
     const user = useSelector(state => state.user)
     const [newTeamForm, setNewTeamForm] = useState(false)
+    const [recruitResp, setRecruitResp] = useState("")
     const [joinForm, setJoinForm] = useState(false) 
     const [teams, setTeams] = useState([])
     const [code, setCode] = useState("")
 
-    console.log(teams)
 
     const MINUTE_MS = 60000;
 
@@ -38,12 +39,31 @@ const TeamsLayout = () => {
     const handleClick = () => {
         dispatch(fetchLogOut('/logout'))
         dispatch(isAdmin(false))
+        dispatch(emptyProjects())
+        console.log('hi')
         navigate('/')
     }
 
     const joinSubmit = (e) => {
         e.preventDefault()
-
+        fetch('/join', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                code: code,
+                user_id: user.id,
+                email: user.email,
+            }),
+        })
+        .then((r) => {
+            if (r.ok) {
+                r.json()
+                .then(team => setTeams(teams => [...teams, team]))
+            } else {
+                r.json().then((err) => setRecruitResp(err.errors));
+            }})
     }
 
     return (
@@ -56,6 +76,7 @@ const TeamsLayout = () => {
                     <label>Enter Code: </label>
                     <input type="text" name="code" onChange={(e) => setCode(e.target.value)}></input>
                     <button type="submit">Submit</button>
+                    <span>{recruitResp}</span>
                 </form>
                 }
             {newTeamForm ? <NewTeam setTeams={setTeams} setNewTeamForm={setNewTeamForm}/> 

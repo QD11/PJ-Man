@@ -8,7 +8,7 @@ class TeamsController < ApplicationController
 
     def create
         team = Team.create(name: params[:name], description: params[:description])
-        team_user = TeamUser.create(user_id: params[:user_id], team_id: team.id, admin: true, owner: true)
+        team_user = TeamUser.create(user_id: params[:user_id], team_id: team.id, admin: true, owner: true, email: params[:email])
         render json: team
     end
 end

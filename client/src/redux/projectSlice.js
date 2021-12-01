@@ -27,6 +27,9 @@ const projectSlice = createSlice({
         getAllProjects(state, action) {
             return [...action.payload]
         },
+        emptyProjects(state, action) {
+            return []
+        }
         // updateTaskStatus(state, action) {
         //     const currentState = [...current(state)]
         //     console.log(action.payload)
@@ -37,5 +40,5 @@ const projectSlice = createSlice({
     },
 })
 
-export const { addProject, getAllProjects, updateTaskStatus } = projectSlice.actions
+export const { emptyProjects, addProject, getAllProjects, updateTaskStatus } = projectSlice.actions
 export default projectSlice.reducer

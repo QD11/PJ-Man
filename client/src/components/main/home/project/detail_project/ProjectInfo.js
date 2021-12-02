@@ -7,7 +7,7 @@ import styled from 'styled-components'
 
 const ProjectInfo = () => {
     const isAdmin = useSelector(state => state.isAdmin)
-    const projects = useSelector(state => state.projects)
+    const projects = useSelector(state => state.team).projects
     const { project_id } = useParams()
     const projectInfo = projects.find(proj => proj.id === parseInt(project_id))
 

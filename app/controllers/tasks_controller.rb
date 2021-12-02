@@ -8,7 +8,7 @@ class TasksController < ApplicationController
             if section.tasks.empty?
                 section.destroy
             end
-            projects_specific_to_team
+            show_for_all
         # else
         #     render json: { error: "Task not found" }, status: :not_found
         end
@@ -28,13 +28,13 @@ class TasksController < ApplicationController
             # taskuser = TaskUser.create(task_id: task.id, user_id: params[:member])
         end
         # render json: task, status: :created
-        projects_specific_to_team
+        show_for_all
     end
 
     def status_update
         task = Task.find_by(id: params[:task_id])
         task.update!(completed: params[:completed])
-        projects_specific_to_team
+        show_for_all
         # render json: task
     end
 end

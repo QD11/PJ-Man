@@ -8,13 +8,22 @@ class ProjectsController < ApplicationController
 
     def create
         project = Project.create!(project_params)
-        render json: project, status: :created
+        # render json: project, status: :created
+        show_for_all
     end
 
     def update
         project = Project.find_by(id: params[:id])
+        team = project.team
         project.update!(name: params[:name], priority: params[:priority])
-        projects_specific_to_team
+        render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
+    end
+
+    def destroy
+        project = Project.find_by(id: params[:id])
+        team = project.team
+        project.destroy
+        render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
     end
 
     private

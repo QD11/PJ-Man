@@ -8,8 +8,6 @@ import ProjectInfo from './ProjectInfo'
 import Task from './Task'
 
 const ProjRoutes = () => {
-    const isAdmin = useSelector(state => state.isAdmin)
-    
     return (
         <Routes>
             <Route path="/" element={<ProjectInfo />} />

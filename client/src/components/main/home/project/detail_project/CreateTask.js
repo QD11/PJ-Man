@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {useSelector, useDispatch} from 'react-redux'
-import {getAllProjects} from '../../../../../redux/projectSlice'
+import { getTeam } from '../../../../../redux/teamSlice'
 import {motion, AnimatePresence} from 'framer-motion'
 import {RiFileAddLine} from 'react-icons/ri'
 import DndAssign from './DndAssign'
@@ -28,7 +28,6 @@ const CreateTask = ({projectInfo}) => {
     const members = team.team_users.map(team_user => team_user.user)
     const teamUsers = team.team_users.map(team_user => team_user.id)
 
-    console.log(teamUsers)
     const itemsFromBackend = members.map((member, index) => {
         return ({
             ...member,
@@ -76,7 +75,7 @@ const CreateTask = ({projectInfo}) => {
             if (resp.ok) {
                 resp.json()
                 .then(data => {
-                    dispatch(getAllProjects(data))
+                    dispatch(getTeam(data))
                     setResponseMsg("Task created successfully")
                     setTaskForm({
                         name: "",

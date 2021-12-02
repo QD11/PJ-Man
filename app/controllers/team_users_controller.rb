@@ -4,8 +4,9 @@ class TeamUsersController < ApplicationController
         team_user = TeamUser.find_by(id: params[:team_user_id])
         if team_user
             team_user.update(admin: params[:admin])
-            team = Team.find_by(id: params[:team_id])
-            render json: team, status: :ok
+            # team = Team.find_by(id: params[:team_id])
+            # render json: team, status: :ok
+            show_for_all
         else
             render json: { error: "Team_user not found" }, status: :not_found
         end
@@ -22,7 +23,7 @@ class TeamUsersController < ApplicationController
             # render json: {
             #     projects: projects.to_json(:include => ['sections', 'sections.tasks'], 
             #     team: team, serializer: TeamSerializer}
-            projects_specific_to_team
+            show_for_all
         else
             render json: { errors: "Team_user not found" }, status: :not_found
         end

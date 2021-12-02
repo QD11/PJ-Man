@@ -5,6 +5,7 @@ import Avatar from 'react-avatar'
 import { motion } from 'framer-motion'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllProjects } from '../../../../../redux/projectSlice'
+import { getTeam } from '../../../../../redux/teamSlice'
 
 const Section = ({section}) => {
     const navigate = useNavigate()
@@ -14,15 +15,14 @@ const Section = ({section}) => {
 
     const deleteHandler = (e, task) => {
         e.stopPropagation()
-        console.log(task)
         fetch(`/tasks/${team.id}/${task.id}`, {
             method: "DELETE"
         })
         .then((r) => {
             if (r.ok) {
                 r.json()
-                .then(project => {
-                    dispatch(getAllProjects(project))
+                .then(data => {
+                    dispatch(getTeam(data))
                 })
             } else {
                 r.json().then((err) => console.log(err.errors));

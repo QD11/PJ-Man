@@ -28,7 +28,7 @@ const teamSlice = createSlice({
         },
         logOutTeam(state, action) {
             return null
-        },
+        }
         // removeMemberFromTeam(state, action) {
         //     const currentState = {...current(state)}
         //     const {user_id} = action.payload

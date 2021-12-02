@@ -3,13 +3,14 @@ import {useParams} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import Avatar from 'react-avatar'
 import {getAllProjects} from '../../../../../redux/projectSlice'
+import { getTeam } from '../../../../../redux/teamSlice'
 import styled from 'styled-components'
 
 const Task = () => {
     const params = useParams()
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
-    const taskInfo = useSelector(state => state.projects).find(project => project.id === parseInt(params.project_id)).sections.find(section => section.id === parseInt(params.section_id)).tasks.find(task => task.id === parseInt(params.task_id))
+    const taskInfo = useSelector(state => state.team).projects.find(project => project.id === parseInt(params.project_id)).sections.find(section => section.id === parseInt(params.section_id)).tasks.find(task => task.id === parseInt(params.task_id))
 
     const handleStatusChange = (e) => {
         fetch(`/${taskInfo.id}/status_update`, {
@@ -19,7 +20,7 @@ const Task = () => {
             body: JSON.stringify({completed: e.target.value, team_id: team.id}) 
         })
         .then(resp => resp.json())
-        .then(data => dispatch(getAllProjects(data))
+        .then(data => dispatch(getTeam(data))
         //add error
             // dispatch(updateTaskStatus([{
             //     ...data},

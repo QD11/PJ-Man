@@ -41,7 +41,7 @@ const MemberPage = () => {
         .then((r) => {
             if (r.ok) {
                 r.json()
-                .then(data => setRecruitResp("Success! Make sure to send him this code!"))
+                .then(data => setRecruitResp("Success! Make sure to send this code!"))
             } else {
                 r.json().then((err) => setRecruitResp(err.errors));
             }})

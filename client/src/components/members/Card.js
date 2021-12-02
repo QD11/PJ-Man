@@ -29,8 +29,6 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
             }
     })}
 
-    console.log(user.id)
-
     const removeUser = () => {
         fetch(`/${teamUserCurrentInfo.team_id}/team_users/${team_user.id}`, {
             method: "DELETE",
@@ -40,8 +38,8 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
                 r.json()
                 .then(data => {
                     // dispatch
-                    dispatch(getAllProjects(data))
-                    dispatch(fetchTeam(`/teams/${teamUserCurrentInfo.team_id}`))
+                    dispatch(getTeam(data))
+                    // dispatch(fetchTeam(`/teams/${teamUserCurrentInfo.team_id}`))
                     // dispatch(removeMemberFromTeam({user_id: user.id}))
                 })
             }

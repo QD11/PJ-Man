@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
     def show
         team = Team.find_by(id: params[:id])
         # render json: team, status: :ok
-        render json: team, include: ['team_users', 'team_users.user']
+        render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
     end
 
     def create

@@ -3,30 +3,37 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate, Route, Routes} from 'react-router-dom'
 import { logOutTeam } from '../../redux/teamSlice'
 import { isAdmin } from '../../redux/adminSlice'
-import { fetchProjects } from '../../redux/projectSlice'
+import { fetchProjects, emptyProjects } from '../../redux/projectSlice'
+import { fetchTeam } from '../../redux/teamSlice'
 
 import Home from './home/Home'
 
 import NavBar from './NavBar'
 
 const MainPage = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const user = useSelector(state => state.user)
     const MINUTE_MS = 60000; //one minute
-    //where fetch projects happens
-    dispatch(isAdmin(team.team_users.find(team_user => team_user.user_id === user.id).admin))
 
     useEffect(() => {
-        dispatch(fetchProjects(`/${team.id}/projects`))
-
+        dispatch(fetchTeam(`/teams/${team.id}`))
+        dispatch(isAdmin(team.team_users.find(team_user => team_user.user_id === user.id).admin))
         //fetch projects every 15 seconds
         const interval = setInterval(() => {
-            dispatch(fetchProjects(`/${team.id}/projects`))
+            dispatch(fetchTeam(`/teams/${team.id}`))
         }, MINUTE_MS/1);
         
         return () => clearInterval(interval);
-    }, [team])
+    }, [])
+
+    // if (!team.team_users.find(team_user => team_user.user_id === user.id)) {
+    //     navigate('/')
+    //     dispatch(logOutTeam())
+    //     dispatch(isAdmin(false))
+    //     dispatch(emptyProjects())
+    // }
 
     return (
         <>

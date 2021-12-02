@@ -5,6 +5,7 @@ import Avatar from 'react-avatar'
 import { motion } from 'framer-motion'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllProjects } from '../../../../../redux/projectSlice'
+import { getTeam } from '../../../../../redux/teamSlice'
 
 const Section = ({section}) => {
     const navigate = useNavigate()
@@ -14,15 +15,14 @@ const Section = ({section}) => {
 
     const deleteHandler = (e, task) => {
         e.stopPropagation()
-        console.log(task)
         fetch(`/tasks/${team.id}/${task.id}`, {
             method: "DELETE"
         })
         .then((r) => {
             if (r.ok) {
                 r.json()
-                .then(project => {
-                    dispatch(getAllProjects(project))
+                .then(data => {
+                    dispatch(getTeam(data))
                 })
             } else {
                 r.json().then((err) => console.log(err.errors));
@@ -48,7 +48,7 @@ const Section = ({section}) => {
                     <div className="avatar-assigned-to">
                         <div>
                             <label>Assigned to: </label>
-                            {task.users.map(user => <Avatar key={user.id} name={user.first_name + " " + user.last_name} round={true} size="25" textSizeRatio={1} />)}
+                            {task.team_users.map(team_user => <Avatar key={team_user.id} name={team_user.user.first_name + " " + team_user.user.last_name} round={true} size="25" textSizeRatio={1} />)}
                         </div>
                         { isAdmin && <button onClick={(e) => deleteHandler(e, task)}> Delete </button>}
                     </div>

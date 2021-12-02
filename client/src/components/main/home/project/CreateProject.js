@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
 import {useSelector, useDispatch} from 'react-redux'
 import {RiFileAddLine} from 'react-icons/ri'
-import {useNavigate} from 'react-router-dom'
+
 import { addProject } from '../../../../redux/projectSlice'
+import { getTeam } from '../../../../redux/teamSlice'
 
 const CreateProject = () => {
     const dispatch = useDispatch()
@@ -44,9 +45,9 @@ const CreateProject = () => {
         }).then((r) => {
             if (r.ok) {
                 r.json()
-                .then(project => {
-                    dispatch(addProject(project))
-                    setResponseMsg(`${project.name} created`)
+                .then(data => {
+                    dispatch(getTeam(data))
+                    // setResponseMsg(`${project.name} created`)
                 })
             } else {
                 r.json().then((err) => setResponseMsg(err.errors));

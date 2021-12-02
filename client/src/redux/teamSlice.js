@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, current} from '@reduxjs/toolkit'
 
 export const fetchTeam = createAsyncThunk(
     'user/fetchTeam',
@@ -29,6 +29,14 @@ const teamSlice = createSlice({
         logOutTeam(state, action) {
             return null
         }
+        // removeMemberFromTeam(state, action) {
+        //     const currentState = {...current(state)}
+        //     const {user_id} = action.payload
+        //     const indexOne = currentState.users.findIndex(user => user.id === user_id)
+        //     currentState.users.splice(indexOne, 1)
+
+        //     console.log(currentState)
+        // }
     },
 })
 

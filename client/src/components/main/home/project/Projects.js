@@ -1,18 +1,14 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useSelector} from 'react-redux'
 import { motion} from 'framer-motion'
 import styled from 'styled-components'
-import {useNavigate} from 'react-router-dom'
+
 
 import CreateProject from './CreateProject'
 import ProjectList from './ProjectList'
 
 const Projects = () => {
-    const navigate = useNavigate()
     const isAdmin = useSelector(state => state.isAdmin)
-    const team = useSelector(state => state.team)
-    const [createHover, setCreateHover] = useState(false)
-    const [createOpen, setCreateOpen] = useState(false)
 
     return (
         <>

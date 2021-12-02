@@ -6,12 +6,14 @@ import {useNavigate} from 'react-router-dom'
 import {BsThreeDots} from 'react-icons/bs'
 import {RiDeleteBin2Line, RiArchiveLine} from 'react-icons/ri'
 import {getAllProjects} from '../../../../redux/projectSlice'
+import {getTeam} from '../../../../redux/teamSlice'
 
 const ProjectItem = ({project}) => {
     const dispatch = useDispatch()
     const [option, setOption] = useState(false)
     const [respMsg, setRespMsg] = useState(null)
     const team = useSelector(state => state.team)
+    const isAdmin = useSelector(state => state.isAdmin)
     const [updateForm, setUpdateForm] = useState({
         name: project.name,
         priority: project.priority,
@@ -40,7 +42,7 @@ const ProjectItem = ({project}) => {
         .then(resp => {
             if (resp.ok) {
                 resp.json()
-                .then(data => dispatch(getAllProjects(data)))
+                .then(data => dispatch(getTeam(data)))
             }
             else {
                 resp.json()
@@ -49,13 +51,21 @@ const ProjectItem = ({project}) => {
         })  
     }
 
+    const deleteProject = () => {
+        fetch(`/projects/${project.id}`, {
+            method: "DELETE",
+        })
+        .then(resp => resp.json())
+        .then(data => dispatch(getTeam(data)))
+    }
+
     return (
         <ProjectLI priority={project.priosity}>
             <div className="card card-top-right" onClick={handleClick}>
                 <div className="card-inner">
                     <TitleDiv>
                         {/* <h2 className="card-title">{project.name}</h2> */}
-                            <DotsDiv
+                            { isAdmin && <DotsDiv
                                 onClick={e => e.stopPropagation()}
                                 // whileHover={{scale: 1.1 }}
                                 // onClick={() => console.log('hey')}
@@ -101,12 +111,12 @@ const ProjectItem = ({project}) => {
                                             <DelDiv>
                                                 <ArchiveIcon onClick={() => console.log("QQQQ")}/>
                                                 <span>{respMsg}</span>
-                                                <DelIcon onClick={() => console.log("QQQQ")}/>
+                                                <DelIcon onClick={deleteProject}/>
                                             </DelDiv>
                                         </DotsForm>
                                     }   
                                 </AnimatePresence>
-                            </DotsDiv>
+                            </DotsDiv>}
                     </TitleDiv>
                     <h2 className="card-title">{project.name}</h2>
                     <div className="card-body">

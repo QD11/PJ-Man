@@ -6,6 +6,12 @@ class ApplicationController < ActionController::API
 
     before_action :authorize 
 
+    def show_for_all
+        team = Team.find_by(id: params[:team_id])
+        # render json: team, status: :ok
+        render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
+    end
+
     def projects_specific_to_team
         team = Team.find_by(id: params[:team_id])
         projects = Project.where(team_id: team.id)

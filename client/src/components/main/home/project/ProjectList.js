@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import ProjectItem from './ProjectItem'
 
 const ProjectList = () => {
-    const projects = useSelector(state => state.projects)
-
+    // const projects = useSelector(state => state.projects)
+    const projects = useSelector(state => state.team).projects
 
     return (
         <>

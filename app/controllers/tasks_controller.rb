@@ -37,4 +37,10 @@ class TasksController < ApplicationController
         show_for_all
         # render json: task
     end
+
+    def tasks_specific_to_teamuser
+        team_user = TeamUser.find_by(id: params[:team_user_id])
+        tasks = team_user.tasks
+        render json: tasks, each_serializer: TaskSectionSerializer
+    end
 end

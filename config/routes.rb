@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get '/me', to: 'users#show'
   # get '/org', to: 'organizations#show'
 
+  get '/:team_user_id/tasks', to: 'tasks#tasks_specific_to_teamuser'
+
   patch '/change_admin/:team_user_id', to: 'team_users#change_admin'
   patch '/change_title/:team_user_id', to: 'team_users#change_title'
 

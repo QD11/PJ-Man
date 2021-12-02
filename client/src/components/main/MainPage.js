@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate, Route, Routes} from 'react-router-dom'
-import { logOutTeam } from '../../redux/teamSlice'
 import { isAdmin } from '../../redux/adminSlice'
-import { fetchProjects, emptyProjects } from '../../redux/projectSlice'
 import { fetchTeam } from '../../redux/teamSlice'
 
 import Home from './home/Home'
+import User from './user/User'
 
 import NavBar from './NavBar'
 
@@ -40,6 +39,7 @@ const MainPage = () => {
             <NavBar />
             <Routes>
                 <Route path="/*" element={<Home />} />
+                <Route path="/user" element={<User/>} />
             </Routes>
         </>
     )

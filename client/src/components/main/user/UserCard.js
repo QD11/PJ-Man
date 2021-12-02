@@ -1,92 +1,83 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import Avatar from 'react-avatar'
-import {RiMessage3Line, RiArrowUpCircleLine, RiArrowDownCircleLine, RiUserUnfollowFill} from 'react-icons/ri'
-import { useDispatch } from 'react-redux'
-import { fetchTeam, getTeam } from '../../redux/teamSlice'
-import { getAllProjects } from '../../redux/projectSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTeam } from '../../../redux/teamSlice'
 
-const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
+const UserCard = ({user, team_user}) => {
     //userInfo points to logged in user
     //user refers to the card owner
     const dispatch = useDispatch()
-    const changeAdminHandler = () => {
-        const currentAdmin = team_user.admin
-        const team_id = teamUserCurrentInfo.team_id
+    const [titleInput, setTitleInput] = useState(false)
+    const team = useSelector(state => state.team)
+    const [title, setTitle] = useState('')
+    
+    useEffect(() => {
+        setTitle('')
+    }, [titleInput])
 
-        fetch(`/change_admin/${team_user.id}`, {
+    const onTitleHandler = () => {
+        fetch(`/change_title/${team_user.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                team_id: team_id,
-                admin: !currentAdmin,
+                team_id: team.id,
+                title:  title ? title : null,
             })
         })
         .then((r) => {
             if (r.ok) {
                 r.json()
-                .then(data => dispatch(getTeam(data)))
-            }
-    })}
-
-    const removeUser = () => {
-        fetch(`/${teamUserCurrentInfo.team_id}/team_users/${team_user.id}`, {
-            method: "DELETE",
-        })
-        .then((r) => {
-            if (r.ok) {
-                r.json()
                 .then(data => {
-                    // dispatch
                     dispatch(getTeam(data))
-                    // dispatch(fetchTeam(`/teams/${teamUserCurrentInfo.team_id}`))
-                    // dispatch(removeMemberFromTeam({user_id: user.id}))
+                    setTitleInput(false)
                 })
             }
-    })}
+        })
+    }
 
     return (
-        <CardDiv>
-            <div className="top-half">
-                <div>
-                    <div className="name-admin" >
-                        <h3>{user.first_name + " " + user.last_name}</h3>
-                        <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
-                        {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
+        <div>
+            <CardDiv>
+                <div className="top-half">
+                    <div>
+                        <div className="name-admin" >
+                            <h3>{user.first_name + " " + user.last_name}</h3>
+                            <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
+                            {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
+                        </div>
+                        <TitleDiv className="role">
+                            {titleInput ? 
+                            <> 
+                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                                <button onClick={onTitleHandler}> Submit </button>
+                            </>
+                            : 
+                            <p>{team_user.title ? team_user.title : "---"}</p>}
+                        </TitleDiv>
+                        <div>
+                            <button onClick={() => setTitleInput(titleInput => !titleInput)}>Change Title</button>
+                        </div>
                     </div>
-                    <p>{team_user.title ? team_user.title : "---"}</p>
+                    <div>
+                        <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
+                    </div>
                 </div>
-                <div className="remove-user-div">
-                    {showRemove && < RiUserUnfollowFill onClick={removeUser} />}
-                </div>
-                <div>
-                <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
-                </div>
-            </div>
-            {userInfo.id !== user.id && <div className="bottom-half">
-                <div className="Message">
-                    < RiMessage3Line />
-                    <span>Message</span>
-                </div>
-                {!team_user.owner && teamUserCurrentInfo.admin &&
-                    <ProDemDiv onClick={changeAdminHandler}>
-                        {team_user.admin ? 
-                        <div>
-                            <RiArrowDownCircleLine  />
-                            <span >Demote</span> 
-                        </div>
-                        : 
-                        <div>
-                            <RiArrowUpCircleLine  />
-                            <span >Promote</span> 
-                        </div>
-                        }
-                    </ProDemDiv>
-                }
-            </div>}
-        </CardDiv>
+            </CardDiv>
+        </div>
     )
 }
+
+const TitleDiv = styled.div`
+    height: 35px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    & button {
+        margin-left: 5px;
+        // margin-block-start: 1em;
+        // margin-block-end: 1em;
+    }
+`
 
 const OwnerStatus = styled.span`
     display: inline-block;
@@ -122,6 +113,10 @@ const CardDiv = styled.div`
     background-color: #fff;
     font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     
+    .content {
+        display: flex;
+    }
+
     .remove-user-div {
         display: flex;
         align-items: center;
@@ -152,8 +147,7 @@ const CardDiv = styled.div`
 
     & p {
         color: #8f9cb5;
-        font-size: 1.3rem;
-        margin-top: 0.25rem;
+        font-size: 1rem;
     }
 
     .name-admin {
@@ -210,4 +204,4 @@ const ProDemDiv = styled.div`
 `
 
 
-export default Card
+export default UserCard

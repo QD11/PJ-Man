@@ -33,6 +33,9 @@ const NavBar = () => {
             <div>
                 <button onClick={() => navigate(`/${team.name}`)}>Home</button>
             </div>
+            <div>
+            <button onClick={() => navigate(`/${team.name}/user`)}>User</button>
+            </div>
             <button onClick={handleLogOut}>Logout</button>
         </NavDiv>
     )

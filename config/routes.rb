@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # get '/org', to: 'organizations#show'
 
   patch '/change_admin/:team_user_id', to: 'team_users#change_admin'
+  patch '/change_title/:team_user_id', to: 'team_users#change_title'
 
   post '/join', to: 'recruitments#join'
 

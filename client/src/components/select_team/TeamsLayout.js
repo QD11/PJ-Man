@@ -40,7 +40,6 @@ const TeamsLayout = () => {
         dispatch(fetchLogOut('/logout'))
         dispatch(isAdmin(false))
         dispatch(emptyProjects())
-        console.log('hi')
         navigate('/')
     }
 

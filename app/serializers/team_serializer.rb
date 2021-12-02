@@ -3,5 +3,6 @@ class TeamSerializer < ActiveModel::Serializer
 
   has_many :team_users
   has_many :users, through: :team_users
+  # has_many :projects
 
 end

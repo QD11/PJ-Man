@@ -24,11 +24,16 @@ const CreateTask = ({projectInfo}) => {
     }, [showCreate])
 
     //dnd
-    const members = useSelector(state => state.team).users
-    const itemsFromBackend = members.map(member => {
+    // const members = useSelector(state => state.team).team_users.map(team_user => team_user.user)
+    const members = team.team_users.map(team_user => team_user.user)
+    const teamUsers = team.team_users.map(team_user => team_user.id)
+
+    console.log(teamUsers)
+    const itemsFromBackend = members.map((member, index) => {
         return ({
             ...member,
-            id : member.id.toString()
+            id : member.id.toString(), 
+            team_user_id: teamUsers[index]
         })
     })
         
@@ -59,6 +64,7 @@ const CreateTask = ({projectInfo}) => {
             ...taskForm,
             member : columns.assigned_members.items
         }
+        
         fetch("/tasks", {
             method: "POST",
             headers: {

@@ -48,7 +48,7 @@ const Section = ({section}) => {
                     <div className="avatar-assigned-to">
                         <div>
                             <label>Assigned to: </label>
-                            {task.users.map(user => <Avatar key={user.id} name={user.first_name + " " + user.last_name} round={true} size="25" textSizeRatio={1} />)}
+                            {task.team_users.map(team_user => <Avatar key={team_user.id} name={team_user.user.first_name + " " + team_user.user.last_name} round={true} size="25" textSizeRatio={1} />)}
                         </div>
                         { isAdmin && <button onClick={(e) => deleteHandler(e, task)}> Delete </button>}
                     </div>

@@ -23,7 +23,7 @@ class TasksController < ApplicationController
         task = Task.create!(name: params[:name], description: params[:description], completed: false, section_id: section.id)
         if task.valid?
             params[:member].each do |user|
-                TaskUser.create(task_id: task.id, user_id: user["id"])
+                TaskUser.create(task_id: task.id, user_id: user["id"], team_user_id: user["team_user_id"])
             end
             # taskuser = TaskUser.create(task_id: task.id, user_id: params[:member])
         end

@@ -5,6 +5,7 @@ import Avatar from 'react-avatar'
 import { useNavigate } from 'react-router-dom'
 import {getTeam} from '../../redux/teamSlice'
 import {useDispatch} from 'react-redux'
+// import { removeMemberFromTeam } from '../../redux/teamSlice'
 
 const TeamCard = ({team}) => {
     const [isOpen, setIsOpen] = useState(false)

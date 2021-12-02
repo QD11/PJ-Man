@@ -11,7 +11,8 @@ const MemberPage = () => {
     const userInfo = useSelector(state => state.user)
     const team = useSelector(state => state.team)
     const isAdmin = useSelector(state => state.isAdmin)
-    const filterUserTeam = team.users.filter(user => user.id !== userInfo.id)
+    // const filterUserTeam = team.users.filter(user => user.id !== userInfo.id)
+    const filterUserTeam = team.team_users.map(team_user => team_user.user).filter(user => user.id !== userInfo.id)
     const [email, setEmail] = useState('')
     const [code, setCode] = useState('')
     const [showOpen, setShowOpen] = useState(false)
@@ -19,8 +20,6 @@ const MemberPage = () => {
     const [recruitResp, setRecruitResp] = useState("")
 
     const teamUserCurrentInfo = team.team_users.find(user => user.user_id === userInfo.id)
-
-    
 
     useEffect(() => {
         setCode(uuid())
@@ -51,8 +50,8 @@ const MemberPage = () => {
     return (
         <MembersDiv>
             <div className="members-div">
-                {isAdmin && <CreateDiv onClick={() => setShowOpen(showOpen => !showOpen)}>
-                    <div >
+                {isAdmin && <CreateDiv >
+                    <div onClick={() => setShowOpen(showOpen => !showOpen)} style={{cursor: "pointer"}}>
                         < RiUserAddLine/>
                         <ItemSpan> Add Member</ItemSpan>
                     </div>
@@ -106,7 +105,6 @@ const ItemSpan = styled(motion.span)`
 `
 
 const CreateDiv = styled(motion.div)`
-    cursor: pointer;
     flex-direction: column;
     display:flex;
     width: fit-content;

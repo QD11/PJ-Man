@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import Avatar from 'react-avatar'
 import {RiMessage3Line, RiArrowUpCircleLine, RiArrowDownCircleLine, RiUserUnfollowFill} from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
-import { getTeam } from '../../redux/teamSlice'
+import { fetchTeam, getTeam } from '../../redux/teamSlice'
+import { getAllProjects } from '../../redux/projectSlice'
 
 const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
     //userInfo points to logged in user
@@ -28,13 +29,23 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
             }
     })}
 
+    console.log(user.id)
+
     const removeUser = () => {
-        fetch(`/team_users/${team_user.id}`, {
+        fetch(`/${teamUserCurrentInfo.team_id}/team_users/${team_user.id}`, {
             method: "DELETE",
         })
-        .then(r => r.json())
-        .then(data => console.log(data))
-    }
+        .then((r) => {
+            if (r.ok) {
+                r.json()
+                .then(data => {
+                    // dispatch
+                    dispatch(getAllProjects(data))
+                    dispatch(fetchTeam(`/teams/${teamUserCurrentInfo.team_id}`))
+                    // dispatch(removeMemberFromTeam({user_id: user.id}))
+                })
+            }
+    })}
 
     return (
         <CardDiv>
@@ -48,7 +59,7 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
                     <p>{team_user.title ? team_user.title : "---"}</p>
                 </div>
                 <div className="remove-user-div">
-                    {showRemove && < RiUserUnfollowFill />}
+                    {showRemove && < RiUserUnfollowFill onClick={removeUser} />}
                 </div>
                 <div>
                 <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>

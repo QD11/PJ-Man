@@ -30,8 +30,9 @@ const PageDiv = styled.div`
 const RightDiv = styled.div`
     display: flex;
     // margin: 10px 0px 0px 20px;
-    width: 1000px;
-    margin: 2rem 11rem;
+    width: 1200px;
+    // width: 100%;
+    margin: 2rem 10rem;
 `
 
 

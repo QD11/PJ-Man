@@ -7,6 +7,8 @@ import {BsThreeDots} from 'react-icons/bs'
 import {RiDeleteBin2Line, RiArchiveLine} from 'react-icons/ri'
 import {getAllProjects} from '../../../../redux/projectSlice'
 import {getTeam} from '../../../../redux/teamSlice'
+import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import Avatar from 'react-avatar'
 
 const ProjectItem = ({project}) => {
     const dispatch = useDispatch()
@@ -59,16 +61,24 @@ const ProjectItem = ({project}) => {
         .then(data => dispatch(getTeam(data)))
     }
 
+    //all this to find members in each category
+    const tasks = []
+    const teamUsers = []
+    const abc = project.sections.map(section => section.tasks).forEach(c => c.forEach(d => tasks.push(d)))
+    tasks.forEach(task => task.team_users.forEach(a => teamUsers.push(a)))
+    function unique(array, propertyName) {
+        return array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
+    }
+    const uniqueTeamUsers = unique(teamUsers, 'id')
+    
     return (
-        <ProjectLI priority={project.priosity}>
+        <>
+        {/* <ProjectLI priority={project.priority}>
             <div className="card card-top-right" onClick={handleClick}>
                 <div className="card-inner">
                     <TitleDiv>
-                        {/* <h2 className="card-title">{project.name}</h2> */}
                             { isAdmin && <DotsDiv
                                 onClick={e => e.stopPropagation()}
-                                // whileHover={{scale: 1.1 }}
-                                // onClick={() => console.log('hey')}
                             >
                                 <DotsIcon onClick={e => {
                                     e.stopPropagation()
@@ -130,9 +140,85 @@ const ProjectItem = ({project}) => {
                     </div>
                 </div>
             </div>
-        </ProjectLI>
+        </ProjectLI> */}
+        <CardLi priority={project.priority} onClick={handleClick}>
+            <div className="priority-dots">
+                <SpanPriority priority={project.priority} >Priority: {project.priority.slice(0,1).toUpperCase() + project.priority.slice(1)}</SpanPriority>
+                <BsThreeDots />
+            </div>
+            <div className="content">
+                <div>
+                    <h1>{project.name}</h1>
+                    {uniqueTeamUsers.map(teamUser => 
+                            <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
+                        )}
+                </div>
+                <div className="chart-div" >
+                <CircularProgressbarWithChildren value={66}
+                    styles={buildStyles({
+                        // textSize: '16px',
+                        rotation: 0.5 + (1 - 66 / 100) / 2,
+                        pathTransitionDuration: 0.5,
+                        pathTransition: 'none',
+                        pathColor: `#fba609`,
+                        pathColor: project.priority === "low" ? "#4caf50" : project.priority === "medium"? "#03a9f4": "#f44336",
+                        // textColor: '#fba609',
+                        trailColor: '#d6d6d6',
+                        // verticalAlign: "middle",
+                        })}
+                        >
+                    <div className="text-chart">
+                        <strong >66%</strong>
+                    </div>
+                </CircularProgressbarWithChildren>
+                </div>
+            </div>
+        </CardLi>
+        </>
     )
 }
+
+const SpanPriority = styled.span`
+    font-size: 18px;
+    color: ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+`
+
+const CardLi = styled.li`
+    font-family: Quarion, sans-serif;
+    list-style: none;
+    margin-bottom: 70px;
+    margin-right: 100px;
+    padding: 0;
+    background-color:#fff;
+    border-radius: 20px;
+    padding: 20px;
+    width: 400px;
+    height: fit-content;
+    // box-shadow: -10px 0px 0px 0px #fba609;
+    box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    transition: 0.2s;
+    &:hover {
+        box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    }
+    .priority-dots {
+        display:flex;
+        justify-content: space-between;
+    }
+    .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .chart-div {
+            width: 120px;
+            height: 120px;
+            .text-chart {
+                font-size: 30px;
+            }
+        }
+    }
+`
+
+/////////////////////////////////
 
 const UpdateBut = styled.button`
     // margin-top: 5px;

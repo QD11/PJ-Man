@@ -34,7 +34,7 @@ const ProjectList = () => {
 }
 
 const ProjectUL = styled(motion.ul)`
-    width: 1000px;
+    // width: 500px;
     padding-inline-start: 0px;
     display:flex;
     margin-top: 100px;

@@ -109,7 +109,7 @@ const UserCard = ({user, team_user}) => {
                     <div>
                         {/* {user.profile_picture_url ? <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} src={user.profile_picture_url} round={true} size="75" textSizeRatio={1.75}/>
                         : */}
-                        <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
+                        <Avatar src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
                         {/* } */}
                     </div>
                 </div>

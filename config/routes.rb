@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :users
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  post 'uploads/prepare'
+  patch "/pictures/:user_id", to: "users#update_picture"
 
   delete '/tasks/:team_id/:task_id', to: 'tasks#destroy'
 
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
   get '/:team_id/projects', to: "projects#projects_specific_to_team"
   # get '/:team_id/:project_name/
 
-  Rails.application.routes.draw do
-    mount ActionCable.server => '/cable'
-  end
+  # Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+  # end
 end

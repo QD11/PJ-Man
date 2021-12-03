@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Avatar from 'react-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTeam } from '../../../redux/teamSlice'
+import { getUser } from '../../../redux/userSlice'
+import CloudinaryUpload from './CloudinaryUpload'
 
 const UserCard = ({user, team_user}) => {
     //userInfo points to logged in user
@@ -36,6 +38,28 @@ const UserCard = ({user, team_user}) => {
         })
     }
 
+    const handleUpload = (result) => {
+        const body = {
+            profile_picture_url: result.info.secure_url,
+            profile_picture_thumbnail_url: result.info.eager[0].secure_url,
+            cloudinary_public_id: result.info.public_id,
+            // team_id: team.id
+            }
+            fetch(`/pictures/${user.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(user => {
+                dispatch(getUser(user));
+
+            })
+        }
+    
+
     return (
         <div>
             <CardDiv>
@@ -57,10 +81,23 @@ const UserCard = ({user, team_user}) => {
                         </TitleDiv>
                         <div>
                             <button onClick={() => setTitleInput(titleInput => !titleInput)}>Change Title</button>
+                            {/* <button onClick={() => CloudinaryUpload("k3o6vpxz", "Update Picture", handleUpload)}>test</button> */}
+                            <div>
+                                <CloudinaryUpload
+                                    preset="k3o6vpxz"
+                                    buttonText="Update Picture"
+                                    handleUpload={handleUpload}
+                                /> 
+                                {/* <input type="file" accept="image/*" multiple={false} /> */}
+                                <button onClick={() => setTitleInput(titleInput => !titleInput)}>Remove Picture</button>
+                            </div>
                         </div>
                     </div>
                     <div>
-                        <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
+                        {/* {user.profile_picture_url ? <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} src={user.profile_picture_url} round={true} size="75" textSizeRatio={1.75}/>
+                        : */}
+                        <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
+                        {/* } */}
                     </div>
                 </div>
             </CardDiv>
@@ -202,6 +239,16 @@ const ProDemDiv = styled.div`
         margin-left: 10px;
     }
 `
+
+// text-decoration: none;
+// color: black;
+// border: 0.5px solid #717171;
+// font-size: 13px;
+// margin-left: 5px;
+// margin-right: 5px;
+// background-color: #efefef;
+// padding: 2px;
+// border-radius: 2px;
 
 
 export default UserCard

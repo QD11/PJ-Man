@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import UserCard from './UserCard'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { RiArrowRightSFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
+import CloudinaryUpload from './CloudinaryUpload'
+import { getUser } from '../../../redux/userSlice'
 
 const User = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const team = useSelector(state => state.team)
     const team_user = team.team_users.find(team_user => team_user.user_id === user.id)
@@ -19,18 +22,16 @@ const User = () => {
         .then(resp => resp.json())
         .then(data => setTasks(data))
     }, [])
-
     
-
     return (
         <UserDiv>
             <UserCard user={user} team_user={team_user} />
             <div className="tasks-div">
                 <h2>Your Tasks</h2>
-                <div>
+                <TaskUL>
                     {tasks.map(task => {
                         return(
-                        <TaskDiv onClick={() => navigate(`/${team.name}/project/${task.section.project.id}/${task.section.id}/${task.id}`)}>
+                        <TaskDiv key={task.id} onClick={() => navigate(`/${team.name}/project/${task.section.project.id}/${task.section.id}/${task.id}`)}>
                             <div className="task">
                                 <span>{task.name}</span>
                             </div>
@@ -43,13 +44,23 @@ const User = () => {
                             </div>
                         </TaskDiv>
                     )})}
-                </div>
+                </TaskUL>
             </div>
         </UserDiv>
     )
 }
 
-const TaskDiv = styled.div`
+const TaskUL = styled.ul`
+margin-block-start: 0em;
+margin-block-end: 0em;
+padding-inline-start: 0em;
+&: last-child {
+    margin-bottom: 40px;
+}
+`
+
+const TaskDiv = styled.li`
+    list-style: none;
     align-items:center;
     border-radius: 5px;
     border: 1px solid #e2e8f0;
@@ -80,6 +91,7 @@ const UserDiv = styled.div`
     flex-direction: column;
     align-items: center;
 `
+
 
 
 export default User

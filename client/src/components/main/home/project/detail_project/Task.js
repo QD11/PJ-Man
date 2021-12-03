@@ -38,7 +38,7 @@ const Task = () => {
                     {taskInfo.team_users.map(team_user => <Avatar key={team_user.id} name={team_user.user.first_name + ' ' +  team_user.user.last_name} round={true} size="20" textSizeRatio={1.75}/>)}
                 </div>
                 <div>
-                    <label for="status" >Status: </label>
+                    <label >Status: </label>
                     <select id="status" defaultValue={taskInfo.completed} onChange={handleStatusChange}>
                         <option value={false} >Not Completed</option>
                         <option value={true}>Completed</option>

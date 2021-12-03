@@ -18,7 +18,7 @@ code {
     monospace;
 }
 
-:root {
+/* :root {
   --body-text-color: #5c5957;
   --body-bg-color: #e2d9d5;
   --card-border-color: #e2d9d5;
@@ -27,11 +27,11 @@ code {
   --red: #e31b23;
   --offset-before: 8px;
   --offset-after: 16px;
-}
-
+} */
+/* 
 .card {
   position: relative;
-  /* cursor: pointer; */
+  /* cursor: pointer; 
   max-width: 400px;
   margin: 60px auto;
 }
@@ -53,8 +53,8 @@ code {
   border: 1px solid var(--card-border-color);
   border-radius: 5px;
   transition: transform 0.3s;
-}
-
+} */
+/* 
 .card::before,
 .card-inner {
   z-index: 1;
@@ -71,13 +71,13 @@ code {
 
 .card-top-right::after {
   transform: translate(var(--offset-after), calc(-1 * var(--offset-after)));
-}
-
+} */
+/* 
 .card-top-right:hover::before,
 .card-top-right:hover::after,
 .card-top-right:hover .card-inner {
   transform: translate(var(--offset-before), 0);
-}
+} */
 
 
 

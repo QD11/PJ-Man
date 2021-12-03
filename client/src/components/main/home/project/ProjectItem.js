@@ -70,6 +70,9 @@ const ProjectItem = ({project}) => {
         return array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
     }
     const uniqueTeamUsers = unique(teamUsers, 'id')
+
+    const completedTasks = `${(tasks.filter(task => task.completed === true).length)}/${tasks.length}`
+    const completedTasksPercent = 100 * (tasks.filter(task => task.completed === true).length/tasks.length ? tasks.filter(task => task.completed === true).length/tasks.length : 0)
     
     return (
         <>
@@ -154,10 +157,10 @@ const ProjectItem = ({project}) => {
                         )}
                 </div>
                 <div className="chart-div" >
-                <CircularProgressbarWithChildren value={66}
+                <CircularProgressbarWithChildren value={completedTasksPercent}
                     styles={buildStyles({
                         // textSize: '16px',
-                        rotation: 0.5 + (1 - 66 / 100) / 2,
+                        // rotation: 0.5 + (1 - 66 / 100) / 2,
                         pathTransitionDuration: 0.5,
                         pathTransition: 'none',
                         pathColor: `#fba609`,
@@ -168,7 +171,7 @@ const ProjectItem = ({project}) => {
                         })}
                         >
                     <div className="text-chart">
-                        <strong >66%</strong>
+                        <strong >{completedTasks === '0/0' ? 'N/A' : completedTasks }</strong>
                     </div>
                 </CircularProgressbarWithChildren>
                 </div>
@@ -196,7 +199,7 @@ const CardLi = styled.li`
     height: fit-content;
     // box-shadow: -10px 0px 0px 0px #fba609;
     box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
-    transition: 0.2s;
+    transition: 0.5s;
     &:hover {
         box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     }

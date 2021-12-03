@@ -35,27 +35,6 @@ export const fetchLogOut = createAsyncThunk(
     }
 )
 
-// export const loginUser = createAsyncThunk(
-//     'user/loginUser',
-//     async (loginForm, {dispatch}) => {
-//         return (
-//             await fetch('/login', {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify(loginForm)
-//                 })
-//                 .then(resp => {
-//                     if (resp.ok) {
-//                         resp.json()
-//                         .then(user => dispatch(getUser(user)))
-//                     }
-//                 })
-//         )
-//     }
-// )
-
 const initialState = null
 
 const userSlice = createSlice({

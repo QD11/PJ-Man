@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :task_messages
   resources :recruitments
   resources :task_users
   resources :tasks
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
   # get '/:team_id/:project_name/
 
   # Rails.application.routes.draw do
+  resources :task_messages
   mount ActionCable.server => '/cable'
   # end
 end

@@ -1,0 +1,2 @@
+class TaskMessagesController < ApplicationController
+end

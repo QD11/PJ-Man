@@ -12,6 +12,11 @@ class TeamsController < ApplicationController
         render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
     end
 
+    def show_one
+        team = Team.find_by(id: session[:team_id])
+        render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
+    end
+
     def create
         team = Team.create(name: params[:name], description: params[:description])
         team_user = TeamUser.create(user_id: params[:user_id], team_id: team.id, admin: true, owner: true, email: params[:email])

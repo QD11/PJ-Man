@@ -15,7 +15,7 @@ const TeamCard = ({team}) => {
     return (
         <>
             <MotionCard onClick={toggleOpen} initial={false}>
-                <Avatar name={team.name} round={true} size="80" textSizeRatio={1.75}/>
+                <Avatar name={team.name} round={true} size="120" textSizeRatio={1.75}/>
                 <motion.span> {team.name}</motion.span>
                 <AnimatePresence initial={false}>
                     {isOpen && <motion.section
@@ -52,18 +52,18 @@ function Content({team}) {
     const orderedUsers = team.users.sort(sortArray)
 
     const handleClick = () => {
-        // fetch("/org_login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         },
-        //     body: JSON.stringify({organization_id: organization.id}),
-        // })
-        // .then(resp => resp.json())
-        // .then(org => {
+        fetch("/team_login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body: JSON.stringify({team_id: team.id}),
+        })
+        .then(resp => resp.json())
+        .then(team => {
             dispatch(getTeam(team))
             navigate(`/${team.name}`)
-        // })
+        })
     }
 
     return (
@@ -74,7 +74,7 @@ function Content({team}) {
             exit={{ opacity: 0 }}
         >
             <AvatarContainer>
-                {orderedUsers.map(user => <div key={user.id}>{<Avatar name={user.first_name + ' ' +  user.last_name} round={true} size="20" textSizeRatio={1.75}/>}</div>)}
+                {orderedUsers.map(user => <div key={user.id}>{<Avatar src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="60" textSizeRatio={1.75}/>}</div>)}
             </AvatarContainer>
             <MotionSpan>{team.description}</MotionSpan>
             <button onClick={handleClick}>Enter</button>

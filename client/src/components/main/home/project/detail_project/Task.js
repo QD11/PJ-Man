@@ -35,7 +35,7 @@ const Task = () => {
             <div className="status-assign">
                 <div>
                     <label>Assigned To: </label>
-                    {taskInfo.team_users.map(team_user => <Avatar key={team_user.id} name={team_user.user.first_name + ' ' +  team_user.user.last_name} round={true} size="20" textSizeRatio={1.75}/>)}
+                    {taskInfo.team_users.map(team_user => <Avatar key={team_user.id} src={team_user.user.profile_picture_url} name={team_user.user.first_name + ' ' +  team_user.user.last_name} round={true} size="60" textSizeRatio={1.75}/>)}
                 </div>
                 <div>
                     <label >Status: </label>

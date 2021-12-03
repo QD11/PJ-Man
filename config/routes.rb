@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'
-  # get '/org', to: 'organizations#show'
+  get '/team_me', to: 'teams#show_one'
 
   get '/:team_user_id/tasks', to: 'tasks#tasks_specific_to_teamuser'
 
@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
   post '/join', to: 'recruitments#join'
 
-  # post '/org_login', to: 'sessions#org_create'
+  post '/team_login', to: 'sessions#team_create'
+
+
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 

@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import SideNav from './sidenav/SideNav'
 import ProjectRoutes from './project/ProjectRoutes'
 import MemberPage from '../../members/MemberPage'
+import ForumMain from '../../forum/ForumMain'
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
                     <Route path="/" element={<div><h1>Dashboard</h1></div>} />
                     <Route path="/project/*" element={<ProjectRoutes/>} />
                     <Route path="/members/*" element={<MemberPage/>} />
+                    <Route path="/forum/*" element={<ForumMain />} />
                 </Routes>
             </RightDiv>
         </PageDiv>

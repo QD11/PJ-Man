@@ -16,6 +16,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchMe('/me'))
+        dispatch(fetchTeam('/team_me'))
     }, [dispatch])
 
     const user = useSelector(store => store.user)

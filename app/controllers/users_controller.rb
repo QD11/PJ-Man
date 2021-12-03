@@ -25,6 +25,16 @@ class UsersController < ApplicationController
             render json: user.errors, status: :unprocessable_entity
         end
     end
+
+    def remove_picture
+        user = User.find_by(id: session[:user_id])
+        if user
+            user.update(profile_picture_url: '', profile_picture_thumbnail_url: '', cloudinary_public_id: '')
+            render json: user, status: :ok
+        else 
+            render json: user.errors, status: :unprocessable_entity
+        end
+    end
     
 
     private

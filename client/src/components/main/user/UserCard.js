@@ -44,21 +44,34 @@ const UserCard = ({user, team_user}) => {
             profile_picture_thumbnail_url: result.info.eager[0].secure_url,
             cloudinary_public_id: result.info.public_id,
             // team_id: team.id
-            }
-            fetch(`/pictures/${user.id}`, {
+        }
+        fetch(`/pictures/${user.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+        })
+        .then(res => res.json())
+        .then(user => {
+            dispatch(getUser(user));
+
+        })
+    }
+    
+    const removePicture = () => {
+        fetch('/remove_picture', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body)
-            })
-            .then(res => res.json())
-            .then(user => {
-                dispatch(getUser(user));
+        })
+        .then(res => res.json())
+        .then(user => {
+            dispatch(getUser(user));
 
-            })
-        }
-    
+        }) 
+    }
 
     return (
         <div>
@@ -89,7 +102,7 @@ const UserCard = ({user, team_user}) => {
                                     handleUpload={handleUpload}
                                 /> 
                                 {/* <input type="file" accept="image/*" multiple={false} /> */}
-                                <button onClick={() => setTitleInput(titleInput => !titleInput)}>Remove Picture</button>
+                                <button onClick={removePicture}>Remove Picture</button>
                             </div>
                         </div>
                     </div>

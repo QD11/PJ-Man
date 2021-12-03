@@ -1,6 +1,6 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
-import { logOutTeam } from '../../redux/teamSlice'
+import { logOutTeam, fetchTeamLogOut } from '../../redux/teamSlice'
 import { fetchLogOut } from '../../redux/userSlice'
 import { isAdmin } from '../../redux/adminSlice'
 import { emptyProjects } from '../../redux/projectSlice'
@@ -14,7 +14,8 @@ const NavBar = () => {
     const team = useSelector(state => state.team)
 
     const onClickTeams = () => {
-        dispatch(logOutTeam())
+        // dispatch(logOutTeam())
+        dispatch(fetchTeamLogOut('/logout_team'))
         dispatch(isAdmin(false))
         dispatch(emptyProjects())
         navigate('/')
@@ -22,6 +23,7 @@ const NavBar = () => {
 
     const handleLogOut = () => {
         dispatch(fetchLogOut('/logout'))
+        dispatch(fetchTeamLogOut('/logout_team'))
         dispatch(isAdmin(false))
         dispatch(emptyProjects())
         navigate('/')

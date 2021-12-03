@@ -26,4 +26,9 @@ class SessionsController < ApplicationController
         # session.delete :organization_id
         head :no_content
     end
+
+    def destroy_team
+        session.delete :team_id
+        head :no_content
+    end
 end

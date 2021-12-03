@@ -17,6 +17,23 @@ export const fetchTeam = createAsyncThunk(
     }
 )
 
+export const fetchTeamLogOut = createAsyncThunk(
+    'user/fetchTeamLogOut',
+    async (API, {dispatch}) => {
+        return (
+            await fetch(API, {
+                credentials: 'include'
+            })
+            .then(resp => {
+                if (resp.ok) {
+                    resp.json()
+                    .then(team => dispatch(logOutTeam(team)))
+                }
+            })
+        )
+    }
+)
+
 const initialState = null
 
 const teamSlice = createSlice({

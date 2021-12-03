@@ -28,7 +28,7 @@ export const fetchLogOut = createAsyncThunk(
             .then(resp => {
                 if (resp.ok) {
                     dispatch(logOutUser());
-                    dispatch(logOutTeam());
+                    // dispatch(logOutTeam());
                 }
             })
         )

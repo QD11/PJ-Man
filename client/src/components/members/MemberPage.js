@@ -21,9 +21,9 @@ const MemberPage = () => {
 
     const teamUserCurrentInfo = team.team_users.find(user => user.user_id === userInfo.id)
 
-    // useEffect(() => {
-    //     setCode(uuid())
-    // }, [showOpen])
+    useEffect(() => {
+        setCode('aaaa')
+    }, [showOpen])
 
     const handleSubmit = (e) => {
         e.preventDefault()

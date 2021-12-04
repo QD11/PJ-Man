@@ -99,9 +99,9 @@ function DndAssign({setColumns, columns}) {
                                 ? "lightblue"
                                 : "lightgrey",
                             padding: 4,
-                            width: 290,
-                            maxHeight: 300,
-                            minHeight: 300,
+                            width: 250,
+                            maxHeight: 315,
+                            minHeight: 315,
                             overflowY: "scroll",
                             }}
                         >
@@ -132,8 +132,10 @@ function DndAssign({setColumns, columns}) {
                                         }}
                                     >
                                         <ItemDiv>
-                                            <Avatar src={item.profile_picture_url} name={item.first_name + " " + item.last_name} round={true} size={40} textSizeRatio={1} />
-                                            {item.first_name + " " + item.last_name}
+                                            <Avatar src={item.profile_picture_url} name={item.first_name + " " + item.last_name} round={true} size={38} textSizeRatio={1} />
+                                            <div>
+                                                <span>{(item.first_name + " " + item.last_name).length < 11 ? item.first_name + " " + item.last_name  :  (item.first_name + " " + item.last_name).slice(0,11)}</span>
+                                            </div>
                                         </ItemDiv>
                                     </div>
                                     );

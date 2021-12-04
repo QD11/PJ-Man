@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import styled from 'styled-components'
 import Card from './Card'
 import { v4 as uuid } from "uuid";
 import {RiUserAddLine, RiUserUnfollowLine} from 'react-icons/ri'
 import { motion } from 'framer-motion'
-import { useEffect } from 'react/cjs/react.development';
 
 const MemberPage = () => {
     const userInfo = useSelector(state => state.user)
@@ -22,7 +21,7 @@ const MemberPage = () => {
     const teamUserCurrentInfo = team.team_users.find(user => user.user_id === userInfo.id)
 
     useEffect(() => {
-        setCode('aaaa')
+        setCode(uuid)
     }, [showOpen])
 
     const handleSubmit = (e) => {

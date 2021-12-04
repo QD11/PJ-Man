@@ -151,7 +151,7 @@ const ProjectItem = ({project}) => {
             </div>
             <div className="content">
                 <div>
-                    <h1>{project.name}</h1>
+                    <h2>{project.name}</h2>
                     {uniqueTeamUsers.map(teamUser => 
                             <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
                         )}
@@ -187,7 +187,7 @@ const SpanPriority = styled.span`
 `
 
 const CardLi = styled.li`
-    font-family: Quarion, sans-serif;
+    // font-family: Quarion, sans-serif;
     list-style: none;
     margin-bottom: 70px;
     margin-right: 100px;
@@ -201,7 +201,7 @@ const CardLi = styled.li`
     box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     transition: 0.5s;
     &:hover {
-        box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+        box-shadow: -14px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     }
     .priority-dots {
         display:flex;

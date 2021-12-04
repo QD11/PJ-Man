@@ -57,9 +57,9 @@ const ProjectInfo = () => {
                         <span>Total</span>
                     </div>
                 </div>
-                <div>
+                {/* <div> */}
                     {sections.map(section => <Section key={section.id} section={section} />)}
-                </div>
+                {/* </div> */}
             </ProjectDiv>
         </>
     )
@@ -68,13 +68,13 @@ const ProjectInfo = () => {
 const ProjectDiv = styled.div`
     display: flex;
     justify-content: flex-start;
-    font-family: Quarion, sans-serif;
+    // font-family: Quarion, sans-serif;
     flex-direction: column;
-    width: 20em;
+    width: fit-content;
     background-color:#fff;
     border-radius: 20px;
     padding: 40px;
-    width: 850px;
+    width: fit-content;
     height: fit-content;
     transition: 0.5s;
     // box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
@@ -89,7 +89,7 @@ const ProjectDiv = styled.div`
         }
     }
     .proj-name {
-        // font-size: 5em;
+        font-size: 4em;
         margin-bottom: 10px;
         margin-top: 0;
     }
@@ -101,6 +101,7 @@ const ProjectDiv = styled.div`
     .task-header {
         display: flex;
         flex-direction: row;
+        margin-bottom: 20px;
     }
 `
 

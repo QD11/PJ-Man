@@ -6,6 +6,9 @@ import { motion } from 'framer-motion'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllProjects } from '../../../../../redux/projectSlice'
 import { getTeam } from '../../../../../redux/teamSlice'
+import {RiMoreFill, RiCheckboxCircleFill, RiCloseCircleFill} from 'react-icons/ri'
+import  {BiTask, BiTaskX} from 'react-icons/bi'
+import {ImRadioUnchecked} from 'react-icons/im'
 
 const Section = ({section}) => {
     const navigate = useNavigate()
@@ -32,40 +35,37 @@ const Section = ({section}) => {
     return (
         <>
             <SectionDiv>
-                <h4>{section.name}</h4>
+                <h2>{section.name}</h2>
                 <TaskUl className="section-holder">
                     {section.tasks.map(task => 
                         <TaskLi>
-                            <div className="top-div">
+                            <div className="icon-div">
+                                {/* <div className="completed"> */}
+                                    {task.completed ? <Completed /> : <NotCompleted />}
+                                {/* </div> */}
+                                <span className="date">{task.created_at.slice(0,10)}</span>
+                                <Dots />
                             </div>
-                            <div className="mid-div">
-                                <span>{task.name}</span>
-                                <span>{task.description}</span>
-                            </div>
+                            {/* <div className="completed">
+                                {task.completed ? <Completed /> : <NotCompleted />}
+                            </div> */}
+                            <span className="task-name">{task.name}</span>
+                            <span className="description">{task.description.length < 10  ? task.description : task.description.slice(0,10) + "..."}</span>
+                            {/* <span className="completed">{task.completed? "Completed": "Not Completed"}</span> */}
+                            
+                            {/* <div className="avatar-container">
+                            </div> */}
                             <div className="bottom-div">
-                                
+                                <div className="avatar-container">
+                                {task.team_users.slice(0,4).map(teamUser => 
+                                    <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="30" textSizeRatio={1.75}/>
+                                    )}
+                                </div>
+                                <div>
+                                    <span className="enter">View</span>
+                                </div>
                             </div>
                         </TaskLi>
-                        // <TaskDiv
-                        //     // whileHover={{scale: 1.03 }}
-                        //     //whileTap={{scale: 0.98}}
-                        //     name="task-div" 
-                        //     completed={task.completed} 
-                        //     onClick={() => navigate(`${section.id}/${task.id}`)} 
-                        //     key={task.id}
-                        // >
-                        //     <div className="name-complete">
-                        //         <h4>{task.name}</h4>
-                        //         <h4>{task.completed ? "Completed" : "Not Completed"}</h4>
-                        //     </div>
-                        //     <div className="avatar-assigned-to">
-                        //         <div>
-                        //             <label>Assigned to: </label>
-                        //             {task.team_users.map(team_user => <Avatar key={team_user.id} src={team_user.user.profile_picture_url} name={team_user.user.first_name + " " + team_user.user.last_name} round={true} size="50" textSizeRatio={1} />)}
-                        //         </div>
-                        //         { isAdmin && <button onClick={(e) => deleteHandler(e, task)}> Delete </button>}
-                        //     </div>
-                        // </TaskDiv>
                     )}
                 </TaskUl>
             </SectionDiv>
@@ -73,45 +73,121 @@ const Section = ({section}) => {
     )
 }
 
+const Completed = styled(RiCheckboxCircleFill)`
+    margin-left: 6px;
+    font-size: 30px;
+    color:green;
+`
+
+const NotCompleted = styled(RiCloseCircleFill)`
+    margin-left: 6px;
+    font-size: 30px;
+    color:red;
+`
+
+const Dots = styled(RiMoreFill)`
+    color: red;
+`
+
 const TaskUl = styled.ul`
+font-famil
 margin-block-start: 0em;
 margin-block-end: 0em;
 padding-inline-start: 0px;
-margin-bottom: 50px;
+// margin-bottom: 50px;
+width: 775px;
+font-family: 'Readex Pro', sans-serif;
+
 
 `
 
 const TaskLi = styled.li`
     // border: 1px solid black;
-    border-radius: 50px;
-    width: 250px;
-    height: 250px;
+    // background-color: #f4433673;
+    border-radius: 30px;
+    width: 225px;
+    // height: 225px;
+    min-height: 225px;
     margin-right: 50px;
     :nth-child(3n) {
         margin-right: 0px;
     }
+    justify-content: space-around;
     margin-top: 10px;
     margin-bottom: 50px;
-    box-shadow: 0 0px 15px -8px rgb(0 0 0 / 70%);
+    box-shadow: 0 0px 15px -8px rgb(0 0 0 / 30%);
     display: flex;
     // justify-content: center;
     // align-items: center;
     flex-direction: column;
-    .top-div {
-        height: 50px;
+
+    .completed {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .icon-div {
+        align-items: center;
+        display: flex;
+        margin: 0 20px 0 20px;
+        justify-content: space-between;
+        .date {
+            font-size: 13px;
+            color: #8f8f8f;
+        }
+    }
+    .task-name {
+        font-size: 25px;
+        width: 100%;
+        text-align: center;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .description {
+        // padding: 10px;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .completed {
+        padding: 10px;
+    }
+
+    .avatar-container {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .content {
+        padding: 25px;
         width: 100%;
     }
-    .mid-div {
-        height: 150px;
+
     }
     .bottom-div {
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         border-style: solid;
         border-color: #e2e8f0;
+        // border-color: blue;
         border-top-width: 1px;
         border-bottom-width: 0px;
         border-right-width: 0px;
         border-left-width: 0px;
+        .enter {
+            margin-right: 10px;
+            display: inline-block;
+            color: #03a9f4;;
+            background-color: #b9e1f4;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-left: .75rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+        }
     }
 `
 

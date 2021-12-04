@@ -68,7 +68,7 @@ const SideList = styled(motion.ul)`
     padding-inline-start: 20px;
     position: sticky;
     top: 30px;
-    position: absolute;
+    position: fixed;
     top: 5em;
 `
 

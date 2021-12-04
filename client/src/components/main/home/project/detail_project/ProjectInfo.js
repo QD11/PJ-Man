@@ -6,6 +6,7 @@ import Section from './Section'
 import styled from 'styled-components'
 import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import Avatar from 'react-avatar'
+import Modal from './Modal.js'
 
 const ProjectInfo = () => {
     const isAdmin = useSelector(state => state.isAdmin)
@@ -17,15 +18,14 @@ const ProjectInfo = () => {
     const tasks = []
     const teamUsers = []
     sections.forEach(section => section.tasks.forEach(task => tasks.push(task)))
-    const completedTasks = `${(tasks.filter(task => task.completed === true).length)}/${tasks.length}`
-    const completedTasksPercent = 100 * (tasks.filter(task => task.completed === true).length/tasks.length ? tasks.filter(task => task.completed === true).length/tasks.length : 0)
+    // const completedTasks = `${(tasks.filter(task => task.completed === true).length)}/${tasks.length}`
+    // const completedTasksPercent = 100 * (tasks.filter(task => task.completed === true).length/tasks.length ? tasks.filter(task => task.completed === true).length/tasks.length : 0)
     tasks.forEach(task => task.team_users.forEach(a => teamUsers.push(a)))
     function unique(array, propertyName) {
         return array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
     }
-    const uniqueTeamUsers = unique(teamUsers, 'id')    
+    // const uniqueTeamUsers = unique(teamUsers, 'id')    
 
-    console.log(sections)
     return (
         // <ProjectInfoDiv>
         //     <div className="create-task-div">
@@ -42,7 +42,10 @@ const ProjectInfo = () => {
         // </ProjectInfoDiv>
         <>
             <ProjectDiv priority={projectInfo.priority}>
-                <h1 className="proj-name">{projectInfo.name}</h1>
+                <div class="title-header">
+                    <h1 className="proj-name">{projectInfo.name}</h1>
+                    <Modal projectInfo={projectInfo}/>
+                </div>
                 <div className="task-header">
                     <div className="task-status">
                         <span>{tasks.filter(task => task.completed === true).length}</span>
@@ -81,6 +84,12 @@ const ProjectDiv = styled.div`
     // &:hover {
     //     box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     // }
+    .title-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     .chart-div {
         width: 170px;
         height: 170px;

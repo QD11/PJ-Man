@@ -27,7 +27,6 @@ function App() {
         navigate('/')
     }
 
-
     return(
         <>
             {/* {user && <button onClick={handleClick}>Log Out</button>} */}

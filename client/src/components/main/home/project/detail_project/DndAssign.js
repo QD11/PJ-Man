@@ -132,7 +132,7 @@ function DndAssign({setColumns, columns}) {
                                         }}
                                     >
                                         <ItemDiv>
-                                            <Avatar name={item.first_name + " " + item.last_name} round={true} size={40} textSizeRatio={1} />
+                                            <Avatar src={item.profile_picture_url} name={item.first_name + " " + item.last_name} round={true} size={40} textSizeRatio={1} />
                                             {item.first_name + " " + item.last_name}
                                         </ItemDiv>
                                     </div>

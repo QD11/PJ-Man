@@ -7,7 +7,7 @@ import {BsThreeDots} from 'react-icons/bs'
 import {RiDeleteBin2Line, RiArchiveLine} from 'react-icons/ri'
 import {getAllProjects} from '../../../../redux/projectSlice'
 import {getTeam} from '../../../../redux/teamSlice'
-import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import Avatar from 'react-avatar'
 
 const ProjectItem = ({project}) => {
@@ -64,13 +64,12 @@ const ProjectItem = ({project}) => {
     //all this to find members in each category
     const tasks = []
     const teamUsers = []
-    const abc = project.sections.map(section => section.tasks).forEach(c => c.forEach(d => tasks.push(d)))
+    project.sections.map(section => section.tasks).forEach(c => c.forEach(d => tasks.push(d)))
     tasks.forEach(task => task.team_users.forEach(a => teamUsers.push(a)))
     function unique(array, propertyName) {
         return array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
     }
     const uniqueTeamUsers = unique(teamUsers, 'id')
-
     const completedTasks = `${(tasks.filter(task => task.completed === true).length)}/${tasks.length}`
     const completedTasksPercent = 100 * (tasks.filter(task => task.completed === true).length/tasks.length ? tasks.filter(task => task.completed === true).length/tasks.length : 0)
     

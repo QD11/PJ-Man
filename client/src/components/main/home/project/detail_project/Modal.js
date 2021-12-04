@@ -125,15 +125,18 @@ const Modal = ({projectInfo}) => {
 
     return (
         <>
-        <div>
+        {/* <AddTask
+            whileHover={{scale: 1.1 }}
+            whileTap={{scale: 0.9 }}
+        > */}
             <AddTask onClick={toggleModal} className="btn-modal"/>
-        </div>
+        {/* </AddTask> */}
 
         {modal && (
             <ModalDiv className="modal">
                 <div onClick={toggleModal} className="overlay"></div>
                 <div className="modal-content">
-                    <h2>Hello Modal</h2>
+                    <h2>Create A Task!</h2>
                     <CreateDiv>
                         <FormMotion 
                             onSubmit={handleSubmit}
@@ -187,6 +190,7 @@ const Modal = ({projectInfo}) => {
 
 const AddTask = styled(RiAddCircleLine)`
     font-size: 70px;
+    cursor: pointer;
 `
 
 const ModalButton = styled.button`

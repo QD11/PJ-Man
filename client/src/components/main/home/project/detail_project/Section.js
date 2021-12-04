@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getAllProjects } from '../../../../../redux/projectSlice'
 import { getTeam } from '../../../../../redux/teamSlice'
 import {RiMoreFill, RiCheckboxCircleFill, RiCloseCircleFill} from 'react-icons/ri'
+import {AiFillDelete} from 'react-icons/ai'
 import  {BiTask, BiTaskX} from 'react-icons/bi'
 import {ImRadioUnchecked} from 'react-icons/im'
 
@@ -16,8 +17,7 @@ const Section = ({section}) => {
     const isAdmin = useSelector(state => state.isAdmin)
     const team = useSelector(state => state.team)
 
-    const deleteHandler = (e, task) => {
-        e.stopPropagation()
+    const deleteHandler = (task) => {
         fetch(`/tasks/${team.id}/${task.id}`, {
             method: "DELETE"
         })
@@ -43,8 +43,8 @@ const Section = ({section}) => {
                                 {/* <div className="completed"> */}
                                     {task.completed ? <Completed /> : <NotCompleted />}
                                 {/* </div> */}
-                                <span className="date">{task.created_at.slice(0,10)}</span>
-                                <Dots />
+                                <span className="date">{task.created_at.slice(5,10)+'-'+task.created_at.slice(0,4)}</span>
+                                <Trash onClick={() => deleteHandler(task)} />
                             </div>
                             {/* <div className="completed">
                                 {task.completed ? <Completed /> : <NotCompleted />}
@@ -62,7 +62,7 @@ const Section = ({section}) => {
                                     )}
                                 </div>
                                 <div>
-                                    <span className="enter">View</span>
+                                    <span onClick={()=> navigate(`${section.id}/${task.id}`)} className="enter">View</span>
                                 </div>
                             </div>
                         </TaskLi>
@@ -85,8 +85,10 @@ const NotCompleted = styled(RiCloseCircleFill)`
     color:red;
 `
 
-const Dots = styled(RiMoreFill)`
-    color: red;
+const Trash = styled(AiFillDelete)`
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
 `
 
 const TaskUl = styled.ul`
@@ -187,6 +189,7 @@ const TaskLi = styled.li`
             padding-right: 1rem;
             padding-top: 0.2rem;
             padding-bottom: 0.2rem;
+            cursor: pointer;
         }
     }
 `

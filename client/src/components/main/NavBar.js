@@ -1,6 +1,6 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
-import { logOutTeam, fetchTeamLogOut } from '../../redux/teamSlice'
+import { fetchTeamLogOut } from '../../redux/teamSlice'
 import { fetchLogOut } from '../../redux/userSlice'
 import { isAdmin } from '../../redux/adminSlice'
 import { emptyProjects } from '../../redux/projectSlice'

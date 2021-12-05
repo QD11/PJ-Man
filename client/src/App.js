@@ -1,8 +1,8 @@
 import {useEffect} from 'react'
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 
-import {fetchMe, fetchLogOut} from '../src/redux/userSlice'
+import {fetchMe } from '../src/redux/userSlice'
 import {fetchTeam } from './redux/teamSlice'
 
 import LoginForm from './components/auth/LoginForm'
@@ -12,7 +12,6 @@ import MainPage from './components/main/MainPage'
 
 function App() {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(fetchMe('/me'))
@@ -21,11 +20,6 @@ function App() {
 
     const user = useSelector(store => store.user)
     const team = useSelector(store => store.team)
-    
-    const handleClick = () => {
-        dispatch(fetchLogOut('/logout'))
-        navigate('/')
-    }
 
     return(
         <>

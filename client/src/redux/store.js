@@ -6,7 +6,7 @@ import projectReducer from './projectSlice'
 
 const store = configureStore({
     reducer: {
-        projects: projectReducer,
+        // projects: projectReducer,
         user: userReducer,
         team: teamReducer,
         isAdmin: adminReducer,

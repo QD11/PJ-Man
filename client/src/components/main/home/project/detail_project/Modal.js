@@ -33,11 +33,11 @@ const Modal = ({projectInfo}) => {
     })
         
     const columnsFromBackend = {
-        ['members']: {
+        members : {
             name: "Members",
             items: itemsFromBackend
         },
-        ['assigned_members']: {
+        assigned_members: {
             name: "Assign To",
             items: []
         },

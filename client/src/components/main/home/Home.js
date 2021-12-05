@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNavigate, Route, Routes} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import styled from 'styled-components'
 
 import SideNav from './sidenav/SideNav'

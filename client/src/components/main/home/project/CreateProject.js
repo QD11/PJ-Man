@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import {useSelector, useDispatch} from 'react-redux'
 import {RiFileAddLine} from 'react-icons/ri'
 
-import { addProject } from '../../../../redux/projectSlice'
 import { getTeam } from '../../../../redux/teamSlice'
 
 const CreateProject = () => {
@@ -17,6 +16,7 @@ const CreateProject = () => {
         priority: 'low',
         team_id: team.id,
     })
+    
     useEffect(() => {
         setCreateForm({
             ...createForm,

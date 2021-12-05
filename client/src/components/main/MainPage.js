@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {useNavigate, Route, Routes} from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
 import { isAdmin } from '../../redux/adminSlice'
 import { fetchTeam } from '../../redux/teamSlice'
 
@@ -10,7 +10,6 @@ import User from './user/User'
 import NavBar from './NavBar'
 
 const MainPage = () => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const user = useSelector(state => state.user)
@@ -25,14 +24,7 @@ const MainPage = () => {
         }, MINUTE_MS/1);
         
         return () => clearInterval(interval);
-    }, [])
-
-    // if (!team.team_users.find(team_user => team_user.user_id === user.id)) {
-    //     navigate('/')
-    //     dispatch(logOutTeam())
-    //     dispatch(isAdmin(false))
-    //     dispatch(emptyProjects())
-    // }
+    })
 
     return (
         <>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import Avatar from 'react-avatar'
 import {getAllProjects} from '../../../../../redux/projectSlice'
@@ -10,6 +10,7 @@ import TaskMessage from './TaskMessage'
 
 const Task = () => {
     const params = useParams()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const taskInfo = useSelector(state => state.team).projects.find(project => project.id === parseInt(params.project_id)).sections.find(section => section.id === parseInt(params.section_id)).tasks.find(task => task.id === parseInt(params.task_id))
@@ -64,9 +65,9 @@ const Task = () => {
             }
         })
     }
-
     return (
         <TaskDiv>
+            <GoBack onClick={() => navigate(`/${params.team}/project/${params.project_id}/`)}>Go Back</GoBack>
             <h2>{taskInfo.name}</h2>
             <div className="status-assign">
                 <div className="assign-div">
@@ -108,6 +109,10 @@ const Task = () => {
         </TaskDiv>
     )
 }
+
+const GoBack = styled.button`
+    width: fit-content;
+`
 
 const TaskMessageDiv = styled.div`
     margin-top: 20px;

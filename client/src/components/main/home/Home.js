@@ -6,6 +6,8 @@ import SideNav from './sidenav/SideNav'
 import ProjectRoutes from './project/ProjectRoutes'
 import MemberPage from '../../members/MemberPage'
 import ForumMain from '../../forum/ForumMain'
+import ChatBar from '../../chat/ChatBar'
+
 
 const Home = () => {
     return (
@@ -19,6 +21,7 @@ const Home = () => {
                     <Route path="/forum/*" element={<ForumMain />} />
                 </Routes>
             </RightDiv>
+            < ChatBar />
         </PageDiv>
     )
 }

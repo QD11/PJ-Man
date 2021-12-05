@@ -1,5 +1,5 @@
 class TaskSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :completed, :team_users, :created_at
+  attributes :id, :name, :description, :completed, :team_users, :task_messages, :created_at
   
   # def users
   #   object.users.map do|user|
@@ -10,6 +10,12 @@ class TaskSerializer < ActiveModel::Serializer
   def team_users
     object.team_users.map do|team_user|
       ::TeamUserSerializer.new(team_user)
+    end
+  end
+
+  def task_messages
+    object.task_messages.map do |task_message|
+      ::TaskMessageSerializer.new(task_message)
     end
   end
 

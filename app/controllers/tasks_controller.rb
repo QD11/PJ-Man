@@ -43,4 +43,6 @@ class TasksController < ApplicationController
         tasks = team_user.tasks
         render json: tasks, each_serializer: TaskSectionSerializer
     end
+
+    
 end

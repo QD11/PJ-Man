@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
-  resources :task_messages
+  # resources :task_messages
   resources :recruitments
-  resources :task_users
   resources :tasks
   resources :sections
   resources :projects
   resources :team_users
   resources :teams
   resources :users
+  # resources :task_messages, only: [:index] do
+  #   resources :tasks, only: [:index]
+  # end
+  resources :tasks, only: [:show] do
+    resources :task_messages, only: [:index]
+  end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   post 'uploads/prepare'

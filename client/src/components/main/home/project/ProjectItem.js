@@ -4,11 +4,12 @@ import {motion, AnimatePresence} from 'framer-motion'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import {BsThreeDots} from 'react-icons/bs'
-import {RiDeleteBin2Line, RiArchiveLine} from 'react-icons/ri'
+import {RiDeleteBin2Line, RiArchiveLine, RiCloseCircleFill} from 'react-icons/ri'
 import {getAllProjects} from '../../../../redux/projectSlice'
 import {getTeam} from '../../../../redux/teamSlice'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import Avatar from 'react-avatar'
+import { useEffect } from 'react/cjs/react.development'
 
 const ProjectItem = ({project}) => {
     const dispatch = useDispatch()
@@ -21,10 +22,15 @@ const ProjectItem = ({project}) => {
         priority: project.priority,
         team_id: team.id
     })
+    const [cardForm, setCardForm] = useState(0)
+
     const navigate = useNavigate()
+
     const handleClick = () => {
         navigate(`${project.id}`)
     }
+
+    
 
     const updateChange = (e) => {
         setUpdateForm({
@@ -32,6 +38,14 @@ const ProjectItem = ({project}) => {
             [e.target.name] : e.target.value
         })
     }
+
+    useEffect(() => {
+        setUpdateForm({
+            ...updateForm,
+            name: project.name,
+            priority: project.priority
+        })
+    }, [cardForm])
 
     const updateSubmit = (e) => {
         e.preventDefault()
@@ -44,7 +58,10 @@ const ProjectItem = ({project}) => {
         .then(resp => {
             if (resp.ok) {
                 resp.json()
-                .then(data => dispatch(getTeam(data)))
+                .then(data => {
+                    dispatch(getTeam(data))
+                    setCardForm(0)
+                })
             }
             else {
                 resp.json()
@@ -74,111 +91,126 @@ const ProjectItem = ({project}) => {
     const completedTasksPercent = 100 * (tasks.filter(task => task.completed === true).length/tasks.length ? tasks.filter(task => task.completed === true).length/tasks.length : 0)
     
     return (
-        <>
-        {/* <ProjectLI priority={project.priority}>
-            <div className="card card-top-right" onClick={handleClick}>
-                <div className="card-inner">
-                    <TitleDiv>
-                            { isAdmin && <DotsDiv
-                                onClick={e => e.stopPropagation()}
-                            >
-                                <DotsIcon onClick={e => {
-                                    e.stopPropagation()
-                                    setOption(option => !option)
-                                }}/>
-                                <AnimatePresence initial={false}>
-                                    {option && <DotsForm
-                                            onSubmit={updateSubmit}
-                                            autocomplete="off"
-                                            initial="collapsed"
-                                            animate="open"
-                                            exit="collapsed"
-                                            variants={{
-                                                open: { opacity: 1, width: "auto", height: 110,
-                                                    transition:{ 
-                                                        duration: 0.3, 
-                                                        ease: [0.04, 0.62, 0.83, 0.99],
-                                                    }},
-                                                collapsed: { opacity: 0, width: 0, height: 0,
-                                                    transition:{ 
-                                                        duration: 0.3, 
-                                                        ease: [0.04, 0.82, 0.83, 0.99],
-                                                        delay: 0.1,
-                                                    }
-                                                }
-                                            }}
-                                        >
-                                            <NameMotion onChange={updateChange} type="text" autocomplete="off" value={updateForm.name} name="name"></NameMotion>
-                                            <PriorityUpdateDiv>
-                                                <div>
-                                                    <label>Priority: </label>
-                                                    <motion.select autocomplete="off" onChange={updateChange} name="priority" defaultValue={updateForm.priority} name="priority">
-                                                        <option value="low">Low</option>
-                                                        <option value="medium">Med</option>
-                                                        <option value="high">High</option>
-                                                    </motion.select>
-                                                </div>
-                                                <UpdateBut type="submit">Update</UpdateBut>
-                                            </PriorityUpdateDiv>
-                                            <DelDiv>
-                                                <ArchiveIcon onClick={() => console.log("QQQQ")}/>
-                                                <span>{respMsg}</span>
-                                                <DelIcon onClick={deleteProject}/>
-                                            </DelDiv>
-                                        </DotsForm>
-                                    }   
-                                </AnimatePresence>
-                            </DotsDiv>}
-                    </TitleDiv>
-                    <h2 className="card-title">{project.name}</h2>
-                    <div className="card-body">
-                        <span>Show priority</span>
+        <CardLi priority={project.priority}>
+            {cardForm === 0 && 
+                <>
+                    <div className="priority-dots">
+                        <SpanPriority priority={project.priority} >Priority: {project.priority.slice(0,1).toUpperCase() + project.priority.slice(1)}</SpanPriority>
+                        <BsThreeDots onClick={() => setCardForm(1)}/>
+                    </div>
+                    <div className="content">
                         <div>
-                            <span>Tasks #/#</span>
+                            <h2 onClick={handleClick} style={{cursor: "pointer", width: "fit-content"}}>{project.name}</h2>
+                            <div className="avatar-div">
+                                {uniqueTeamUsers.length < 5 ? uniqueTeamUsers.map(teamUser => 
+                                        <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
+                                    )
+                                :
+                                    <>
+                                        {uniqueTeamUsers.slice(0,4).map(teamUser => 
+                                            <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
+                                        )}
+                                        <span>...</span>
+                                    </>
+                                }
+                            </div>
                         </div>
-                        <div>
-                            <span>Members?</span>
+                        <div className="chart-div" >
+                            <CircularProgressbarWithChildren value={completedTasksPercent}
+                                styles={buildStyles({
+                                    // textSize: '16px',
+                                    // rotation: 0.5 + (1 - 66 / 100) / 2,
+                                    pathTransitionDuration: 0.5,
+                                    pathTransition: 'none',
+                                    pathColor: `#fba609`,
+                                    pathColor: project.priority === "low" ? "#4caf50" : project.priority === "medium"? "#03a9f4": "#f44336",
+                                    // textColor: '#fba609',
+                                    trailColor: '#d6d6d6',
+                                    // verticalAlign: "middle",
+                                    })}
+                                    >
+                                <div className="text-chart">
+                                    <strong >{completedTasks === '0/0' ? 'N/A' : completedTasks }</strong>
+                                </div>
+                            </CircularProgressbarWithChildren>
                         </div>
                     </div>
+                </>}
+            {cardForm === 1 &&
+            <OptionDiv>
+                <div className="option-div">
+                    <RiCloseCircleFill onClick={() => setCardForm(0)}/>    
                 </div>
-            </div>
-        </ProjectLI> */}
-        <CardLi priority={project.priority} onClick={handleClick}>
-            <div className="priority-dots">
-                <SpanPriority priority={project.priority} >Priority: {project.priority.slice(0,1).toUpperCase() + project.priority.slice(1)}</SpanPriority>
-                <BsThreeDots />
-            </div>
-            <div className="content">
-                <div>
-                    <h2>{project.name}</h2>
-                    {uniqueTeamUsers.map(teamUser => 
-                            <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
-                        )}
+                <div className="option-menu">
+                    <button onClick={() => setCardForm(2)}>Edit Project</button>
+                    <button onClick={deleteProject} >Delete</button>
                 </div>
-                <div className="chart-div" >
-                <CircularProgressbarWithChildren value={completedTasksPercent}
-                    styles={buildStyles({
-                        // textSize: '16px',
-                        // rotation: 0.5 + (1 - 66 / 100) / 2,
-                        pathTransitionDuration: 0.5,
-                        pathTransition: 'none',
-                        pathColor: `#fba609`,
-                        pathColor: project.priority === "low" ? "#4caf50" : project.priority === "medium"? "#03a9f4": "#f44336",
-                        // textColor: '#fba609',
-                        trailColor: '#d6d6d6',
-                        // verticalAlign: "middle",
-                        })}
-                        >
-                    <div className="text-chart">
-                        <strong >{completedTasks === '0/0' ? 'N/A' : completedTasks }</strong>
+            </OptionDiv>
+            }
+            {cardForm === 2 &&
+            <OptionDiv>
+                <div className="option-div">
+                    <RiCloseCircleFill onClick={() => setCardForm(0)}/>    
+                </div>
+                <form className="edit-form" onSubmit={updateSubmit}>
+                    <div className="edit-input">
+                        <span>Name: </span>
+                        <input value={updateForm.name} type="text" name="name" onChange={e => updateChange(e)}/>
                     </div>
-                </CircularProgressbarWithChildren>
-                </div>
-            </div>
+                    <div className="edit-input">
+                        <span>Priority: </span>
+                        <select value={updateForm.priority} name="priority" onChange={e => updateChange(e)}>
+                            <option value="low">Low</option>
+                            <option value="medium">Med</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <button type="submit" disabled={!updateForm.name}>Submit</button>
+                </form>
+            </OptionDiv>
+            }
         </CardLi>
-        </>
     )
 }
+
+const OptionDiv = styled.div`
+    height: 100%;
+    .option-div {
+        display:flex;
+        justify-content: flex-end;
+    }
+    .option-menu {
+        justify-content: space-evenly;
+        display:flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .edit-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        justify-content: space-evenly;
+        .edit-input {
+            margin-left: 200px;
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+        }
+        & span {
+            font-size: 20px;
+            // width: 200px;
+        }
+        & button {
+            padding: 5px;
+            width: fit-content;
+        }
+    }
+    & button {
+        width: 300px;
+    }
+`
 
 const SpanPriority = styled.span`
     font-size: 18px;
@@ -190,12 +222,11 @@ const CardLi = styled.li`
     list-style: none;
     margin-bottom: 70px;
     margin-right: 100px;
-    padding: 0;
     background-color:#fff;
     border-radius: 20px;
     padding: 20px;
     width: 400px;
-    height: fit-content;
+    height: 140px;
     // box-shadow: -10px 0px 0px 0px #fba609;
     box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     transition: 0.5s;
@@ -205,6 +236,10 @@ const CardLi = styled.li`
     .priority-dots {
         display:flex;
         justify-content: space-between;
+    }
+    .avatar-div{
+        display: flex;
+        align-items: flex-end;
     }
     .content {
         display: flex;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {motion, AnimatePresence} from 'framer-motion'
 import styled from 'styled-components'
@@ -9,7 +9,6 @@ import {getAllProjects} from '../../../../redux/projectSlice'
 import {getTeam} from '../../../../redux/teamSlice'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import Avatar from 'react-avatar'
-import { useEffect } from 'react/cjs/react.development'
 
 const ProjectItem = ({project}) => {
     const dispatch = useDispatch()
@@ -29,8 +28,6 @@ const ProjectItem = ({project}) => {
     const handleClick = () => {
         navigate(`${project.id}`)
     }
-
-    
 
     const updateChange = (e) => {
         setUpdateForm({
@@ -96,7 +93,7 @@ const ProjectItem = ({project}) => {
                 <>
                     <div className="priority-dots">
                         <SpanPriority priority={project.priority} >Priority: {project.priority.slice(0,1).toUpperCase() + project.priority.slice(1)}</SpanPriority>
-                        <BsThreeDots onClick={() => setCardForm(1)}/>
+                        {isAdmin && <BsThreeDots onClick={() => setCardForm(1)}/>}
                     </div>
                     <div className="content">
                         <div>

@@ -22,9 +22,15 @@ const TaskMessage = ({message, teamUser}) => {
                     <UserSpan>{content}</UserSpan>
                     <DateSpan>{renderDate}</DateSpan>
                 </MessageDiv>
+                <AvatarDiv>
+                    <Avatar src={message.team_user.user.profile_picture_url} name={message.team_user.user.first_name + ' ' +  message.team_user.user.last_name} round={true} size="45" textSizeRatio={1.75}/>
+                </AvatarDiv>
             </UserDiv>
             :
             <OtherDiv>
+                <AvatarDiv>
+                    <Avatar src={message.team_user.user.profile_picture_url} name={message.team_user.user.first_name + ' ' +  message.team_user.user.last_name} round={true} size="45" textSizeRatio={1.75}/>
+                </AvatarDiv>
                 <OtherMessageDiv>
                     <OtherSpan>{content} </OtherSpan>
                     <OtherDateSpan>{renderDate}</OtherDateSpan>
@@ -33,6 +39,10 @@ const TaskMessage = ({message, teamUser}) => {
         </>
     )
 }
+
+const AvatarDiv = styled.div`
+    margin-bottom: -10px;
+`
 
 const UserDiv = styled.div`
     display: flex;
@@ -70,14 +80,14 @@ const OtherDateSpan = styled.span`
     justify-content: flex-start;
 `
 
-const UserSpan = styled.p`
+const UserSpan = styled.span`
     display: flex;
     justify-content: flex-end;
     margin: 5px 0 5px;
     padding: 0.5em 1em 0.65em;
     border-radius: 4px;
     font-size: 20px;
-    //max-width: 65%;
+    max-width: 500px;
     clear: both;
     position: relative;
     float: right;
@@ -106,6 +116,7 @@ const OtherSpan = styled.p`
     border-top-right-radius: 1.1em;
     border-bottom-left-radius: 1em 0.2em;
     border-bottom-right-radius: 1.1em;
+    max-width: 500px;
 `
 
 export default TaskMessage

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :team_users
   resources :teams
   resources :users
+  resources :task_messages
   # resources :task_messages, only: [:index] do
   #   resources :tasks, only: [:index]
   # end

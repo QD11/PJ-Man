@@ -154,6 +154,7 @@ const AdminStatus = styled.span`
 `
 
 const CardDiv = styled.div`
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
     align-items:center;
     border-radius: 5px;
     border: 1px solid #e2e8f0;

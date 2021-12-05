@@ -16,6 +16,7 @@ const Task = () => {
     const user = useSelector(state => state.user)
     const teamUser = team.team_users.find(team_user => team_user.user_id === user.id)
     const [messages, setMessages] = useState([])
+    const [inputMsg, setInputMsg] = useState("")
     
     useEffect(() => {
         fetch(`/tasks/${taskInfo.id}/task_messages`)
@@ -38,6 +39,30 @@ const Task = () => {
             //     {project_name: params.project, section_name: params.section}
             // ]))
         )
+    }
+
+    const handleUploadMessage = (e) => {
+        e.preventDefault()
+        fetch('/task_messages', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                task_id: taskInfo.id,
+                team_user_id: teamUser.id,
+                message: inputMsg,
+            })
+        })
+        .then(resp => {
+            if (resp.ok) {
+                resp.json()
+                .then(messages => {
+                    setMessages(messages)
+                    setInputMsg("")
+                })
+            }
+        })
     }
 
     return (
@@ -68,15 +93,79 @@ const Task = () => {
                     {taskInfo.description}
                 </span>
             </div>
-            <div className="task-message-div">
+            <TaskMessageDiv>
                 {/* {messages.map(message => <span>{message.message}</span>)} */}
-                {messages.map(message => <TaskMessage key={message.id} teamUser={teamUser} message={message}/>)}
-            </div>
+                <div className="messageDiv">
+                    {messages.map(message => <TaskMessage key={message.id} teamUser={teamUser} message={message}/>)}
+                </div>
+                <div className="messageForm">
+                    <form className="grouping" onSubmit={handleUploadMessage}>
+                        <input value={inputMsg} type="text" onChange={ e => setInputMsg(e.target.value)} ></input>
+                        <button disabled={!inputMsg} >Submit</button>
+                    </form>
+                </div>
+            </TaskMessageDiv>
         </TaskDiv>
     )
 }
 
+const TaskMessageDiv = styled.div`
+    margin-top: 20px;
+    height: 500px;
+    border: 1px solid #cbcbcb;
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    background: #f4f7ff99;
+    .messageForm {
+        width: 100%;
+        // height: 20%;
+        box-sizing: border-box;
+        border-width: 1;
+        border-style: solid;
+        border-color: #cbcbcb;
+        border-left-width: 0px;
+        border-top-width: 1px;
+        border-bottom-width: 0px;
+        border-right-width: 0px;
+        display: flex;
+        align-items: center;
+        .grouping { 
+            display: flex;
+            width: 100%;
+            margin-top: 15px;
+            justify-content: space-around;
+
+        }
+        & input {
+            width: 85%;
+            height: 40px;
+            // margin-left: 15px;
+            font-size: 25px;
+        }
+        & button {
+            height: 46px;
+        }
+    }
+    .messageDiv {
+        height: 80%;
+        max-height: 80%;
+        min-height: 80%;
+        overflow-y: scroll;
+        &::-webkit-scrollbar { 
+            width:12px;
+            }
+        &::-webkit-scrollbar-thumb {
+            margin-top: 5px;
+            border-radius: 10px;
+            background: #1289fe; 
+            }
+        &::-webkit-scrollbar-track-piece {
+            margin-top: 15px;
+    }
+`
+
 const TaskDiv = styled.div`
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 30%);
     margin-top: 2em;
     border: 1px solid #e2d9d5;
     border-radius: 20px;
@@ -124,17 +213,21 @@ const TaskDiv = styled.div`
     .description-div {
         margin-top: 20px;
         .description-span {
+            margin-top: 10px;
+            box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
             width: 80;
+            border-radius: 20px;
             border: 2px solid #e2d9d5;
             display: flex;
             flex-wrap: wrap;
             // margin: 5px;
-            padding: 5px;
+            padding: 15px;
             background-color: white;
-            overflow-y: scroll;
-            height: 100px;
+            overflow-y: hidden;
+            height: 80px;
             
         }
+
     }
 `
 

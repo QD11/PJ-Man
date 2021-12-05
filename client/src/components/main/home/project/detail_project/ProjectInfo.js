@@ -44,7 +44,7 @@ const ProjectInfo = () => {
             <ProjectDiv priority={projectInfo.priority}>
                 <div class="title-header">
                     <h1 className="proj-name">{projectInfo.name}</h1>
-                    <Modal projectInfo={projectInfo}/>
+                    {isAdmin && <Modal projectInfo={projectInfo}/>}
                 </div>
                 <div className="task-header">
                     <div className="task-status">

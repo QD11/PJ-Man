@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styled from 'styled-components'
 import {useSelector, useDispatch} from 'react-redux'
-import {RiFileAddLine} from 'react-icons/ri'
+import {RiFileAddLine, RiFileAddFill} from 'react-icons/ri'
 
 import { getTeam } from '../../../../redux/teamSlice'
 
 const CreateProject = () => {
+    const [modal, setModal] = useState(false)
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const [responseMsg, setResponseMsg] = useState(null)
@@ -53,14 +54,25 @@ const CreateProject = () => {
                 r.json().then((err) => setResponseMsg(err.errors));
             }})
     }
+    ////
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+
+    if(modal) {
+        document.body.classList.add('active-modal')
+    } else {
+        document.body.classList.remove('active-modal')
+    }
 
     return (
         <CreateDiv name="create-project-div">
-            <motion.div onClick={() => setCreateOpen(createOpen => !createOpen)}>
-                <RiFileAddLine/>
-                <ItemSpan> Add Project</ItemSpan>
+            <motion.div className="btn-div">
+                {/* <RiFileAddLine/>
+                <ItemSpan> Add Project</ItemSpan> */}
+                <AddProject onClick={toggleModal}/>
             </motion.div>
-            <AnimatePresence initial={false}>
+            {/* <AnimatePresence initial={false}>
                     {createOpen && <ClickedForm
                         onSubmit ={handleSubmit}
                         key="content"
@@ -89,120 +101,48 @@ const CreateProject = () => {
                         </div>
                     </ClickedForm>
                     }
-                </AnimatePresence>
+                </AnimatePresence> */}
+            {modal && 
+                <ModalDiv className="modal">
+                    <div onClick={toggleModal} className="overlay"></div>
+                    <div className="modal-content">
+                        <form className="container" onSubmit={handleSubmit}>
+                            <div>
+                                <span className="project-name">Project Name: </span>
+                                <InputMotion autoComplete="off" priority={createForm.priority} type="text" autocomplete="off" placeholder="Name" onChange={handleChange} name="name"></InputMotion>
+                            </div>
+                            <div className="prio-div">
+                                <span>Priority: </span>
+                                <motion.select onChange={handleChange} name="priority" className="prio-drop">
+                                    <option value="low">Low</option>
+                                    <option value="medium">Med</option>
+                                    <option value="high">High</option>
+                                </motion.select>
+                            </div>
+                            <div className="btn-div">
+                                <SubmitMotion className="btn" type="submit" disabled={createForm.name? false : true}>Create</SubmitMotion>
+                                {responseMsg &&  <motion.span>{responseMsg}</motion.span>}
+                            {/* </div>
+                            <div> */}
+                            </div>
+                        </form>
+                        <button className="close-modal" onClick={toggleModal}>
+                            CLOSE
+                        </button>
+                    </div>
+                </ModalDiv>}
 
-
-            {/* fix this */}
-            {/* <AnimatePresence initial={false}>
-            {onHover && !createOpen && <motion.div
-                initial="collapsed"
-                animate="open"
-                exit="collapsed"
-                variants={{
-                    open: { opacity: 1, width: "auto",
-                        transition:{ 
-                            duration: 0.3, 
-                            ease: [0.04, 0.62, 0.83, 0.98],
-                        }},
-                    collapsed: { opacity: 0, width: 0,
-                        transition:{ 
-                            duration: 0.3, 
-                            ease: [0.04, 0.82, 0.83, 0.99],
-                            delay: 0.3,
-                        }
-                    }
-                }}
-            >
-                <ItemSpan
-                    layout
-                    variants={{
-                        open: { opacity: 1, width: "auto",
-                        transition:{
-                            type: 'tween',
-                            duration: 0.3, 
-                            ease: "easeInOut",
-                            delay: 0.3
-                        }},
-                        collapsed: { opacity: 0, width: 0,
-                            transition:{ 
-                                duration: 0.2, 
-                                ease: [0.04, 0.62, 0.83, 0.99],
-                            }
-                        }
-                    }}
-                    >Add Project</ItemSpan>
-            </motion.div>}
-            //when clicked
-            {createOpen  && <ClickedDiv
-                initial="collapsed"
-                animate="open"
-                exit="collapsed"
-                variants={{
-                    open: { opacity: 1, width: "auto", height: 300,
-                        transition:{ 
-                            duration: 0.3, 
-                            ease: [0.04, 0.62, 0.83, 0.98],
-                        }},
-                    collapsed: { opacity: 0, width: 0, height: 0,
-                        transition:{ 
-                            duration: 0.3, 
-                            ease: [0.04, 0.82, 0.83, 0.99],
-                            delay: 0.3,
-                        }
-                    }
-                }}
-            >
-                <ItemSpan
-                    layout
-                    variants={{
-                        open: { opacity: 1, width: "auto",
-                        transition:{
-                            type: 'tween',
-                            duration: 0.3, 
-                            ease: "easeInOut",
-                            delay: 0.3
-                        }},
-                        collapsed: { opacity: 0, width: 0,
-                            transition:{ 
-                                duration: 0.2, 
-                                ease: [0.04, 0.62, 0.83, 0.99],
-                            }
-                        }
-                    }}
-                    >Add Project
-                </ItemSpan>
-                <motion.input
-                    layout
-                    variants={{
-                        open: { opacity: 1, width: "auto",
-                        transition:{
-                            type: 'tween',
-                            duration: 0.3, 
-                            ease: "easeInOut",
-                            delay: 0.3
-                        }},
-                        collapsed: { opacity: 0, width: 0, height: 0,
-                            transition:{ 
-                                duration: 0.2, 
-                                ease: [0.04, 0.62, 0.83, 0.99],
-                            }
-                        }
-                    }}
-                >
-                </motion.input>
-
-            </ClickedDiv>}
-            </AnimatePresence> */}
         </CreateDiv>
     )
 }
 
 const InputMotion = styled(motion.input)`
-    background-color: ${props => props.priority === "low" ? "#b3ffe5" : props.priority === "medium"? "#b7cbfb": "#fdb4b4"}
+    background-color: ${props => props.priority === "low" ? "#b3ffe5" : props.priority === "medium"? "#b7cbfb": "#fdb4b4"};
+    font-size: 30px;
 `
 
 const SubmitMotion = styled(motion.button)`
-    margin-left: 10px;
+    font-size: 30px;
 `
 
 const ItemSpan = styled(motion.span)`
@@ -211,27 +151,105 @@ const ItemSpan = styled(motion.span)`
     // margin-bottom: -10px;
 `
 
-const ClickedForm = styled(motion.form)`
+const AddProject = styled(RiFileAddFill)`
     // position: absolute;
+    margin-right: 100px;
+    font-size: 60px;
+    cursor: pointer;
+    color: #253858;
 `
 
 const CreateDiv = styled(motion.div)`
-    position: absolute;
-    z-index: 100;
-    top: 72px;
-    left: 950px;
     flex-direction: column;
     display:flex;
-    width: 170px;
-    margin-bottom: 20px;
-    font-size: 25px;
-    height: fit-content;
-    cursor: pointer;
-    border-radius: 10px;
-    padding: 10px 10px;
-    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 70%);
-    background: rgb(248 248 248 / 100%);
+    width: 100%;
+    justify-content: flex-end;
+    z-index: 2;
+    // position: absolute;
+    // top: 72px;
+    // left: 950px;
+    // margin-bottom: 20px;
+    // font-size: 25px;
+    // height: fit-content;
+    // cursor: pointer;
+    // border-radius: 10px;
+    // padding: 10px 10px;
+    // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 70%);
+    // background: rgb(248 248 248 / 100%);
+    .btn-div {
+        display:flex;
+        justify-content: flex-end;
+    }
 `
+
+
+const ModalDiv = styled.div`
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+
+    .overlay {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: fixed;
+        background: rgba(49,49,49,0.8);
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1.4;
+        background: #f1f1f1;
+        padding: 14px 28px;
+        border-radius: 3px;
+        // max-width: 600px;
+        // min-width: 300px;
+        width: fit-content;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 7px;
+    }
+
+    .container {
+        height: fit-content;
+        width: fit-content;
+        padding: 50px;
+        font-size: 30px 40px;
+        & span {
+            display: inline-block;
+            min-width: 220px;
+        }
+        .prio-div {
+            margin-top: 20px;
+            .prio-drop {
+                font-size: 30px;
+            }
+            
+        }
+        .btn-div {
+            display: flex;
+            margin-top: 20px;
+            .btn {
+                // font-size: 30px;
+            }
+        }
+    }
+`
+
 
 
 

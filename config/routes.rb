@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  # resources :task_messages
+  resources :chat_members
+  resources :chat_messages
+  resources :chatrooms
   resources :recruitments
   resources :tasks
   resources :sections
@@ -11,6 +13,14 @@ Rails.application.routes.draw do
   # resources :task_messages, only: [:index] do
   #   resources :tasks, only: [:index]
   # end
+  resources :team_users, only: [:show] do
+    resources :chatrooms, only: [:index]
+  end
+
+  resources :chatrooms, only: [:show] do
+    resources :chat_messages, only: [:index]
+  end
+
   resources :tasks, only: [:show] do
     resources :task_messages, only: [:index]
   end
@@ -50,6 +60,8 @@ Rails.application.routes.draw do
   # get '/:team_id/:project_name/
 
   # Rails.application.routes.draw do
+  resources :chat_members
+  resources :chat_messages
   resources :task_messages
   mount ActionCable.server => '/cable'
   # end

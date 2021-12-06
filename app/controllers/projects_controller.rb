@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
     # end
 
     def create
-        project = Project.create!(project_params)
+        project = Project.create!(name: params[:name], priority: params[:priority], team_id: params[:team_id], completed: false)
         # render json: project, status: :created
         show_for_all
     end

@@ -88,7 +88,13 @@ const ProjectItem = ({project}) => {
     const completedTasksPercent = 100 * (tasks.filter(task => task.completed === true).length/tasks.length ? tasks.filter(task => task.completed === true).length/tasks.length : 0)
     
     return (
-        <CardLi priority={project.priority}>
+        <CardLi priority={project.priority}
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.2,
+            }}
+        >
             {cardForm === 0 && 
                 <>
                     <div className="priority-dots">
@@ -214,7 +220,7 @@ const SpanPriority = styled.span`
     color: ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
 `
 
-const CardLi = styled.li`
+const CardLi = styled(motion.li)`
     // font-family: Quarion, sans-serif;
     list-style: none;
     margin-bottom: 70px;

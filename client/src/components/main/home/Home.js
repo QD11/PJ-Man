@@ -6,6 +6,8 @@ import SideNav from './sidenav/SideNav'
 import ProjectRoutes from './project/ProjectRoutes'
 import MemberPage from '../../members/MemberPage'
 import ForumMain from '../../forum/ForumMain'
+import ChatBar from '../../chat/ChatBar'
+
 
 const Home = () => {
     return (
@@ -19,6 +21,7 @@ const Home = () => {
                     <Route path="/forum/*" element={<ForumMain />} />
                 </Routes>
             </RightDiv>
+            < ChatBar />
         </PageDiv>
     )
 }
@@ -30,7 +33,7 @@ const PageDiv = styled.div`
 const RightDiv = styled.div`
     display: flex;
     // margin: 10px 0px 0px 20px;
-    width: 1200px;
+    width: 1100px;
     // width: 100%;
     margin: 2rem 3rem;
 `

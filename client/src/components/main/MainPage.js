@@ -4,6 +4,8 @@ import { Route, Routes} from 'react-router-dom'
 import { isAdmin } from '../../redux/adminSlice'
 import { fetchTeam } from '../../redux/teamSlice'
 
+import ChatBar from '../chat/ChatBar'
+
 import Home from './home/Home'
 import User from './user/User'
 
@@ -21,10 +23,10 @@ const MainPage = () => {
         //fetch projects every 15 seconds
         const interval = setInterval(() => {
             dispatch(fetchTeam(`/teams/${team.id}`))
-        }, MINUTE_MS/1);
+        }, MINUTE_MS/0.75);
         
         return () => clearInterval(interval);
-    })
+    }, [])
 
     return (
         <>
@@ -33,6 +35,7 @@ const MainPage = () => {
                 <Route path="/*" element={<Home />} />
                 <Route path="/user" element={<User/>} />
             </Routes>
+            
         </>
     )
 }

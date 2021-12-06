@@ -11,7 +11,7 @@ import {AiFillDelete} from 'react-icons/ai'
 import  {BiTask, BiTaskX} from 'react-icons/bi'
 import {ImRadioUnchecked} from 'react-icons/im'
 
-const Section = ({section}) => {
+const Section = ({section, val}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isAdmin = useSelector(state => state.isAdmin)
@@ -31,13 +31,14 @@ const Section = ({section}) => {
                 r.json().then((err) => console.log(err.errors));
             }})
     }
-    
+    console.log(section.tasks)
     return (
         <>
             <SectionDiv>
                 <h2>{section.name}</h2>
                 <TaskUl className="section-holder">
-                    {section.tasks.map(task => 
+                    {(val === "Ongoing" ? section.tasks.filter(task => !task.completed) : val === "Completed" ? section.tasks.filter(task => task.completed) : section.tasks).map(task => 
+                    // {section.tasks.map(task => 
                         <TaskLi>
                             <div className="icon-div">
                                 {/* <div className="completed"> */}

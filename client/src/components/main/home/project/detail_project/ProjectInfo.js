@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import Avatar from 'react-avatar'
 import Modal from './Modal.js'
 import CustomSelect from './PJDropdown.js'
+import StateToggle from './StateToggle'
 
 const ProjectInfo = () => {
     const [filter, setFilter] = useState("All")
@@ -34,8 +35,9 @@ const ProjectInfo = () => {
 
     return (
         <ProjectDiv priority={projectInfo.priority}>
-            <div class="title-header">
+            <div className="title-header">
                 <h1 className="proj-name">{projectInfo.name}</h1>
+                <StateToggle projectInfo={projectInfo}/>
                 {isAdmin && <Modal projectInfo={projectInfo}/>}
             </div>
             <div className="task-header">
@@ -87,6 +89,7 @@ const ProjectDiv = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 40px;
     }
 
     .chart-div {
@@ -110,6 +113,7 @@ const ProjectDiv = styled.div`
         display: flex;
         flex-direction: row;
         margin-bottom: 20px;
+        font-size: 25px;
     }
 `
 

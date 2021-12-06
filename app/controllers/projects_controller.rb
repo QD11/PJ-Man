@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
     def update
         project = Project.find_by(id: params[:id])
         team = project.team
-        project.update!(name: params[:name], priority: params[:priority])
+        project.update!(name: params[:name], priority: params[:priority], completed: params[:completed])
         render json: team, include: ['team_users', 'team_users.user', 'projects', 'projects.sections', 'projects.sections.tasks']
     end
 

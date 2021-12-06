@@ -39,7 +39,7 @@ const Section = ({section, val}) => {
                 <TaskUl className="section-holder">
                     {(val === "Ongoing" ? section.tasks.filter(task => !task.completed) : val === "Completed" ? section.tasks.filter(task => task.completed) : section.tasks).map(task => 
                     // {section.tasks.map(task => 
-                        <TaskLi>
+                        <TaskLi key={task.id}>
                             <div className="icon-div">
                                 {/* <div className="completed"> */}
                                     {task.completed ? <Completed /> : <NotCompleted />}

@@ -70,7 +70,7 @@ const DropdownBtn = styled.button`
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 25px;
   padding: 0 14px;
   cursor: pointer;
   width: 150px;
@@ -103,7 +103,7 @@ const DropdownItem = styled.button`
   text-align: left;
   cursor: pointer;
   padding: 0 14px;
-  font-size: 14px;
+  font-size: 25px;
   &.active,
   &:hover {
     background-color: #eee;

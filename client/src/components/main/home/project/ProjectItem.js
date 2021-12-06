@@ -19,7 +19,8 @@ const ProjectItem = ({project}) => {
     const [updateForm, setUpdateForm] = useState({
         name: project.name,
         priority: project.priority,
-        team_id: team.id
+        team_id: team.id,
+        completed: project.completed,
     })
     const [cardForm, setCardForm] = useState(0)
 
@@ -103,7 +104,7 @@ const ProjectItem = ({project}) => {
                     </div>
                     <div className="content">
                         <div>
-                            <h2 onClick={handleClick} style={{cursor: "pointer", width: "fit-content"}}>{project.name}</h2>
+                            <h2 onClick={handleClick} className="project-name" >{project.name}</h2>
                             <div className="avatar-div">
                                 {uniqueTeamUsers.length < 5 ? uniqueTeamUsers.map(teamUser => 
                                         <Avatar key={teamUser.user.id}  src={teamUser.user.profile_picture_url} name={teamUser.user.first_name + ' ' +  teamUser.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
@@ -254,6 +255,13 @@ const CardLi = styled(motion.li)`
             .text-chart {
                 font-size: 30px;
             }
+        }
+        .project-name {
+            cursor: pointer;
+            width: fit-content; 
+            font-size: 40px;
+            margin-block-start: 0.25em;
+            margin-block-end: 0.25em;
         }
     }
 `

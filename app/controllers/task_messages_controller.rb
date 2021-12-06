@@ -3,8 +3,8 @@ class TaskMessagesController < ApplicationController
         if params[:task_id]
             task = Task.find(params[:task_id])
             messages = task.task_messages
+            render json: messages
         end
-        render json: messages
     end
 
     def create

@@ -34,6 +34,7 @@ const FlexDiv = styled(motion.div)`
     //border:1px solid black;
     display: flex;
     flex-direction: column;
+    width: 100%;
     // font-size: 20px;
 `
 

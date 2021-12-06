@@ -1,14 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useParams} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import CreateTask from './CreateTask'
 import Section from './Section'
 import styled from 'styled-components'
-import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+// import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import Avatar from 'react-avatar'
 import Modal from './Modal.js'
+import CustomSelect from './PJDropdown.js'
 
 const ProjectInfo = () => {
+    const [filter, setFilter] = useState("All")
     const isAdmin = useSelector(state => state.isAdmin)
     const projects = useSelector(state => state.team).projects
     const { project_id } = useParams()
@@ -24,47 +26,44 @@ const ProjectInfo = () => {
     function unique(array, propertyName) {
         return array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
     }
-    // const uniqueTeamUsers = unique(teamUsers, 'id')    
+    const [val, setVal] = useState("All")
+    const options = [
+        "All", "Ongoing", "Completed"
+    ]
+
 
     return (
-        // <ProjectInfoDiv>
-        //     <div className="create-task-div">
-        //         {isAdmin && <CreateTask projectInfo={projectInfo}/>}
-        //     </div>
-        //     <ContentDiv>
-        //         <div className="proj-div">
-        //             <h1 className="projectName">{projectInfo.name}</h1>
-        //         </div>
-        //         <div className="content-in-content">
-        //             {projectInfo.sections.map(section => <Section key={section.id} section={section} />)}
-        //         </div>
-        //     </ContentDiv>
-        // </ProjectInfoDiv>
-        <>
-            <ProjectDiv priority={projectInfo.priority}>
-                <div class="title-header">
-                    <h1 className="proj-name">{projectInfo.name}</h1>
-                    {isAdmin && <Modal projectInfo={projectInfo}/>}
+        <ProjectDiv priority={projectInfo.priority}>
+            <div class="title-header">
+                <h1 className="proj-name">{projectInfo.name}</h1>
+                {isAdmin && <Modal projectInfo={projectInfo}/>}
+            </div>
+            <div className="task-header">
+                <div className="task-status">
+                    <span>{tasks.filter(task => task.completed === true).length}</span>
+                    <span>Completed</span>
                 </div>
-                <div className="task-header">
-                    <div className="task-status">
-                        <span>{tasks.filter(task => task.completed === true).length}</span>
-                        <span>Completed</span>
-                    </div>
-                    <div className="task-status">
-                        <span>{tasks.filter(task => task.completed === false).length}</span>
-                        <span>In Progress</span>
-                    </div>
-                    <div className="task-status">
-                        <span>{tasks.length}</span>
-                        <span>Total</span>
-                    </div>
+                <div className="task-status">
+                    <span>{tasks.filter(task => task.completed === false).length}</span>
+                    <span>In Progress</span>
                 </div>
-                {/* <div> */}
-                    {sections.map(section => <Section key={section.id} section={section} />)}
-                {/* </div> */}
-            </ProjectDiv>
-        </>
+                <div className="task-status">
+                    <span>{tasks.length}</span>
+                    <span>Total</span>
+                </div>
+                <div>
+                <CustomSelect
+                    value={val}
+                    onChange={setVal}
+                    options={options}
+                    // placeholder="Choose an option..."
+                />
+            </div>
+            </div>
+            {/* <div> */}
+                {sections.map(section => <Section key={section.id} val={val} section={section} />)}
+            {/* </div> */}
+        </ProjectDiv>
     )
 }
 

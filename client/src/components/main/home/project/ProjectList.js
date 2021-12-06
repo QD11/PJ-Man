@@ -8,11 +8,13 @@ import CustomSelect from './dropdown/Dropdown'
 
 const ProjectList = () => {
     // const projects = useSelector(state => state.projects)
-    const [val, setVal] = useState("Ongoing")
+    const [val, setVal] = useState("All")
     const projects = useSelector(state => state.team).projects
     const options = [
-        "Ongoing", "Completed", "All"
+        "All", "Ongoing", "Completed"
     ]
+
+    const filteredProjects = val === "Ongoing" ? projects.filter(project => !project.completed) : val === "Completed"  ? projects.filter(project => project.completed) : projects
 
     return (
         <>
@@ -45,7 +47,7 @@ const ProjectList = () => {
                     }
                 }}
             >
-                {projects.map(project => <ProjectItem key={project.id} project={project}/>)}
+                {filteredProjects.map(project => <ProjectItem val={val} key={project.id} project={project}/>)}
             </ProjectUL>
         </>
     )

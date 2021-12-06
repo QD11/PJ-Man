@@ -11,10 +11,10 @@ const Projects = () => {
     const isAdmin = useSelector(state => state.isAdmin)
 
     return (
-        <>
+        <FlexDiv>
             {isAdmin && <CreateProject />}
             <ProjectList />
-        </>
+        </FlexDiv>
     )
 }
 
@@ -30,9 +30,11 @@ const Projects = () => {
 // }
 // </AnimatePresence>
 
-const CreateDiv = styled(motion.div)`
+const FlexDiv = styled(motion.div)`
     //border:1px solid black;
-    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    // font-size: 20px;
 `
 
 

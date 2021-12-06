@@ -61,7 +61,7 @@ const ChatDiv = styled.div`
     right: 0;
     position: fixed;
     background: white;
-    
+    z-index: 50;
 
     .chat-div {
         width: 300px;

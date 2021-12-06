@@ -6,13 +6,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getTeam} from '../../../../../redux/teamSlice'
 // import "./styles.css";
 
-const Handle = ({ text, isOn }) => (
+const Handle = ({ text, isOn, completed }) => (
     <div className="option">
         <div className={`text ${isOn ? "active" : null}`}>{text}</div>
         
         {isOn && (
         <HandleDiv
-            isOn={isOn}
+            completed={completed}
             className="handle"
             layoutId="handle"
             animate={{ borderRadius: "40px" }}
@@ -29,9 +29,11 @@ const Handle = ({ text, isOn }) => (
 export default function StateToggle({projectInfo}) {
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
+    const isAdmin = useSelector(state => state.isAdmin)
     const [isOn, setIsOn] = useState(projectInfo.completed);
     
     const handleClick = () => {
+        if (isAdmin) {
         setIsOn(isOn => !isOn)
         fetch(`/projects/${projectInfo.id}`, {
             method: "PATCH",
@@ -49,6 +51,7 @@ export default function StateToggle({projectInfo}) {
                 resp.json()
                 .then(data => {
                     dispatch(getTeam(data))})}})
+                }
     }
     
     return (
@@ -56,8 +59,8 @@ export default function StateToggle({projectInfo}) {
         <AnimateSharedLayout type="crossfade">
             <button className="switch" type="button" onClick={handleClick }>
             <div className="inner">
-                <Handle text="Ongoing" isOn={!isOn} />
-                <Handle text="Completed" isOn={isOn} />
+                <Handle text="Ongoing" isOn={!isOn} completed={false}/>
+                <Handle text="Completed" isOn={isOn} completed={true}/>
             </div>
             </button>
         </AnimateSharedLayout>
@@ -72,8 +75,8 @@ const HandleDiv = styled(motion.div)`
     left: 0;
     right: 0;
     top: 0;
-    // background-color: ${props => props.isOn ? "white" : "red"};
-    background-color: white;
+    background-color: ${props => props.completed ? "#89fc89" : "#ff8f8f"};
+    // background-color: white;
     border-radius: 40px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 4px 4px 16px 0 rgba(0, 0, 0, 0.1);
 `

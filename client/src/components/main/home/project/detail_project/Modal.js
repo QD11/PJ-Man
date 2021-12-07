@@ -208,6 +208,7 @@ const ModalDiv = styled.div`
     right: 0;
     bottom: 0;
     position: fixed;
+    z-index: 1;
 
     .overlay {
         width: 100vw;

@@ -36,6 +36,7 @@ const RightDiv = styled.div`
     width: 1100px;
     // width: 100%;
     margin: 2rem 3rem;
+    margin-top: 100px;
 `
 
 

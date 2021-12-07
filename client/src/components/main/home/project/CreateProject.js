@@ -228,7 +228,7 @@ const ModalDiv = styled.div`
         height: fit-content;
         width: fit-content;
         padding: 50px;
-        font-size: 30px 40px;
+        font-size: 30px;
         & span {
             display: inline-block;
             min-width: 220px;

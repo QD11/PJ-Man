@@ -11,7 +11,6 @@ const MemberPage = () => {
     const team = useSelector(state => state.team)
     const isAdmin = useSelector(state => state.isAdmin)
     // const filterUserTeam = team.users.filter(user => user.id !== userInfo.id)
-    const filterUserTeam = team.team_users.map(team_user => team_user.user).filter(user => user.id !== userInfo.id)
     const [email, setEmail] = useState('')
     const [code, setCode] = useState('')
     const [showOpen, setShowOpen] = useState(false)
@@ -45,6 +44,20 @@ const MemberPage = () => {
                 r.json().then((err) => setRecruitResp(err.errors));
             }})
     }
+
+    const filterUserTeam = team.team_users.map(team_user => team_user.user).filter(user => user.id !== userInfo.id)
+    
+    const compare = (a,b) => {
+        if (a.first_name < b.first_name) {
+            return -1;
+        }
+        if (a.first_name > b.first_name) {
+            return 1;
+        }
+        return 0;
+    }
+
+    const alphabeticalUserTeam = filterUserTeam.sort(compare)
 
     return (
         <MembersDiv>
@@ -83,7 +96,7 @@ const MemberPage = () => {
             </div>
             <CardContainer>
                 <Card userInfo={userInfo} user={userInfo} team_user={team.team_users.find(team_user => team_user.user_id === userInfo.id)}/>
-                {filterUserTeam.map(user => <Card key={user.id} showRemove={showRemove} teamUserCurrentInfo={teamUserCurrentInfo} userInfo={userInfo} user={user} team_user={team.team_users.find(team_user => team_user.user_id === user.id)}/>)}
+                {alphabeticalUserTeam.map(user => <Card key={user.id} showRemove={showRemove} teamUserCurrentInfo={teamUserCurrentInfo} userInfo={userInfo} user={user} team_user={team.team_users.find(team_user => team_user.user_id === user.id)}/>)}
             </CardContainer>
         </MembersDiv>
     )

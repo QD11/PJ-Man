@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useParams, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import Avatar from 'react-avatar'
 import {getAllProjects} from '../../../../../redux/projectSlice'
 import { getTeam } from '../../../../../redux/teamSlice'
 import styled from 'styled-components'
-import { useEffect } from 'react/cjs/react.development'
 import TaskMessage from './TaskMessage'
 
 const Task = () => {
@@ -13,7 +12,8 @@ const Task = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
-    const taskInfo = useSelector(state => state.team).projects.find(project => project.id === parseInt(params.project_id)).sections.find(section => section.id === parseInt(params.section_id)).tasks.find(task => task.id === parseInt(params.task_id))
+    const taskInfo = team.projects.find(project => project.id === parseInt(params.project_id)).sections.find(section => section.id === parseInt(params.section_id)).tasks.find(task => task.id === parseInt(params.task_id))
+    const project = team.projects.find(project => project.id === parseInt(params.project_id))
     const user = useSelector(state => state.user)
     const teamUser = team.team_users.find(team_user => team_user.user_id === user.id)
     const [messages, setMessages] = useState([])
@@ -66,7 +66,7 @@ const Task = () => {
         })
     }
     return (
-        <TaskDiv>
+        <TaskDiv priority={project.priority}>
             <GoBack onClick={() => navigate(`/${params.team}/project/${params.project_id}/`)}>Go Back</GoBack>
             <h2>{taskInfo.name}</h2>
             <div className="status-assign">
@@ -170,7 +170,8 @@ const TaskMessageDiv = styled.div`
 `
 
 const TaskDiv = styled.div`
-    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 30%);
+    // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 30%);
+    box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     margin-top: 2em;
     border: 1px solid #e2d9d5;
     border-radius: 20px;

@@ -44,11 +44,14 @@ const NavBar = () => {
 }
 
 const NavDiv = styled.div`
+    position: fixed;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     background-color: #434343;
     height: 40px;
     box-shadow: 0 0px 30px -6px rgba(0,0,0,0.9);
+    z-index: 5;
 `
 
 export default NavBar

@@ -75,13 +75,15 @@ const HandleDiv = styled(motion.div)`
     left: 0;
     right: 0;
     top: 0;
-    background-color: ${props => props.completed ? "#89fc89" : "#ff8f8f"};
+    background-color: ${props => props.completed ? "green" : "red"};
     // background-color: white;
     border-radius: 40px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 4px 4px 16px 0 rgba(0, 0, 0, 0.1);
 `
 
 const ToggleDiv = styled.div`
+    box-shadow: 0 0px 15px -8px rgb(0 0 0 / 50%);
+    border-radius: 40px;
     .switch {
         font-family: "Open Sans", sans-serif;
         display: flex;
@@ -111,19 +113,20 @@ const ToggleDiv = styled.div`
     }
 
     .text {
-        font-size: 30px;
-        font-weight: 400;
-        line-height: 20px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 5px;
         white-space: nowrap;
         color: rgba(0, 0, 0, 0.5);
         position: relative;
-        padding: 30px 40px;
+        padding: 20px 20px;
         z-index: 1;
         transition: ease 200ms color;
     }
 
     .active {
-        color: #000;
+        // color: #000;
+        color: white;
         // color: red;
     }
 

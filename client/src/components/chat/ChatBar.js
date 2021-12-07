@@ -45,14 +45,15 @@ const ChatBar = () => {
     
     return (
         <ChatDiv>
-            <BsChatRightDots onClick={() => setOpenSideBar(openSideBar => !openSideBar)} />
-            {openSideBar && 
+            {/* <BsChatRightDots onClick={() => setOpenSideBar(openSideBar => !openSideBar)} />
+            {openSideBar &&  */}
                 <div className="chat-div">
                     {/* <div className="add-div"><RiAddFill /></div> */}
                     <CreateRoom channel={channel} setCurrentReceiver={setCurrentReceiver} allChatrooms={allChatrooms}/>
                     <ChatroomList allChatrooms={allChatrooms} setCurrentReceiver={setCurrentReceiver}/>
                     {currentChatroom && <MessageBox userTeamUser={userTeamUser} currentReceiver={currentReceiver} currentChatroom={currentChatroom}/>}
-                </div>}
+                </div>
+            // }
         </ChatDiv>
     )
 }
@@ -62,6 +63,7 @@ const ChatDiv = styled.div`
     position: fixed;
     background: white;
     z-index: 50;
+    margin-top: 39.99px;
 
     .chat-div {
         width: 300px;

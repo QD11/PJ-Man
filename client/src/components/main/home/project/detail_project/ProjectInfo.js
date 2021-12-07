@@ -54,13 +54,13 @@ const ProjectInfo = () => {
                     <span>Total</span>
                 </div>
                 <div>
-                <CustomSelect
-                    value={val}
-                    onChange={setVal}
-                    options={options}
-                    // placeholder="Choose an option..."
-                />
-            </div>
+                    <CustomSelect
+                        value={val}
+                        onChange={setVal}
+                        options={options}
+                        // placeholder="Choose an option..."
+                    />
+                </div>
             </div>
             {/* <div> */}
                 {sections.map(section => <Section key={section.id} val={val} section={section} />)}
@@ -72,16 +72,14 @@ const ProjectInfo = () => {
 const ProjectDiv = styled.div`
     display: flex;
     justify-content: flex-start;
-    // font-family: Quarion, sans-serif;
     flex-direction: column;
-    width: fit-content;
     background-color:#fff;
     border-radius: 20px;
     padding: 40px;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     transition: 0.5s;
-    // box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     // &:hover {
     //     box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
     // }
@@ -112,6 +110,7 @@ const ProjectDiv = styled.div`
     .task-header {
         display: flex;
         flex-direction: row;
+        justify-content: space-around;
         margin-bottom: 20px;
         font-size: 25px;
     }

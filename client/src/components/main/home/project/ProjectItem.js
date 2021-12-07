@@ -100,6 +100,7 @@ const ProjectItem = ({project}) => {
                 <>
                     <div className="priority-dots">
                         <SpanPriority priority={project.priority} >Priority: {project.priority.slice(0,1).toUpperCase() + project.priority.slice(1)}</SpanPriority>
+                        <span>{project.completed ? "Completed" : "Ongoing" }</span>
                         {isAdmin && <BsThreeDots onClick={() => setCardForm(1)}/>}
                     </div>
                     <div className="content">

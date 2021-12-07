@@ -98,7 +98,8 @@ margin-block-start: 0em;
 margin-block-end: 0em;
 padding-inline-start: 0px;
 // margin-bottom: 50px;
-width: 775px;
+// width: 775px;
+width: 100%;
 font-family: 'Readex Pro', sans-serif;
 
 
@@ -111,7 +112,7 @@ const TaskLi = styled.li`
     width: 225px;
     // height: 225px;
     min-height: 225px;
-    margin-right: 50px;
+    margin-right: 100px;
     :nth-child(3n) {
         margin-right: 0px;
     }
@@ -142,7 +143,10 @@ const TaskLi = styled.li`
         font-size: 25px;
         width: 100%;
         text-align: center;
-        padding: 0px 0px 0px 0px;
+        // padding: 5px;
+        word-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
     }
 
     .description {

@@ -54,6 +54,7 @@ const MessageDiv = styled.div`
     display: flex;
     flex-direction: column;
     margin-right:4px;
+    max-width: 400px;
 `
 
 const OtherDiv = styled.div`
@@ -87,7 +88,6 @@ const UserSpan = styled.span`
     padding: 0.5em 1em 0.65em;
     border-radius: 4px;
     font-size: 20px;
-    max-width: 500px;
     clear: both;
     position: relative;
     float: right;
@@ -97,6 +97,10 @@ const UserSpan = styled.span`
     border-top-right-radius: 1.1em;
     border-bottom-right-radius: 1em 0.2em;
     border-bottom-left-radius: 1.1em;
+    // width: 100%;
+    word-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
 `
 
 const OtherSpan = styled.p`
@@ -117,6 +121,9 @@ const OtherSpan = styled.p`
     border-bottom-left-radius: 1em 0.2em;
     border-bottom-right-radius: 1.1em;
     max-width: 500px;
+    word-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
 `
 
 export default TaskMessage

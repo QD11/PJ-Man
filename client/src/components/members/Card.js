@@ -45,28 +45,55 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
             }
     })}
 
+    const status = {
+        owner: team_user.owner,
+        admin: team_user.admin
+    }
+
     return (
         <CardDiv>
             <div className="top-half">
-                <div>
-                    <div className="name-admin" >
-                        <h3>{user.first_name + " " + user.last_name}</h3>
-                        <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
-                        {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
+                <div className="content-div">
+                    <div>
+                        <div>
+                            <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
+                            {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
+                        </div>
+                        <div className="name-admin" >
+                            <h3>{user.first_name + " " + user.last_name}</h3>
+                        </div>
+                        <p>{team_user.title ? team_user.title : "---"}</p>
                     </div>
-                    <p>{team_user.title ? team_user.title : "---"}</p>
+                    <div className="remove-user-div">
+                        {showRemove && < RiUserUnfollowFill onClick={removeUser} />}
+                    </div>
+                {userInfo.id !== user.id && <div className="bottom-half">
+                <div className="Message">
+                    < RiMessage3Line />
+                    <span>Message</span>
                 </div>
-                <div className="remove-user-div">
-                    {showRemove && < RiUserUnfollowFill onClick={removeUser} />}
+                {!team_user.owner && teamUserCurrentInfo.admin &&
+                    <ProDemDiv>
+                        {team_user.admin ? 
+                        <div onClick={changeAdminHandler} style={{width: "fit-content"}}>
+                            <RiArrowDownCircleLine  />
+                            <span >Demote</span> 
+                        </div>
+                        : 
+                        <div onClick={changeAdminHandler} style={{width: "fit-content"}}>
+                            <RiArrowUpCircleLine  />
+                            <span >Promote</span> 
+                        </div>
+                        }
+                    </ProDemDiv>
+                }
+            </div>}
                 </div>
-                <div>
-                {user.profile_picture_url ? <Avatar key={user.id}  src={user.profile_picture_url} round={true} size="75" textSizeRatio={1.75}/>
-                        :
-                        <Avatar key={user.id}  name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>}
-                {/* <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/> */}
-                </div>
+                <AvatarDiv status={status} className="avatar-div">
+                    <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="100" textSizeRatio={1.75}/>
+                </AvatarDiv>
             </div>
-            {userInfo.id !== user.id && <div className="bottom-half">
+            {/* {userInfo.id !== user.id && <div className="bottom-half">
                 <div className="Message">
                     < RiMessage3Line />
                     <span>Message</span>
@@ -86,7 +113,7 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
                         }
                     </ProDemDiv>
                 }
-            </div>}
+            </div>} */}
         </CardDiv>
     )
 }
@@ -114,16 +141,29 @@ const AdminStatus = styled.span`
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 `
+const AvatarDiv = styled.div`
+    border-radius: 0 40px 40px 0;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    background-color: ${props => props.status.owner ? "red" : props.status.admin ? "green" : "purple"};
+    align-items: center;
+`
 
 const CardDiv = styled.div`
-box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
-
+    // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
+    transition: all 0.5s ease-out;
+    :hover {
+        box-shadow: -10px 10px 0px 0px rgb(0 0 0 / 20%);
+        transform: translate(5px, -5px);
+        // translate-x: 10px;
+    }
     align-items:center;
-    border-radius: 5px;
-    border: 1px solid #e2e8f0;
+    border-radius: 40px;
+    // border: 1px solid #e2e8f0;
     margin-top: 40px;
     // height: 141px;
-    width: 600px;
+    width: 500px;
     background-color: #fff;
     font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     
@@ -141,7 +181,19 @@ box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
     .top-half {
         display: flex;
         justify-content: space-between;
-        padding: 1.5rem;
+        // padding: 1.5rem;
+        .content-div {
+            padding: 20px 0px 20px 20px;
+            width: 60%;
+        }
+        // .avatar-div {
+        //     border-radius: 0 40px 40px 0;
+        //     width: 40%;
+        //     display: flex;
+        //     justify-content: center;
+        //     background-color: red;
+        //     align-items: center;
+        // }
     }
 
     & h3 {
@@ -171,20 +223,20 @@ box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
         // padding: 20px 0 20px 0;
         justify-content: space-around;
         box-sizing: border-box;
-        border-width: 1;
-        border-style: solid;
-        border-color: #e2e8f0;
-        border-top-width: 1px;
-        border-bottom-width: 0px;
-        border-right-width: 0px;
-        border-left-width: 0px;
+        // border-width: 1;
+        // border-style: solid;
+        // border-color: #e2e8f0;
+        // border-top-width: 1px;
+        // border-bottom-width: 0px;
+        // border-right-width: 0px;
+        // border-left-width: 0px;
         align-items: center;
         .Message {
             font-size: 20px;
             width: 50%;
             text-align: center;
             height: 100%;
-            padding: 20px 0 20px 0;
+            // padding: 20px 0 20px 0;
             & span {
                 margin-left: 10px;
                 color: #183063;
@@ -196,19 +248,19 @@ box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
 
 const ProDemDiv = styled.div`
     cursor: pointer;
-    border-width: 1;
-    border-style: solid;
-    border-color: #e2e8f0;
-    border-left-width: 1px;
-    border-top-width: 0px;
-    border-bottom-width: 0px;
-    border-right-width: 0px;
+    // border-width: 1;
+    // border-style: solid;
+    // border-color: #e2e8f0;
+    // border-left-width: 1px;
+    // border-top-width: 0px;
+    // border-bottom-width: 0px;
+    // border-right-width: 0px;
     color: #183063;
     font-size: 20px;
     text-align: center;
     width: 50%;
     height: 100%;
-    padding: 20px 0 20px 0;
+    // padding: 20px 0 20px 0;
     & span {
         margin-left: 10px;
     }

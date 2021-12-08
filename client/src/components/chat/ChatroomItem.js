@@ -4,15 +4,15 @@ import Avatar from 'react-avatar'
 import styled from 'styled-components'
 import {ActionCableContext} from '../../index'
 
-const ChatroomItem = ({chatroom, setCurrentReceiver}) => {
+const ChatroomItem = ({chatroom, setCurrentReceiver, setAllChatrooms}) => {
     const cable = useContext(ActionCableContext)
-    const [messages, setMessages] = useState([])
     const user = useSelector(state => state.user)
-
+    const [lastMessage, setLastMessage] = useState("")
+    
     useEffect(() => {
-        fetch(`/chatrooms/${chatroom.id}/chat_messages`)
+        fetch(`/last_message/${chatroom.id}`)
         .then(resp => resp.json())
-        .then(messages => setMessages(messages))
+        .then(message => setLastMessage(message))
     }, [])
 
     useEffect(() => {
@@ -22,17 +22,37 @@ const ChatroomItem = ({chatroom, setCurrentReceiver}) => {
         },
         {
             received: (newMessage) => {
-                setMessages(messages => [...messages, newMessage])
+                setLastMessage(newMessage)
+                setAllChatrooms(allChatrooms => allChatrooms.map(chatroom => {
+                    if (chatroom.id === newMessage.chatroom.id) {
+                        return({
+                            ...chatroom,
+                            last_message: {
+                                ...chatroom.last_message,
+                                created_at: newMessage.created_at,
+                                id: newMessage.id,
+                                message: newMessage.message,
+                                team_user_id: newMessage.team_user.id,
+                                updated_at: newMessage.created_at
+                            }
+                        })
+                    }
+                    else {
+                        return({
+                            ...chatroom
+                        })
+                    }
+                }))
             }
         })
     }, [])
     
-    if (!messages.length) {
+    
+    if (!lastMessage) {
         return null
     }
-
     const otherMember = chatroom.chat_members.find(chat_member => chat_member.team_user.user_id !== user.id).team_user
-    const lastMsg = messages[messages.length - 1].message
+    // const lastMsg = messages[messages.length - 1].message
 
     const handleClick=() => {
         setCurrentReceiver(otherMember)
@@ -41,18 +61,36 @@ const ChatroomItem = ({chatroom, setCurrentReceiver}) => {
     return (
         // <ChatItemDiv onClick={() => setCurrentReceiver(otherMember)}>
         <ChatItemDiv onClick={handleClick}>
-            <div>
-                <Avatar key={user.id}  src={otherMember.user.profile_picture_url} name={otherMember.user.first_name + ' ' +  otherMember.user.last_name} round={true} size="20" textSizeRatio={1.75}/>
-                <span>{otherMember.user.first_name + ' ' +  otherMember.user.last_name}</span>
+                <Avatar key={user.id}  src={otherMember.user.profile_picture_url} name={otherMember.user.first_name + ' ' +  otherMember.user.last_name} round={true} size="40" textSizeRatio={1.75}/>
+            <div className="message-div">
+                <span className="name">{otherMember.user.first_name + ' ' +  otherMember.user.last_name}</span>
+                <span className="msg" >{lastMessage.message.length < 15 ? lastMessage.message : lastMessage.message.slice(0,15)+"..."}</span>
             </div>
-            <span>{lastMsg.length < 15 ? lastMsg : lastMsg.slice(0,15)+"..."}</span>
         </ChatItemDiv>
     )
 }
 
 const ChatItemDiv = styled.div`
-    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    display: flex;
     cursor: pointer;
+    box-shadow: 0 0px 20px -10px rgb(0 0 0 / 50%);
+    align-items: center;
+    flex-direction: row;
+    .message-div {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        .msg {
+            color: grey;
+        }
+        .name {
+            font-weight: 400;
+            font-size: 20px;
+        }
+    }
 `
 
 export default ChatroomItem

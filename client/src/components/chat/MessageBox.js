@@ -50,8 +50,8 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
             </div>
             <div className="message-send">
                 <form onSubmit={submitMsg}>
-                    <input type="text" onChange={e => setMsgToSend(e.target.value)}/>
-                    <button type="submit">Send</button>
+                    <input className="sender" type="text" onChange={e => setMsgToSend(e.target.value)}/>
+                    <button className="sender-submit" type="submit">Send</button>
                 </form>
             </div>
         </MessageDiv>
@@ -59,9 +59,10 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
 }
 
 const MessageDiv = styled.div`
+    
     margin-top: 20px;
     width: 100%;
-    height: 100%;
+    height: 370px;
     border: 1px solid black;
     .messages-div {
         height: 80%;
@@ -70,7 +71,13 @@ const MessageDiv = styled.div`
     }
     .message-send {
         height: 20%;
-
+        .sender {
+            width: 70%;
+            font-size: 20px;
+        }
+        .sender-submit {
+            font-size: 20px;
+        }
     }
 `
 

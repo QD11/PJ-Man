@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
   delete '/tasks/:team_id/:task_id', to: 'tasks#destroy'
 
+  get '/last_message/:chatroom_id', to: 'chat_messages#get_last_message'
 
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'

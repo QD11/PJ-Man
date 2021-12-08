@@ -7,7 +7,7 @@ class MessagesChannel < ApplicationCable::Channel
   
   def receive(data)
     teamUser = TeamUser.find_by(id: data['sender_team_user_id'])
-    message = @chatroom.chat_message.create(message: data['message'], team_user: teamUser)
+    message = @chatroom.chat_messages.create(message: data['message'], team_user: teamUser)
     MessagesChannel.broadcast_to(@chatroom, ChatMessageSerializer.new(message))
   end
 

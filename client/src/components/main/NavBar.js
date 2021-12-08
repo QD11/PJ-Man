@@ -44,7 +44,6 @@ const NavBar = () => {
         navigate(`/${team.name}/user`)
         setActive("user")
     }
-    console.log(active)
     return (
         <NavDiv className="NavDiv" active={active}>
             {/* <button onClick={onClickTeams}>Back to Teams</button> */}

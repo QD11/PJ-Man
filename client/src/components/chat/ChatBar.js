@@ -17,8 +17,8 @@ const ChatBar = () => {
     const user = useSelector(state => state.user)
     const userTeamUser = team.team_users.find(teamUser => teamUser.user_id === user.id)
     const [allChatrooms, setAllChatrooms] = useState([])
-
     //subscribe to the create chatroom channel here
+
     useEffect(() => {
         fetch(`/team_users/${userTeamUser.id}/chatrooms`)
         .then(resp => resp.json())
@@ -50,10 +50,10 @@ const ChatBar = () => {
                 <div className="chat-div">
                     {/* <div className="add-div"><RiAddFill /></div> */}
                     <CreateRoom channel={channel} setCurrentReceiver={setCurrentReceiver} allChatrooms={allChatrooms}/>
-                    <ChatroomList allChatrooms={allChatrooms} setCurrentReceiver={setCurrentReceiver}/>
+                    <ChatroomList allChatrooms={allChatrooms} setCurrentReceiver={setCurrentReceiver} setAllChatrooms={setAllChatrooms}/>
                     {currentChatroom && <MessageBox userTeamUser={userTeamUser} currentReceiver={currentReceiver} currentChatroom={currentChatroom}/>}
                 </div>
-            // }
+            {/* } */}
         </ChatDiv>
     )
 }
@@ -61,8 +61,8 @@ const ChatBar = () => {
 const ChatDiv = styled.div`
     right: 0;
     position: fixed;
-    background: white;
-    width: 17%;
+    background: #fff;
+    width: 20em;
     z-index: 50;
     // margin-top: 39.99px;
 

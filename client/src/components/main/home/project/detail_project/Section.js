@@ -31,7 +31,6 @@ const Section = ({section, val}) => {
                 r.json().then((err) => console.log(err.errors));
             }})
     }
-    console.log(section.tasks)
     return (
         <>
             <SectionDiv>

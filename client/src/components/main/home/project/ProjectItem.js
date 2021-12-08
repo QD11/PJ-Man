@@ -219,7 +219,7 @@ const OptionDiv = styled.div`
 
 const SpanPriority = styled.span`
     font-size: 18px;
-    color: ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    color: ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#6ac9f4": "#f44336"};
 `
 
 const CardLi = styled(motion.li)`
@@ -233,10 +233,10 @@ const CardLi = styled(motion.li)`
     width: 400px;
     height: 140px;
     // box-shadow: -10px 0px 0px 0px #fba609;
-    box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    box-shadow: -10px 0px 0px 0px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     transition: 0.5s;
     &:hover {
-        box-shadow: -14px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+        box-shadow: -14px 0px 0px 0px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     }
     .priority-dots {
         display:flex;

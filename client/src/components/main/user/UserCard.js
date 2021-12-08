@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getTeam } from '../../../redux/teamSlice'
 import { getUser } from '../../../redux/userSlice'
 import CloudinaryUpload from './CloudinaryUpload'
+import {BsFillPencilFill} from 'react-icons/bs'
 
 const UserCard = ({user, team_user}) => {
     //userInfo points to logged in user
@@ -13,9 +14,10 @@ const UserCard = ({user, team_user}) => {
     const [titleInput, setTitleInput] = useState(false)
     const team = useSelector(state => state.team)
     const [title, setTitle] = useState('')
+    const [changeTitle, setChangeTitle] = useState(false)
     
     useEffect(() => {
-        setTitle('')
+        setTitle(user.title)
     }, [titleInput])
 
     const onTitleHandler = () => {
@@ -32,6 +34,7 @@ const UserCard = ({user, team_user}) => {
                 r.json()
                 .then(data => {
                     dispatch(getTeam(data))
+                    setChangeTitle(false)
                     setTitleInput(false)
                 })
             }
@@ -72,10 +75,10 @@ const UserCard = ({user, team_user}) => {
 
         }) 
     }
-
+    
     return (
         <div>
-            <CardDiv>
+            {/* <CardDiv>
                 <div className="top-half">
                     <div>
                         <div className="name-admin" >
@@ -94,29 +97,144 @@ const UserCard = ({user, team_user}) => {
                         </TitleDiv>
                         <div>
                             <button onClick={() => setTitleInput(titleInput => !titleInput)}>Change Title</button>
-                            {/* <button onClick={() => CloudinaryUpload("k3o6vpxz", "Update Picture", handleUpload)}>test</button> */}
                             <div>
                                 <CloudinaryUpload
                                     preset="k3o6vpxz"
                                     buttonText="Update Picture"
                                     handleUpload={handleUpload}
                                 /> 
-                                {/* <input type="file" accept="image/*" multiple={false} /> */}
                                 <button onClick={removePicture}>Remove Picture</button>
                             </div>
                         </div>
                     </div>
                     <div>
-                        {/* {user.profile_picture_url ? <Avatar key={user.id} name={user.first_name + ' ' +  user.last_name} src={user.profile_picture_url} round={true} size="75" textSizeRatio={1.75}/>
-                        : */}
                         <Avatar src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="75" textSizeRatio={1.75}/>
-                        {/* } */}
                     </div>
                 </div>
-            </CardDiv>
+            </CardDiv> */}
+            {/*  */}
+            <CardDIV>
+                <div className="header">
+                    <div>
+                        <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
+                        {/* <AdminIcon /> */}
+                        {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
+                    </div>
+                    <AvatarDiv className="avatar-div">
+                        <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="120" textSizeRatio={1.75}/>
+                    </AvatarDiv>
+                    <div className="changePic">
+                        <CloudinaryUpload
+                            preset="k3o6vpxz"
+                            buttonText="Update Picture"
+                            handleUpload={handleUpload}
+                        />
+                        <button onClick={removePicture}>Remove Picture</button>
+                    </div> 
+                    <div className="name-admin" >
+                        <span className="name">{user.first_name + " " + user.last_name}</span>
+                        <div className="title-div">
+                            {changeTitle ?
+                                <>
+                                    <input value={title} onChange={(e) => setTitle(e.target.value)}/>
+                                    < ChangeTitle onClick={onTitleHandler}/>
+                                </>
+                                    :
+                                <>
+                                    <span className="title">{team_user.title ? team_user.title : "---"}</span>
+                                    < ChangeTitle onClick={() => setChangeTitle(true)}/>
+                                </>
+                            }
+                        </div>
+                        <span className="email">{user.email}</span>
+                    </div>
+                </div>
+            </CardDIV>
         </div>
     )
 }
+
+const ChangeTitle = styled(BsFillPencilFill)`
+    margin-left: 10px;
+`
+
+const CardDIV = styled.div`
+    margin-top: 40px;
+    display: flex;
+    border-radius: 20px;
+    height: fit-content;
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
+    .header {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        width: 100%;
+    }
+    .changePic {
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+    }
+    .name-admin {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        & span {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .title-div {
+            margin-top: 10px;
+        }
+        .name {
+            font-size: 28px;
+            font-weight: 500;
+        }
+        .email {
+            color: gray;
+            // font-weight: 600;
+        }
+    }
+    .message-admin {
+        display: flex;
+        flex-direction: row;
+        margin-top: 15px;
+        justify-content: space-around;
+        font-size: 20px;
+        .msg {
+            display: flex;
+            align-items: center;
+        }
+        .adm {
+            display: flex;
+            cursor: pointer;
+            // color: #183063;
+            text-align: center;
+            width:fit-content;
+            height: 100%;
+            // padding: 20px 0 20px 0;
+            & span {
+                // margin-left: 10px;
+            }
+            .admin-btn {
+                width: fit-content;
+                display: flex;
+            }
+        }
+    }
+`
+
+const AvatarDiv = styled.div`
+    border-radius: 0 40px 40px 0;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 const TitleDiv = styled.div`
     height: 35px;

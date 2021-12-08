@@ -76,12 +76,13 @@ const ProjectDiv = styled.div`
     background-color:#fff;
     border-radius: 20px;
     padding: 40px;
-    width: 100%;
+    width: 80%;
     height: fit-content;
     transition: 0.5s;
-    box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    margin-top: -30px;
+    box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     // &:hover {
-    //     box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    //     box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     // }
     .title-header {
         display: flex;

@@ -171,8 +171,9 @@ const TaskMessageDiv = styled.div`
 
 const TaskDiv = styled.div`
     // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 30%);
-    box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#4caf50" : props.priority === "medium"? "#03a9f4": "#f44336"};
+    box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     margin-top: 2em;
+    margin-bottom: 2em;
     border: 1px solid #e2d9d5;
     border-radius: 20px;
     background-color: #fff;

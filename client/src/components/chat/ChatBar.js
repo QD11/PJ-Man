@@ -62,11 +62,12 @@ const ChatDiv = styled.div`
     right: 0;
     position: fixed;
     background: white;
+    width: 17%;
     z-index: 50;
-    margin-top: 39.99px;
+    // margin-top: 39.99px;
 
     .chat-div {
-        width: 300px;
+        // width: 300px;
         display: flex;
         flex-direction: column;
         height: 100vh;

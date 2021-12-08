@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Avatar from 'react-avatar'
 import {RiMessage3Line, RiArrowUpCircleLine, RiArrowDownCircleLine, RiUserUnfollowFill} from 'react-icons/ri'
+import {FaUserSlash} from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { fetchTeam, getTeam } from '../../redux/teamSlice'
 import { getAllProjects } from '../../redux/projectSlice'
@@ -51,72 +52,140 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
     }
 
     return (
-        <CardDiv>
-            <div className="top-half">
-                <div className="content-div">
-                    <div>
-                        <div>
-                            <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
-                            {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
-                        </div>
-                        <div className="name-admin" >
-                            <h3>{user.first_name + " " + user.last_name}</h3>
-                        </div>
-                        <p>{team_user.title ? team_user.title : "---"}</p>
-                    </div>
-                    <div className="remove-user-div">
-                        {showRemove && < RiUserUnfollowFill onClick={removeUser} />}
-                    </div>
-                {userInfo.id !== user.id && <div className="bottom-half">
-                <div className="Message">
-                    < RiMessage3Line />
-                    <span>Message</span>
+        <>
+        <CardLi>
+            <div className="header">
+                <div>
+                    <AdminStatus admin={team_user.admin} >{team_user.admin ? "Admin" : "Member" }</AdminStatus>
+                    {/* <AdminIcon /> */}
+                    {team_user.owner && <OwnerStatus >Owner</OwnerStatus> }
                 </div>
-                {!team_user.owner && teamUserCurrentInfo.admin &&
-                    <ProDemDiv>
-                        {team_user.admin ? 
-                        <div onClick={changeAdminHandler} style={{width: "fit-content"}}>
-                            <RiArrowDownCircleLine  />
-                            <span >Demote</span> 
-                        </div>
-                        : 
-                        <div onClick={changeAdminHandler} style={{width: "fit-content"}}>
-                            <RiArrowUpCircleLine  />
-                            <span >Promote</span> 
-                        </div>
-                        }
-                    </ProDemDiv>
-                }
-            </div>}
-                </div>
-                <AvatarDiv status={status} className="avatar-div">
-                    <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="100" textSizeRatio={1.75}/>
-                </AvatarDiv>
+                {!team_user.owner && teamUserCurrentInfo.owner && <DeleteUser onClick={removeUser}/>}
             </div>
-            {/* {userInfo.id !== user.id && <div className="bottom-half">
-                <div className="Message">
+            <AvatarDiv status={status} className="avatar-div">
+                <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="120" textSizeRatio={1.75}/>
+            </AvatarDiv>
+            <div className="name-admin" >
+                <span className="name">{user.first_name + " " + user.last_name}</span>
+                <span className="title">{team_user.title ? team_user.title : "---"}</span>
+                <span className="email">{user.email}</span>
+            </div>
+            { userInfo.id !== user.id && <div className="message-admin">
+                <div className="msg">
                     < RiMessage3Line />
                     <span>Message</span>
                 </div>
                 {!team_user.owner && teamUserCurrentInfo.admin &&
-                    <ProDemDiv onClick={changeAdminHandler}>
-                        {team_user.admin ? 
-                        <div>
-                            <RiArrowDownCircleLine  />
-                            <span >Demote</span> 
-                        </div>
-                        : 
-                        <div>
-                            <RiArrowUpCircleLine  />
-                            <span >Promote</span> 
-                        </div>
-                        }
-                    </ProDemDiv>
-                }
-            </div>} */}
-        </CardDiv>
+                <div className="adm">
+                    {team_user.admin ? 
+                    <div onClick={changeAdminHandler} className="admin-btn" style={{width: "fit-content"}}>
+                        <RiArrowDownCircleLine  />
+                        <span >Demote</span> 
+                    </div>
+                    : 
+                    <div onClick={changeAdminHandler} className="admin-btn" style={{width: "fit-content"}}>
+                        <RiArrowUpCircleLine  />
+                        <span >Promote</span> 
+                    </div>
+                    }
+                </div>
+            }
+            </div>}
+        </CardLi>
+        </>
     )
 }
+
+const ProDemDiv = styled.div`
+    display: flex;
+    cursor: pointer;
+    color: #183063;
+    font-size: 20px;
+    text-align: center;
+    width:fit-content;
+    height: 100%;
+    // padding: 20px 0 20px 0;
+    & span {
+        // margin-left: 10px;
+    }
+    .admin-btn {
+        width: fit-content;
+        display: flex;
+    }
+`
+
+const DeleteUser = styled(FaUserSlash)`
+    color: red;
+    cursor: pointer;
+`
+
+const CardLi = styled.li`
+    list-style: none;
+    border-radius: 20px;
+    // height: fit-content;
+    min-height: 320px;
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
+    margin-right: 75px;
+    margin-bottom: 75px;
+    :nth-child(3n) {
+        margin-right: 0px;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .name-admin {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        & span {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .name {
+            font-size: 28px;
+            font-weight: 500;
+        }
+        .email {
+            color: gray;
+            // font-weight: 600;
+        }
+    }
+    .message-admin {
+        display: flex;
+        flex-direction: row;
+        margin-top: 15px;
+        justify-content: space-around;
+        font-size: 20px;
+        .msg {
+            display: flex;
+            align-items: center;
+        }
+        .adm {
+            display: flex;
+            cursor: pointer;
+            // color: #183063;
+            text-align: center;
+            width:fit-content;
+            height: 100%;
+            // padding: 20px 0 20px 0;
+            & span {
+                // margin-left: 10px;
+            }
+            .admin-btn {
+                width: fit-content;
+                display: flex;
+            }
+        }
+    }
+`
+
+// const AdminIcon = styled(GrUserAdmin)`
+//     color: green;
+// `
 
 const OwnerStatus = styled.span`
     display: inline-block;
@@ -125,7 +194,7 @@ const OwnerStatus = styled.span`
     border-radius: 9999px;
     font-size: 1rem;
     font-weight: 500;
-    margin-left: .75rem;
+    // margin-left: .75rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 `
@@ -137,20 +206,22 @@ const AdminStatus = styled.span`
     border-radius: 9999px;
     font-size: 1rem;
     font-weight: 500;
-    margin-left: .75rem;
+    // margin-left: .75rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 `
 const AvatarDiv = styled.div`
     border-radius: 0 40px 40px 0;
-    width: 40%;
+    width: 100%;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
-    background-color: ${props => props.status.owner ? "red" : props.status.admin ? "green" : "purple"};
+    // background-color: ${props => props.status.owner ? "red" : props.status.admin ? "green" : "purple"};
     align-items: center;
 `
 
-const CardDiv = styled.div`
+const CardDiv = styled.li`
+    list-style: none;
     // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
     transition: all 0.5s ease-out;
     :hover {
@@ -244,27 +315,5 @@ const CardDiv = styled.div`
         }
     }
 `
-
-
-const ProDemDiv = styled.div`
-    cursor: pointer;
-    // border-width: 1;
-    // border-style: solid;
-    // border-color: #e2e8f0;
-    // border-left-width: 1px;
-    // border-top-width: 0px;
-    // border-bottom-width: 0px;
-    // border-right-width: 0px;
-    color: #183063;
-    font-size: 20px;
-    text-align: center;
-    width: 50%;
-    height: 100%;
-    // padding: 20px 0 20px 0;
-    & span {
-        margin-left: 10px;
-    }
-`
-
 
 export default Card

@@ -66,7 +66,8 @@ const CreateProject = () => {
     }
 
     return (
-        <CreateDiv name="create-project-div">
+        // <CreateDiv name="create-project-div">
+        <>
             <motion.div className="btn-div">
                 {/* <RiFileAddLine/>
                 <ItemSpan> Add Project</ItemSpan> */}
@@ -131,8 +132,8 @@ const CreateProject = () => {
                         </button>
                     </div>
                 </ModalDiv>}
-
-        </CreateDiv>
+                {/* </CreateDiv> */}
+        </>
     )
 }
 
@@ -191,7 +192,7 @@ const ModalDiv = styled.div`
     right: 0;
     bottom: 0;
     position: fixed;
-
+    z-index: 3;
     .overlay {
         width: 100vw;
         height: 100vh;

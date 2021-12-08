@@ -5,20 +5,51 @@ import Avatar from 'react-avatar'
 import { useNavigate } from 'react-router-dom'
 import {getTeam} from '../../redux/teamSlice'
 import {useDispatch} from 'react-redux'
+import {BsChevronDoubleDown, BsChevronDoubleUp} from 'react-icons/bs'
+import {ImEnter} from 'react-icons/im'
 // import { removeMemberFromTeam } from '../../redux/teamSlice'
 
 const TeamCard = ({team}) => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
     const toggleOpen = () => setIsOpen(!isOpen);
 
+    const handleClick = () => {
+        fetch("/team_login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body: JSON.stringify({team_id: team.id}),
+        })
+        .then(resp => resp.json())
+        .then(team => {
+            dispatch(getTeam(team))
+            navigate(`/${team.name}`)
+        })
+    }
 
     return (
         <>
-            <MotionCard onClick={toggleOpen} initial={false}>
-                <Avatar name={team.name} round={true} size="120" textSizeRatio={1.75}/>
-                <motion.span> {team.name}</motion.span>
+            <MotionCard initial={false} className="team-card">
+                <div className="init">
+                    <motion.span className="team-name"> {team.name}</motion.span>
+                    {/* <button className="enter" onClick={handleClick}>Enter</button> */}
+                    < EnterTeam onClick={handleClick}/>
+                    {/* <Avatar name={team.name} round={true} size="120" textSizeRatio={1.75}/> */}
+                </div>
+                {isOpen === false && <div className="click" onClick={toggleOpen}>
+                    <span>Click for More</span>
+                    < BsChevronDoubleDown />
+                </div>}
+                {isOpen === true && <div className="click" onClick={toggleOpen}>
+                    < BsChevronDoubleUp />
+                    <span>Close</span>
+                </div>}
                 <AnimatePresence initial={false}>
                     {isOpen && <motion.section
+                        className="open-section"
                         key="content"
                         initial="collapsed"
                         animate="open"
@@ -73,29 +104,73 @@ function Content({team}) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
-            <AvatarContainer>
-                {orderedUsers.map(user => <div key={user.id}>{<Avatar src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="60" textSizeRatio={1.75}/>}</div>)}
-            </AvatarContainer>
             <MotionSpan>{team.description}</MotionSpan>
-            <button onClick={handleClick}>Enter</button>
+            <AvatarContainer>
+                {orderedUsers.map(user => <li key={user.id}>{<Avatar src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="60" textSizeRatio={1.75}/>}</li>)}
+            </AvatarContainer>
         </motion.div>
         );
 }
-const AvatarContainer = styled.div`
-    display: flex;
+
+const EnterTeam = styled(ImEnter)`
+    font-size: 80px;
+    cursor: pointer;
 `
 
-const MotionCard = styled(motion.div)`
+const AvatarContainer = styled.ul`
+    display: flex;
+    margin-top: 20px;
+    & li {
+        list-style: none;
+        margin-right: 10px;
+    }
+`
+
+const MotionCard = styled(motion.li)`
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    flex-direction: column;
+    list-style: none;
     margin: 0;
     padding: 0;
-    background-color: rgba(214, 214, 214, 0.5);
+    background-color: #fff;
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
+    width: 60%;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     overflow: hidden;
-    cursor: pointer;
+    // cursor: pointer;
+    .init {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .team-name {
+        font-size: 100px;
+    }
+    .click {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: grey;
+        cursor: pointer;
+    }
     &: last-child {
         margin-bottom: 0px;
+    }
+    .enter {
+        height: fit-content;
+    }
+    .open-section {
+        width: 100%;
+        display: flex;
+        & span {
+            font-size: 25px;
+            flex-wrap: wrap;
+        }
     }
 `
 
@@ -105,6 +180,7 @@ const MotionSpan = styled(motion.span)`
     // background-color: #999;
     border-radius: 10px;
     margin-top: 12px;
+    margin-bottom: 25px;
 `
 
 export default TeamCard

@@ -75,8 +75,10 @@ const SideList = styled(motion.ul)`
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;
-    width: 10em;
-    margin: 20px 60px 20px 0px;
+    // width: 10em;
+    width: 13%;
+    margin: 20px 0px 20px 0px;
+    z-index: 3;
 `
 
 export default SideNav

@@ -5,9 +5,11 @@ import styled from 'styled-components'
 
 import ProjectItem from './ProjectItem'
 import CustomSelect from './dropdown/Dropdown'
+import CreateProject from './CreateProject'
 
 const ProjectList = () => {
     // const projects = useSelector(state => state.projects)
+    const isAdmin = useSelector(state => state.isAdmin)
     const [val, setVal] = useState("All")
     const projects = useSelector(state => state.team).projects
     const options = [
@@ -30,6 +32,7 @@ const ProjectList = () => {
                     options={options}
                     // placeholder="Choose an option..."
                 />
+                {isAdmin && <CreateProject />}
             </Clicker>
             <ProjectUL 
                 initial="hidden"
@@ -56,6 +59,9 @@ const Clicker = styled.div`
 // margin-top: 10px;
     z-index: 1;
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `
 
 const ProjectUL = styled(motion.ul)`

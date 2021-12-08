@@ -12,7 +12,7 @@ const Projects = () => {
 
     return (
         <FlexDiv>
-            {isAdmin && <CreateProject />}
+            {/* {isAdmin && <CreateProject />} */}
             <ProjectList />
         </FlexDiv>
     )

@@ -80,24 +80,30 @@ const TeamsLayout = () => {
                 }
             {newTeamForm ? <NewTeam setTeams={setTeams} setNewTeamForm={setNewTeamForm}/> 
                 : 
-                <>
+                <MotionUl>
                     {teams.map(team => <TeamCard key={team.id} team={team} />)}
-                </> 
+                </MotionUl> 
             }
         </div>
     )
 }
 
+
 const MotionUl = styled(motion.ul)`
+    color: #2b2b81;
     list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 250px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    background: white;
-    padding: 20px;
+    padding: 0px;
     border-radius: 25px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    margin-top: 50px;
+    align-items: center;
 `
 
 export default TeamsLayout

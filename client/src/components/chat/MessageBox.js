@@ -4,7 +4,7 @@ import Avatar from 'react-avatar'
 import {ActionCableContext} from '../../index'
 import Message from './Message'
 
-const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
+const MessageBox = ({currentReceiver, currentChatroom, userTeamUser, setAllChatrooms}) => {
     const cable = useContext(ActionCableContext)
     const [channel, setChannel] = useState(null)
     const [messages, setMessages] = useState([])
@@ -22,6 +22,20 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
         {
             received: (newMessage) => {
                 setMessages(messages => [...messages, newMessage])
+                setAllChatrooms(allChatrooms => allChatrooms.map(chatroom => {
+                    if (chatroom.id === currentChatroom.id) {
+                        return ({
+                            ...chatroom,
+                            last_message: newMessage
+                        })
+                    }
+                    else {
+                        return ({
+                            ...chatroom
+                        })
+                    }
+                }))
+                setAllChatrooms(allChatrooms => allChatrooms.filter((v,i,a)=>a.findIndex(t=>(t.id===v.id))===i))
             }
         })
         setChannel(channel)
@@ -29,7 +43,7 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
             channel.unsubscribe()
         }
     }, [currentChatroom])
-
+    
     const submitMsg = (e) => {
         e.preventDefault()
         const data = {
@@ -37,6 +51,7 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
             message: msgToSend
         }
         channel.send(data)
+        setMsgToSend('')
     }
     
     return (
@@ -50,7 +65,7 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser}) => {
             </div>
             <div className="message-send">
                 <form onSubmit={submitMsg}>
-                    <input className="sender" type="text" onChange={e => setMsgToSend(e.target.value)}/>
+                    <input className="sender" type="text" value={msgToSend} onChange={e => setMsgToSend(e.target.value)}/>
                     <button className="sender-submit" type="submit">Send</button>
                 </form>
             </div>

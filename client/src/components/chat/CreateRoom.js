@@ -53,7 +53,7 @@ const CreateRoom = ({setCurrentReceiver, allChatrooms, channel}) => {
 const SearchHolder = styled.div`
     .list-container {
         overflow-y: scroll;
-        max-height: 100px;
+        height: 100px;
     }
     .members {
         display: flex;
@@ -76,7 +76,7 @@ const SearchBar = styled.input`
     font-size: 14px;
     padding: 0 14px;
     cursor: pointer;
-    width: 300px;
+    width: 280px;
     margin: 10px;
 `
 

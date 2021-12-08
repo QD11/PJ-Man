@@ -51,7 +51,7 @@ const ChatBar = () => {
                     {/* <div className="add-div"><RiAddFill /></div> */}
                     <CreateRoom channel={channel} setCurrentReceiver={setCurrentReceiver} allChatrooms={allChatrooms}/>
                     <ChatroomList allChatrooms={allChatrooms} setCurrentReceiver={setCurrentReceiver} setAllChatrooms={setAllChatrooms}/>
-                    {currentChatroom && <MessageBox userTeamUser={userTeamUser} currentReceiver={currentReceiver} currentChatroom={currentChatroom}/>}
+                    {currentChatroom && <MessageBox setAllChatrooms={setAllChatrooms} userTeamUser={userTeamUser} currentReceiver={currentReceiver} currentChatroom={currentChatroom}/>}
                 </div>
             {/* } */}
         </ChatDiv>

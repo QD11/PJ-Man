@@ -15,7 +15,7 @@ const AddMember = () => {
 
     useEffect(() => {
         setCode(uuid)
-    }, [modal])
+    }, [modal, email])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -162,7 +162,7 @@ const ModalDiv = styled.div`
         border-radius: 3px;
         // max-width: 600px;
         // min-width: 300px;
-        width: 500px;
+        width: 600px;
     }
 
     .close-modal {

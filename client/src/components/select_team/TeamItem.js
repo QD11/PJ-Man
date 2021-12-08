@@ -4,7 +4,7 @@ import { motion, AnimatePresence, AnimatedSharedLayout } from 'framer-motion'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 
-const SideItem = ({item}) => {
+const TeamItem = ({item}) => {
     const navigate = useNavigate()
     const [onHover, setOnHover] = useState(false)
 
@@ -14,7 +14,7 @@ const SideItem = ({item}) => {
                 onMouseLeave ={() => setOnHover(false)}
                 whileHover={{scale: 1.1 }}
                 whileTap={{scale: 0.9 }}
-                onClick={() => navigate(item.url)}
+                onClick={item.nav}
             >
                 {item.icon}
                 <AnimatePresence initial={false}>
@@ -86,4 +86,4 @@ const ItemDiv = styled(motion.li)`
     background: #fff;
 `
 
-export default SideItem
+export default TeamItem

@@ -148,6 +148,7 @@ const CardLi = styled.li`
         .name {
             font-size: 28px;
             font-weight: 500;
+            text-align: center;
         }
         .email {
             color: gray;

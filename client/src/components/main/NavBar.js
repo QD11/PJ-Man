@@ -111,7 +111,7 @@ const NavDiv = styled.div`
         display: flex;
         width: fit-content;
         align-items: center;
-        color: ${props => props.active === "home" || props.active === ""? "#fe7f7f" : "#fff"};
+        color: ${props => props.active !== "user"? "#fe7f7f" : "#fff"};
         & span {
             margin-right: 5px;
         }

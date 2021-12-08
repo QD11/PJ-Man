@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import Avatar from 'react-avatar'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTeam } from '../../../redux/teamSlice'
+import { getTeam, fetchTeam } from '../../../redux/teamSlice'
 import { getUser } from '../../../redux/userSlice'
 import CloudinaryUpload from './CloudinaryUpload'
 import {BsFillPencilFill} from 'react-icons/bs'
@@ -58,7 +58,7 @@ const UserCard = ({user, team_user}) => {
         .then(res => res.json())
         .then(user => {
             dispatch(getUser(user));
-
+            dispatch(fetchTeam(`/teams/${team.id}`))
         })
     }
     
@@ -72,7 +72,7 @@ const UserCard = ({user, team_user}) => {
         .then(res => res.json())
         .then(user => {
             dispatch(getUser(user));
-
+            dispatch(fetchTeam(`/teams/${team.id}`))
         }) 
     }
     
@@ -192,6 +192,7 @@ const CardDIV = styled.div`
         .name {
             font-size: 28px;
             font-weight: 500;
+            text-align: center;
         }
         .email {
             color: gray;

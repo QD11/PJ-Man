@@ -71,9 +71,6 @@ const TeamCard = ({team}) => {
 }
 
 function Content({team}) {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
     const sortArray = (x, y) =>{
         if (x.last_name < y.last_name) {return -1;}
         if (x.last_name > y.last_name) {return 1;}
@@ -81,21 +78,6 @@ function Content({team}) {
     }
 
     const orderedUsers = team.users.sort(sortArray)
-
-    const handleClick = () => {
-        fetch("/team_login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                },
-            body: JSON.stringify({team_id: team.id}),
-        })
-        .then(resp => resp.json())
-        .then(team => {
-            dispatch(getTeam(team))
-            navigate(`/${team.name}`)
-        })
-    }
 
     return (
         <motion.div

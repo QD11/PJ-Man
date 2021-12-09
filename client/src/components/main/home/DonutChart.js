@@ -20,6 +20,7 @@ const DonutChart = ({donutOption}) => {
         .then(resp => resp.json())
         .then(data => setAllTasks(data))
     }, [team])
+    
     const tasksCompleted = allTasks.filter(task => task.completed).length
     const completedTaskArray = [allTasks.length - tasksCompleted, tasksCompleted]
 
@@ -66,24 +67,24 @@ const DonutChart = ({donutOption}) => {
                 labels: {
                     // This more specific font property overrides the global property
                     font: {
-                        size: 15
+                        size: 12
                     }
                 }
             },
             title: {
-                display: true,
-                text: 'Spending',
+                display: false,
+                text: 'Completion',
                 font: {
-                    size: 40
+                    size: 11
                 }
             }
         }
         }
 
     return (
-        <DonutDiv>
-            <Doughnut data={data}  options={options} height={300} width={300}/>
-        </DonutDiv>
+        <div>
+            <Doughnut data={data}  options={options} height={400} width={400}/>
+        </div>
     );
 }
 

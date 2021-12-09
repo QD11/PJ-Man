@@ -10,6 +10,12 @@ class TasksController < ApplicationController
         render json: tasks
     end
 
+    def completed_this_week
+        tasks = Task.joins(section: {project: :team}).where(team: {id: params[:team_id]})
+        tasks_this_week = tasks.where("completed_date >= ?", Date.today.at_beginning_of_week)
+        render json: tasks_this_week
+    end
+
     def destroy
         task = Task.find_by(id: params[:task_id])
         if task

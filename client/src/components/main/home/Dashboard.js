@@ -1,34 +1,44 @@
 import React, {useState} from 'react'
 import DonutChart from './DonutChart'
+import LineChart from './LineChart'
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
-import Calendar from 'react-calendar';
 
 const Dashboard = () => {
     const [donutOption, setDonutOption] = useState("project")
-    const [value, onChange] = useState(new Date());
+    
     
 
     return (
+        <>
         <DonutDiv>
             <DonutChart donutOption={donutOption}/>
             <div className="buttons">
-                <button className={donutOption==="project" && "active" } onClick={() => setDonutOption("project")}>Projects</button>
-                <button className={donutOption==="task" && "active" } onClick={() => setDonutOption("task")}>Tasks</button>
+                <button className={donutOption==="project" ? "active" : null } onClick={() => setDonutOption("project")}>Projects</button>
+                <button className={donutOption==="task" ? "active" : null } onClick={() => setDonutOption("task")}>Tasks</button>
             </div>
-            <Calendar
-        onChange={onChange}
-        value={value}
-      />
         </DonutDiv>
+        <LineDiv>
+            <LineChart />
+        </LineDiv>
+        </>
     );
 }
 
-
+const LineDiv = styled.div`
+    margin-top: 10px;
+    display: flex;
+    border-radius: 20px;
+    height: fit-content;
+    width: fit-content;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0px 20px -6px rgb(0 0 0 / 20%);
+    margin-left: 40px;
+`
 
 
 const DonutDiv = styled.div`
-    margin-top: 40px;
+    margin-top: 10px;
     display: flex;
     border-radius: 20px;
     height: fit-content;

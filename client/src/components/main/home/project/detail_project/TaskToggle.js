@@ -41,7 +41,7 @@ export default function TaskToggle({taskInfo}) {
             method: "PATCH",
             headers: {"Content-Type": "application/json"
             },
-            body: JSON.stringify({completed: !isOn, team_id: team.id}) 
+            body: JSON.stringify({completed: !isOn, team_id: team.id, completed_date: new Date()}) 
         })
         .then(resp => {
             if (resp.ok) {

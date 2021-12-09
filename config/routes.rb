@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     resources :chatrooms, only: [:index]
   end
 
+  resources :teams, only: [:show] do
+    resources :tasks, only: [:index]
+  end
+
   resources :chatrooms, only: [:show] do
     resources :chat_messages, only: [:index]
   end

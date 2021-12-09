@@ -43,7 +43,7 @@ const Section = ({section, val}) => {
                                 {/* <div className="completed"> */}
                                     {task.completed ? <Completed /> : <NotCompleted />}
                                 {/* </div> */}
-                                <span className="date">{task.created_at.slice(5,10)+'-'+task.created_at.slice(0,4)}</span>
+                                <span className="date">{task.due_date.slice(5,10)+'-'+task.due_date.slice(0,4)}</span>
                                 {isAdmin && <Trash onClick={() => deleteHandler(task)} />}
                             </div>
                             {/* <div className="completed">

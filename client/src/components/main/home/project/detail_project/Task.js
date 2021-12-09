@@ -69,7 +69,7 @@ const Task = () => {
     return (
         <TaskDiv priority={project.priority}>
             <div className="header">
-            <GoBack onClick={() => navigate(`/${params.team}/project/${params.project_id}/`)}>Go Back</GoBack>
+            <GoBack priority={project.priority} onClick={() => navigate(`/${params.team}/project/${params.project_id}/`)}>Back</GoBack>
             <TaskToggle taskInfo={taskInfo} />
             </div>
             <h2>{taskInfo.name}</h2>
@@ -83,6 +83,10 @@ const Task = () => {
                             </li>
                             )}
                     </ul>
+                </div>
+                <div className="assign-div">
+                    <label>Due By: </label>
+                    <span>{taskInfo.due_date.slice(5,10)+'-'+taskInfo.due_date.slice(0,4)}</span>
                 </div>
                 <div>
                     {/* <label >Status: </label>
@@ -106,7 +110,7 @@ const Task = () => {
                 <div className="messageForm">
                     <form className="grouping" onSubmit={handleUploadMessage}>
                         <input value={inputMsg} type="text" onChange={ e => setInputMsg(e.target.value)} ></input>
-                        <button disabled={!inputMsg} >Submit</button>
+                        <SubmitBtn priority={project.priority} disabled={!inputMsg} >Submit</SubmitBtn>
                     </form>
                 </div>
             </TaskMessageDiv>
@@ -114,8 +118,70 @@ const Task = () => {
     )
 }
 
+
+
+const SubmitBtn = styled.button`
+    // width: fit-content;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    // color: rgb(60, 66, 87);
+    color: black;
+    // background-color: rgb(255, 255, 255);
+    background-color: #f4f6f8;
+    // box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+    box-shadow: -5px 5px 0px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 4px 8px;
+    display: inline-block;
+    min-height: 28px;
+    transition: background-color .24s,box-shadow .24s;
+    margin: 10px;
+    margin-bottom: 22px;
+    // &:hover {
+    //     // background-color: #253858;
+    //     //     color: #fff;
+    //     box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+    // }
+    &:active {
+        box-shadow: none;
+        transform: translate(-2px, 2px);
+    }
+    &:disabled {
+        background-color: #d3d3d3;
+    }
+`
+
 const GoBack = styled.button`
-    width: fit-content;
+    // width: fit-content;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    // color: rgb(60, 66, 87);
+    color: black;
+    // background-color: rgb(255, 255, 255);
+    background-color: #ebecee;
+    // box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+    box-shadow: -5px 5px 0px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 4px 8px;
+    display: inline-block;
+    min-height: 28px;
+    transition: background-color .24s,box-shadow .24s;
+    margin: 10px;
+    // &:hover {
+    //     // background-color: #253858;
+    //     //     color: #fff;
+    //     box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+    // }
+    &:active {
+        box-shadow: none;
+        transform: translate(-2px, 2px);
+    }
 `
 
 const TaskMessageDiv = styled.div`
@@ -143,13 +209,27 @@ const TaskMessageDiv = styled.div`
             width: 100%;
             margin-top: 15px;
             justify-content: space-around;
+            align-items: center;
 
         }
         & input {
-            width: 85%;
+            width: 78%;
             height: 40px;
-            // margin-left: 15px;
             font-size: 25px;
+            margin-left: 20px;
+            
+            padding: 7px;
+            border-radius: 6px;
+            // font-size: 16px;
+            background: #fbfbfb;
+            border: 2px solid transparent;
+            height: 36px;
+            box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0 / 7%), 0 1px 1.5px 0 rgb(0 0 0 / 5%);
+            :focus{
+                border: 2px solid #000;
+                border-radius: 4px;
+            }
+        
         }
         & button {
             height: 46px;
@@ -206,6 +286,10 @@ const TaskDiv = styled.div`
             }
             display: flex;
             flex-direction: column;
+            & span {
+                margin-top: 25px;
+                font-size: 25px;
+            }
         }
         & ul {
             display: flex;

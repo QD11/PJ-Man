@@ -78,7 +78,7 @@ const SideDiv = styled.div`
     // width: 10em;
     width: 13%;
     margin: 20px 0px 20px 0px;
-    z-index: 3;
+    z-index: 1;
 `
 
 export default SideNav

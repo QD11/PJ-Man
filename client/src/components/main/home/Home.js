@@ -2,6 +2,7 @@ import React from 'react'
 import {Route, Routes} from 'react-router-dom'
 import styled from 'styled-components'
 
+import Dashboard from './Dashboard'
 import SideNav from './sidenav/SideNav'
 import ProjectRoutes from './project/ProjectRoutes'
 import MemberPage from '../../members/MemberPage'
@@ -15,7 +16,7 @@ const Home = () => {
             < SideNav />
             <RightDiv name="right-div">
                 <Routes>
-                    <Route path="/" element={<div><h1>Dashboard</h1></div>} />
+                    <Route path="/" element={<Dashboard/>} />
                     <Route path="/project/*" element={<ProjectRoutes/>} />
                     <Route path="/members/*" element={<MemberPage/>} />
                     <Route path="/forum/*" element={<ForumMain />} />

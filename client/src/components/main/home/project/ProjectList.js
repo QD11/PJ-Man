@@ -11,25 +11,44 @@ const ProjectList = () => {
     // const projects = useSelector(state => state.projects)
     const isAdmin = useSelector(state => state.isAdmin)
     const [val, setVal] = useState("All")
+    const [val2, setVal2] = useState("All")
     const projects = useSelector(state => state.team).projects
     const options = [
         "All", "Ongoing", "Completed"
     ]
+    const options2 = [
+        "All", "Low", "Medium", "High"
+    ]
 
     const filteredProjects = val === "Ongoing" ? projects.filter(project => !project.completed) : val === "Completed"  ? projects.filter(project => project.completed) : projects
+    const priorityProjects = val2 === "Low" ? projects.filter(project => project.priority === "low") : val2 === "Medium"  ? projects.filter(project => project.priority === "medium") : val2 === "High"  ? projects.filter(project => project.priority === "high"): filteredProjects
+
+    const compare = (a,b) => {
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+    }
+    const alphabeticalProjects = [...priorityProjects].sort(compare)
+
 
     return (
         <>
             <Clicker>
-                {/* <select >
-                    <option>Ongoing</option>
-                    <option>Completed</option>
-                    <option>All</option>
-                </select> */}
+                
                 <CustomSelect
                     value={val}
                     onChange={setVal}
                     options={options}
+                    // placeholder="Choose an option..."
+                />
+                <CustomSelect
+                    value={val2}
+                    onChange={setVal2}
+                    options={options2}
                     // placeholder="Choose an option..."
                 />
                 {isAdmin && <CreateProject />}
@@ -50,7 +69,7 @@ const ProjectList = () => {
                     }
                 }}
             >
-                {filteredProjects.map(project => <ProjectItem val={val} key={project.id} project={project}/>)}
+                {alphabeticalProjects.map(project => <ProjectItem val={val} key={project.id} project={project}/>)}
             </ProjectUL>
         </>
     )

@@ -63,7 +63,7 @@ const ChatDiv = styled.div`
     position: fixed;
     background: #fff;
     width: 20em;
-    z-index: 50;
+    z-index: 2;
     // margin-top: 39.99px;
 
     .chat-div {

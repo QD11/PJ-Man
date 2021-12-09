@@ -5,12 +5,15 @@ import { getTeam } from '../../../../../redux/teamSlice'
 import {motion, AnimatePresence} from 'framer-motion'
 import {RiFileAddLine} from 'react-icons/ri'
 import DndAssign from './DndAssign'
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 const CreateTask = ({projectInfo}) => {
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const [showCreate, setShowCreate] = useState(false)
     const [responseMsg, setResponseMsg] = useState(null)
+    const [value, onChange] = useState(new Date())
     const [taskForm, setTaskForm] = useState({
         name: "",
         section: "",
@@ -128,6 +131,12 @@ const CreateTask = ({projectInfo}) => {
                         <div>
                             <InputMotion required="required" placeholder="Task" type="text" name="name" autocomplete="off" onChange={handleChange}></InputMotion>
                         </div>
+                        {/* <div>
+                            <Calendar
+                                onChange={onChange}
+                                value={value}
+                            />
+                        </div> */}
                         <div>
                             <InputMotion required="required" placeholder="Section" list="sections" autocomplete="off" name="section" onChange={handleChange}/>  
                             <datalist id="sections">

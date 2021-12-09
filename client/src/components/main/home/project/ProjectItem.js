@@ -144,7 +144,7 @@ const ProjectItem = ({project}) => {
             {cardForm === 1 &&
             <OptionDiv>
                 <div className="option-div">
-                    <RiCloseCircleFill onClick={() => setCardForm(0)}/>    
+                    <RiCloseCircleFill className="close" onClick={() => setCardForm(0)}/>    
                 </div>
                 <div className="option-menu">
                     <button onClick={() => setCardForm(2)}>Edit Project</button>
@@ -155,7 +155,7 @@ const ProjectItem = ({project}) => {
             {cardForm === 2 &&
             <OptionDiv>
                 <div className="option-div">
-                    <RiCloseCircleFill onClick={() => setCardForm(0)}/>    
+                    <RiCloseCircleFill className="close" onClick={() => setCardForm(0)}/>    
                 </div>
                 <form className="edit-form" onSubmit={updateSubmit}>
                     <div className="edit-input">
@@ -183,6 +183,9 @@ const OptionDiv = styled.div`
     .option-div {
         display:flex;
         justify-content: flex-end;
+        .close {
+            cursor: pointer;
+        }
     }
     .option-menu {
         justify-content: space-evenly;
@@ -241,6 +244,7 @@ const CardLi = styled(motion.li)`
     .priority-dots {
         display:flex;
         justify-content: space-between;
+        cursor: pointer;
     }
     .avatar-div{
         display: flex;

@@ -6,12 +6,16 @@ import { getTeam } from '../../../../../redux/teamSlice'
 import {motion, AnimatePresence} from 'framer-motion'
 import {RiFileAddLine, RiAddCircleLine} from 'react-icons/ri'
 import DndAssign from './DndAssign'
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import {parseISO} from 'date-fns'
 
 const Modal = ({projectInfo}) => {
     const [modal, setModal] = useState(false);
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const [showCreate, setShowCreate] = useState(false)
+    const [due, setDue] = useState(new Date())
     const [responseMsg, setResponseMsg] = useState(null)
     const [taskForm, setTaskForm] = useState({
         name: "",
@@ -45,6 +49,16 @@ const Modal = ({projectInfo}) => {
 
     const [columns, setColumns] = useState(columnsFromBackend);
 
+    // const dateChange = dateIn => {
+    //     // const setInvoiceDate = invoice.filter(inv => {
+    //     //     let date = parseISO(inv.created_at).toLocaleDateString()
+    //     //     return date === dateIn.toLocaleDateString()
+    //     // })
+
+    //     setDue(dateIn.toLocaleDateString())
+    // }
+    // console.log(due.toLocaleDateString())
+    // console.log((new Date().toLocaleDateString()))
     const handleChange = (e) => {
         setTaskForm({
             ...taskForm,
@@ -54,6 +68,7 @@ const Modal = ({projectInfo}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        
         const submitForm = {
             ...taskForm,
             member : columns.assigned_members.items
@@ -77,7 +92,8 @@ const Modal = ({projectInfo}) => {
                         section: "",
                         description: "",
                         project_id: projectInfo.id,
-                        team_id: team.id
+                        team_id: team.id,
+                        due_date: due,
                     })
                     setColumns({
                         ['members']: {
@@ -115,6 +131,7 @@ const Modal = ({projectInfo}) => {
     /////////////////////////////////////////////
     const toggleModal = () => {
         setModal(!modal);
+        setDue(new Date())
     };
 
     if(modal) {
@@ -170,6 +187,13 @@ const Modal = ({projectInfo}) => {
                                     <input required="required" type="text" autocomplete="off" onChange={handleChange}></input> */}
                                     <DndAssign setColumns={setColumns} columns={columns}/>
                                 </div>
+                                <div>
+                                    <span>Due Date:</span>
+                                    <Calendar
+                                        onChange={setDue}
+                                        value={due}
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <button type="submit">Create</button>
@@ -208,7 +232,7 @@ const ModalDiv = styled.div`
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 4;
 
     .overlay {
         width: 100vw;
@@ -223,7 +247,7 @@ const ModalDiv = styled.div`
 
     .modal-content {
         position: absolute;
-        top: 40%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         line-height: 1.4;

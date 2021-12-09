@@ -3,7 +3,6 @@ import ChatroomItem from './ChatroomItem'
 import styled from 'styled-components'
 
 const ChatroomList = ({allChatrooms, setCurrentReceiver, setAllChatrooms}) => {
-    console.log(allChatrooms)
     const filteredChatrooms = allChatrooms.filter(chatroom => chatroom.last_message)
 
     const sortedChatrooms = filteredChatrooms.sort(function(a,b) {

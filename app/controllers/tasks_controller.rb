@@ -1,5 +1,15 @@
 class TasksController < ApplicationController
 
+    def index
+        if params[:team_id]
+            # tasks = Task.includes(:section => [:project]).includes(:project => [:team]).where("team.id = #{params[:team_id]}")
+            tasks = Task.joins(section: {project: :team}).where(team: {id: params[:team_id]})
+        else
+            tasks = Task.all
+        end
+        render json: tasks
+    end
+
     def destroy
         task = Task.find_by(id: params[:task_id])
         if task
@@ -20,7 +30,7 @@ class TasksController < ApplicationController
         if !section
             section = Section.create(name: params[:section], project_id: params[:project_id])
         end
-        task = Task.create!(name: params[:name], description: params[:description], completed: false, section_id: section.id)
+        task = Task.create!(name: params[:name], description: params[:description], completed: false, section_id: section.id, due_date: params[:due_date])
         if task.valid?
             params[:member].each do |user|
                 TaskUser.create(task_id: task.id, user_id: user["id"], team_user_id: user["team_user_id"])
@@ -34,6 +44,11 @@ class TasksController < ApplicationController
     def status_update
         task = Task.find_by(id: params[:task_id])
         task.update!(completed: params[:completed])
+        if task.completed
+            task.update(completed_date: params[:completed_date])
+        else
+            task.update(completed_date: nil)
+        end
         show_for_all
         # render json: task
     end

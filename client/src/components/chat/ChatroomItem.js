@@ -79,6 +79,7 @@ const ChatItemDiv = styled.div`
     box-shadow: 0 0px 20px -10px rgb(0 0 0 / 50%);
     align-items: center;
     flex-direction: row;
+    // background-color: #253858;
     .message-div {
         display: flex;
         flex-direction: column;
@@ -89,6 +90,7 @@ const ChatItemDiv = styled.div`
         .name {
             font-weight: 400;
             font-size: 20px;
+            // color:white;
         }
     }
 `

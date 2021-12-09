@@ -83,6 +83,7 @@ const MessageDiv = styled.div`
         height: 80%;
         border: 1px solid black;
         overflow-y: scroll;
+        
     }
     .message-send {
         height: 20%;

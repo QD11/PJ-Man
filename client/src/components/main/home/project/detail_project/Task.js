@@ -6,6 +6,7 @@ import {getAllProjects} from '../../../../../redux/projectSlice'
 import { getTeam } from '../../../../../redux/teamSlice'
 import styled from 'styled-components'
 import TaskMessage from './TaskMessage'
+import TaskToggle from './TaskToggle'
 
 const Task = () => {
     const params = useParams()
@@ -67,7 +68,10 @@ const Task = () => {
     }
     return (
         <TaskDiv priority={project.priority}>
+            <div className="header">
             <GoBack onClick={() => navigate(`/${params.team}/project/${params.project_id}/`)}>Go Back</GoBack>
+            <TaskToggle taskInfo={taskInfo} />
+            </div>
             <h2>{taskInfo.name}</h2>
             <div className="status-assign">
                 <div className="assign-div">
@@ -81,11 +85,11 @@ const Task = () => {
                     </ul>
                 </div>
                 <div>
-                    <label >Status: </label>
+                    {/* <label >Status: </label>
                     <select id="status" defaultValue={taskInfo.completed} onChange={handleStatusChange}>
                         <option value={false} >Not Completed</option>
                         <option value={true}>Completed</option>
-                    </select>
+                    </select> */}
                 </div>
             </div>
             <div className="description-div">
@@ -185,6 +189,12 @@ const TaskDiv = styled.div`
         display: flex;
         justify-content: center;
         font-size: 40px;
+    }
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
     .status-assign {
         display: flex;

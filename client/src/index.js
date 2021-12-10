@@ -9,8 +9,8 @@ import { BrowserRouter } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 
 const CableApp = {}
-CableApp.cable = actionCable.createConsumer('ws://localhost:3000/cable') // change to whatever port your server uses
-// CableApp.cable = actionCable.createConsumer('/cable')
+// CableApp.cable = actionCable.createConsumer('ws://localhost:3000/cable') // change to whatever port your server uses
+CableApp.cable = actionCable.createConsumer('/cable')
 export const ActionCableContext = createContext()
 
 ReactDOM.render(

@@ -61,7 +61,7 @@ const LoginForm = () => {
                     <button className="submit-btn" type="submit">{isLoading? "Loading..." : "LOG IN"}</button>
                 </form>
             <span>{errors}</span>
-            <button onClick={()=> navigate('/signup')}> Create an Account </button>
+            <button className="other" onClick={()=> navigate('/signup')}> Create an Account </button>
             </BigDiv>
         </WholeSec>
     )
@@ -85,6 +85,23 @@ const BigDiv = styled.div`
     background-color: #fff;
     height: 500px;
     width: 500px;
+
+    .other {
+        border: 0;
+            outline: 0;
+            cursor: pointer;
+            color: rgb(60,66,87);
+            background-color: rgb(255,255,255);
+            box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+            border-radius: 4px;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 4px 8px;
+            display: inline-block;
+            min-height: 28px;
+            -webkit-transition: background-color .24s,box-shadow .24s;
+            transition: background-color .24s,box-shadow .24s;
+    }
 
     & h1 {
         padding: 4px 0;

@@ -6,7 +6,6 @@ import { isAdmin } from '../../redux/adminSlice'
 import { emptyProjects } from '../../redux/projectSlice'
 import {useDispatch, useSelector} from 'react-redux'
 import styled from 'styled-components'
-import {BsArrowReturnLeft} from 'react-icons/bs'
 import {RiLogoutCircleRLine, RiUserLine} from 'react-icons/ri'
 import {MdOutlineArrowBack} from 'react-icons/md'
 import {VscHome} from 'react-icons/vsc'
@@ -54,7 +53,7 @@ const NavBar = () => {
                 < VscHome />
             </div>
             <div>
-                <img src={logo} width="40" height="40"/>
+                <img alt="logo" src={logo} width="40" height="40"/>
             </div>
             <div onClick={userHandle}  className="user">
                 <span>User</span>

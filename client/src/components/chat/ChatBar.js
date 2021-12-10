@@ -1,7 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components'
-import {BsChatRightDots} from 'react-icons/bs'
-import {RiAddFill} from 'react-icons/ri'
 import CreateRoom from './CreateRoom'
 import MessageBox from './MessageBox'
 import ChatroomList from './ChatroomList'
@@ -10,7 +8,6 @@ import {useSelector} from 'react-redux'
 
 const ChatBar = () => {
     const cable = useContext(ActionCableContext)
-    const [openSideBar, setOpenSideBar] = useState(true)
     const [currentReceiver, setCurrentReceiver] = useState(null)
     const [channel, setChannel] = useState(null)
     const team = useSelector(state => state.team)
@@ -18,7 +15,7 @@ const ChatBar = () => {
     const userTeamUser = team.team_users.find(teamUser => teamUser.user_id === user.id)
     const [allChatrooms, setAllChatrooms] = useState([])
     //subscribe to the create chatroom channel here
-    console.log(allChatrooms)
+    
     useEffect(() => {
         fetch(`/team_users/${userTeamUser.id}/chatrooms`)
         .then(resp => resp.json())

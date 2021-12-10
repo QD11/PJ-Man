@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { v4 as uuid } from "uuid";
-import { useSelector } from "react-redux"
 import Avatar from "react-avatar"
 import styled from 'styled-components'
 

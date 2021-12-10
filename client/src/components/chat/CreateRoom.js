@@ -1,12 +1,9 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {BsChatRightDots} from 'react-icons/bs'
-import {RiAddFill} from 'react-icons/ri'
 import {useSelector} from 'react-redux'
 import Avatar from 'react-avatar'
 
 const CreateRoom = ({setCurrentReceiver, allChatrooms, channel}) => {
-    const [open, setOpen] = useState(false)
     const [search, setSearch] = useState('')
     const team = useSelector(state => state.team)
     const user = useSelector(state => state.user)

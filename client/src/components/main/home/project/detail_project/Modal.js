@@ -3,13 +3,11 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from 'react-redux'
 import { getTeam } from '../../../../../redux/teamSlice'
-import {motion, AnimatePresence} from 'framer-motion'
-import {RiFileAddLine, RiAddCircleLine} from 'react-icons/ri'
+import {motion} from 'framer-motion'
+import { RiAddCircleLine} from 'react-icons/ri'
 import DndAssign from './DndAssign'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import {parseISO} from 'date-fns'
-
 const Modal = ({projectInfo}) => {
     const [modal, setModal] = useState(false);
     const dispatch = useDispatch()

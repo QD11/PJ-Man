@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {motion, AnimatePresence} from 'framer-motion'
+import {motion} from 'framer-motion'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import {BsThreeDots} from 'react-icons/bs'
-import {RiDeleteBin2Line, RiArchiveLine, RiCloseCircleFill} from 'react-icons/ri'
-import {getAllProjects} from '../../../../redux/projectSlice'
+import {RiCloseCircleFill} from 'react-icons/ri'
 import {getTeam} from '../../../../redux/teamSlice'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import Avatar from 'react-avatar'
 
 const ProjectItem = ({project}) => {
     const dispatch = useDispatch()
-    const [option, setOption] = useState(false)
     const [respMsg, setRespMsg] = useState(null)
     const team = useSelector(state => state.team)
     const isAdmin = useSelector(state => state.isAdmin)

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import {useSelector} from 'react-redux'
-import styled from 'styled-components'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -23,11 +22,6 @@ const DonutChart = ({donutOption}) => {
     
     const tasksCompleted = allTasks.filter(task => task.completed).length
     const completedTaskArray = [allTasks.length - tasksCompleted, tasksCompleted]
-
-
-    const dateObj = new Date()
-    const monthName = dateObj.toLocaleString("default", { month: "long" })  
-    const yearName = new Date().getFullYear();
 
     const data = (donutOption === "project" || donutOption === "task" ) && {
         labels: ['Not Completed', 'Completed'],
@@ -88,10 +82,5 @@ const DonutChart = ({donutOption}) => {
     );
 }
 
-const DonutDiv = styled.div`
-    
-    // width: fit-content;
-    // height: fit-content;
-`
 
 export default DonutChart

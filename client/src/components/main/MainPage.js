@@ -4,8 +4,6 @@ import { Route, Routes} from 'react-router-dom'
 import { isAdmin } from '../../redux/adminSlice'
 import { fetchTeam } from '../../redux/teamSlice'
 
-import ChatBar from '../chat/ChatBar'
-
 import Home from './home/Home'
 import User from './user/User'
 

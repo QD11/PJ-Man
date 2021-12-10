@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import {useSelector, useDispatch} from 'react-redux'
-import {RiFileAddLine, RiFileAddFill} from 'react-icons/ri'
+import {RiFileAddFill} from 'react-icons/ri'
 
 import { getTeam } from '../../../../redux/teamSlice'
 
@@ -11,7 +11,7 @@ const CreateProject = () => {
     const dispatch = useDispatch()
     const team = useSelector(state => state.team)
     const [responseMsg, setResponseMsg] = useState(null)
-    const [createOpen, setCreateOpen] = useState(false)
+    // const [createOpen, setCreateOpen] = useState(false)
     const [createForm, setCreateForm] = useState({
         name: '',
         priority: 'low',
@@ -26,7 +26,7 @@ const CreateProject = () => {
             team_id: team.id
         })
         setResponseMsg(null)
-    }, [createOpen === false])
+    }, [])
 
     const handleChange = (e) => {
         setCreateForm(createForm => ({
@@ -146,12 +146,6 @@ const SubmitMotion = styled(motion.button)`
     font-size: 30px;
 `
 
-const ItemSpan = styled(motion.span)`
-    font-weight: bold;
-    font-weight: 500;
-    // margin-bottom: -10px;
-`
-
 const AddProject = styled(RiFileAddFill)`
     // position: absolute;
     margin-right: 100px;
@@ -160,28 +154,28 @@ const AddProject = styled(RiFileAddFill)`
     color: #253858;
 `
 
-const CreateDiv = styled(motion.div)`
-    flex-direction: column;
-    display:flex;
-    width: 100%;
-    justify-content: flex-end;
-    z-index: 2;
-    // position: absolute;
-    // top: 72px;
-    // left: 950px;
-    // margin-bottom: 20px;
-    // font-size: 25px;
-    // height: fit-content;
-    // cursor: pointer;
-    // border-radius: 10px;
-    // padding: 10px 10px;
-    // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 70%);
-    // background: rgb(248 248 248 / 100%);
-    .btn-div {
-        display:flex;
-        justify-content: flex-end;
-    }
-`
+// const CreateDiv = styled(motion.div)`
+//     flex-direction: column;
+//     display:flex;
+//     width: 100%;
+//     justify-content: flex-end;
+//     z-index: 2;
+//     // position: absolute;
+//     // top: 72px;
+//     // left: 950px;
+//     // margin-bottom: 20px;
+//     // font-size: 25px;
+//     // height: fit-content;
+//     // cursor: pointer;
+//     // border-radius: 10px;
+//     // padding: 10px 10px;
+//     // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 70%);
+//     // background: rgb(248 248 248 / 100%);
+//     .btn-div {
+//         display:flex;
+//         justify-content: flex-end;
+//     }
+// `
 
 
 const ModalDiv = styled.div`

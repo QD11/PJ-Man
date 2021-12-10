@@ -1,14 +1,9 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
 import { motion} from 'framer-motion'
 import styled from 'styled-components'
-
-
-import CreateProject from './CreateProject'
 import ProjectList from './ProjectList'
 
 const Projects = () => {
-    const isAdmin = useSelector(state => state.isAdmin)
 
     return (
         <FlexDiv>

@@ -20,7 +20,8 @@ function App() {
 
     const user = useSelector(store => store.user)
     const team = useSelector(store => store.team)
-
+    console.log(user)
+    console.log(team)
     return(
         <>
             {/* {user && <button onClick={handleClick}>Log Out</button>} */}

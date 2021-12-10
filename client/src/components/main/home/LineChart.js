@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
-import styled from 'styled-components'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -33,7 +32,7 @@ const LineChart = () => {
         .then(resp => resp.json())
         .then(data => setWeekTasks(data))
     }, [team])
-    // console.log(weekTasks)
+    
     const completedCount = [0,0,0,0,0,0,0]
     weekTasks.forEach(task => completedCount[(parseISO(task.completed_date).getDay())] += 1)
     

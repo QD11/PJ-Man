@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { getUser } from '../../redux/userSlice'
-import SignupForm from './SignupForm'
 import logo from '../../pajamas.png'
 
 const LoginForm = () => {
@@ -49,7 +48,7 @@ const LoginForm = () => {
         <WholeSec>
             <BigDiv>
                 <h1>PJ MAN</h1>
-                <img src={logo} height={200} width={200}/>
+                <img alt="logo" src={logo} height={200} width={200}/>
                 <form onSubmit={handleSubmit}>
                     <div className="email-password">
                         <label>Email</label>

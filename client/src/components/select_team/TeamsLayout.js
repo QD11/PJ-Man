@@ -7,11 +7,11 @@ import {emptyProjects} from '../../redux/projectSlice'
 import {isAdmin} from '../../redux/adminSlice'
 import { useNavigate} from 'react-router-dom';
 import {RiLogoutCircleRLine, RiFileListLine} from 'react-icons/ri'
-import {MdOutlineCreate} from 'react-icons/md'
 import {GiTeamIdea} from 'react-icons/gi'
 import TeamCard from './TeamCard'
 import NewTeam from './NewTeam'
 import TeamItem from './TeamItem'
+import logo from '../../pajamas.png'
 
 const TeamsLayout = () => {
     const dispatch = useDispatch()
@@ -19,19 +19,8 @@ const TeamsLayout = () => {
     const user = useSelector(state => state.user)
     const [newTeamForm, setNewTeamForm] = useState(false)
     const [recruitResp, setRecruitResp] = useState("")
-    const [joinForm, setJoinForm] = useState(false) 
     const [teams, setTeams] = useState([])
     const [code, setCode] = useState("")
-
-    console.log(code)
-    const MINUTE_MS = 60000;
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         fetch(`/${user.id}/organizations`)
-    //         .then(resp => resp.json())
-    //         .then(data => setOrganizations(data))
-    //     }, MINUTE_MS)
 
     useEffect(() => {
         fetch(`/${user.id}/teams`)
@@ -104,6 +93,9 @@ const TeamsLayout = () => {
             <NavBar className="buttons">
                 {/* <button onClick={()=>setJoinForm(joinForm => !joinForm)}>Join Team </button> */}
                 {/* <button onClick={()=>setNewTeamForm(bool => !bool)}>New Team</button> */}
+                <div className="logo-div">
+                    <img src={logo} width="40" height="40"/>
+                </div>
                 <div className="logout" onClick={handleLogOut}>
                     <span>Logout</span>
                     <Logout />
@@ -175,15 +167,25 @@ const NavBar = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    background-color: #434343;
+    // justify-content: flex-end;
+    background-color: #4285F4;
     height: 60px;
     box-shadow: 0 0px 30px -6px rgba(0,0,0,0.9);
     z-index: 5;
+    .logo-div{
+        width: 48.2%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 
     .logout {
+        width: 51.8%;
+        font-size: 30px;
+        cursor: pointer;
         display: flex;
-        width: fit-content;
+        justify-content: flex-end;
+        // width: fit-content;
         align-items: center;
         color: white;
         & span {

@@ -5,7 +5,7 @@ import Avatar from 'react-avatar'
 import { useNavigate } from 'react-router-dom'
 import {getTeam} from '../../redux/teamSlice'
 import {useDispatch} from 'react-redux'
-import {BsChevronDoubleDown, BsChevronDoubleUp} from 'react-icons/bs'
+import {BsChevronDoubleDown, BsChevronDoubleUp, BsFillDoorClosedFill, BsFillDoorOpenFill} from 'react-icons/bs'
 import {ImEnter} from 'react-icons/im'
 // import { removeMemberFromTeam } from '../../redux/teamSlice'
 
@@ -14,6 +14,7 @@ const TeamCard = ({team}) => {
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
     const toggleOpen = () => setIsOpen(!isOpen);
+    const [hover, setHover] = useState(false)
 
     const handleClick = () => {
         fetch("/team_login", {
@@ -36,7 +37,12 @@ const TeamCard = ({team}) => {
                 <div className="init">
                     <motion.span className="team-name"> {team.name}</motion.span>
                     {/* <button className="enter" onClick={handleClick}>Enter</button> */}
-                    < EnterTeam onClick={handleClick}/>
+                    <div 
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                    >
+                        {hover ? < OpenTeam onClick={handleClick}/> : < CloseTeam onClick={handleClick}/>}
+                    </div>
                     {/* <Avatar name={team.name} round={true} size="120" textSizeRatio={1.75}/> */}
                 </div>
                 {isOpen === false && <div className="click" onClick={toggleOpen}>
@@ -99,8 +105,19 @@ const EnterTeam = styled(ImEnter)`
     cursor: pointer;
 `
 
+const CloseTeam = styled(BsFillDoorClosedFill)`
+    font-size: 80px;
+    cursor: pointer;
+`
+
+const OpenTeam = styled(BsFillDoorOpenFill)`
+    font-size: 80px;
+    cursor: pointer;
+`
+
 const AvatarContainer = styled.ul`
     display: flex;
+    flex-wrap: wrap;
     margin-top: 20px;
     & li {
         list-style: none;

@@ -10,6 +10,7 @@ import {BsArrowReturnLeft} from 'react-icons/bs'
 import {RiLogoutCircleRLine, RiUserLine} from 'react-icons/ri'
 import {MdOutlineArrowBack} from 'react-icons/md'
 import {VscHome} from 'react-icons/vsc'
+import logo from '../../pajamas.png'
 
 const NavBar = () => {
     const params = useParams()
@@ -52,6 +53,9 @@ const NavBar = () => {
                 <span>Home</span>
                 < VscHome />
             </div>
+            <div>
+                <img src={logo} width="40" height="40"/>
+            </div>
             <div onClick={userHandle}  className="user">
                 <span>User</span>
                 < RiUserLine />
@@ -85,20 +89,23 @@ const NavDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #434343;
+    // background-color: #434343;
+    background-color: #4285F4;
     height: 60px;
     box-shadow: 0 0px 30px -6px rgba(0,0,0,0.9);
     z-index: 5;
     & span {
         // color: #fff;
     }
+    transition-duration: 1s;
     .user {
         font-size: 30px;
         cursor: pointer;
         display: flex;
         width: fit-content;
         align-items: center;
-        color: ${props => props.active === "user" ? "#fe7f7f" : "#fff"};
+        // color: ${props => props.active === "user" ? "#fe7f7f" : "#fff"};
+        color: ${props => props.active === "user" ? "#ff7070" : "#fff"};
         // font-weight: ${props => props.active === "user" && 700}
         & span {
             margin-right: 5px;
@@ -110,16 +117,18 @@ const NavDiv = styled.div`
         display: flex;
         width: fit-content;
         align-items: center;
-        color: ${props => props.active !== "user"? "#fe7f7f" : "#fff"};
+        color: ${props => props.active !== "user"? "#ff7070" : "#fff"};
         & span {
             margin-right: 5px;
         }
     }
     .logout {
+        cursor: pointer;
         display: flex;
         width: fit-content;
         align-items: center;
         color: white;
+        font-size: 30px;
         & span {
             margin-right: 5px;
         }

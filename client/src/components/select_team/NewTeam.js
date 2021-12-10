@@ -110,6 +110,17 @@ const MainDiv = styled.div`
         & input {
             font-size: 25px;
             width: 500px;
+            padding: 7px;
+            border-radius: 6px;
+            // font-size: 16px;
+            background: #fbfbfb;
+            border: 2px solid transparent;
+            height: 36px;
+            box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0 / 7%), 0 1px 1.5px 0 rgb(0 0 0 / 5%);
+            :focus{
+                border: 2px solid #000;
+                border-radius: 4px;
+            }
         }
         & div {
             margin-bottom: 20px;
@@ -124,6 +135,21 @@ const MainDiv = styled.div`
             margin-right: 0;
             width: fit-content;
             font-size: 25px;
+            
+            display: inline-block;
+            outline: 0;
+            border: 0;
+            cursor: pointer;
+            background-color: white;
+            border-radius: 4px;
+            padding: 8px 16px;
+            // font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            line-height: 26px;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06);
+        
         }
     }
 

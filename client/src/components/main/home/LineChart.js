@@ -41,7 +41,7 @@ const LineChart = () => {
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         datasets: [
             {
-                label: 'Completed Tasks This Week',
+                label: 'Completed Tasks',
                 data: completedCount,
                 backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',

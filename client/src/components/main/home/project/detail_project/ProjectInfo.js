@@ -76,7 +76,7 @@ const ProjectDiv = styled.div`
     background-color:#fff;
     border-radius: 20px;
     padding: 40px;
-    width: 80%;
+    width: 85%;
     height: fit-content;
     transition: 0.5s;
     margin-top: 0px;

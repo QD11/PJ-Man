@@ -22,12 +22,11 @@ export const fetchTeamLogOut = createAsyncThunk(
     async (API, {dispatch}) => {
         return (
             await fetch(API, {
-                credentials: 'include'
+                method: 'DELETE'
             })
             .then(resp => {
                 if (resp.ok) {
-                    resp.json()
-                    .then(team => dispatch(logOutTeam(team)))
+                    dispatch(logOutTeam())
                 }
             })
         )

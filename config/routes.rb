@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  delete '/logout_team', to: 'dessions#destroy_team'
+  delete '/logout_team', to: 'sessions#destroy_team'
 
   delete '/:team_id/team_users/:team_user_id', to: 'team_users#destroy'
 
@@ -66,9 +66,6 @@ Rails.application.routes.draw do
   # get '/:team_id/:project_name/
 
   # Rails.application.routes.draw do
-  resources :chat_members
-  resources :chat_messages
-  resources :task_messages
   mount ActionCable.server => '/cable'
   # end
 end

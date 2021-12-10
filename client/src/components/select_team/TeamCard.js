@@ -122,6 +122,7 @@ const AvatarContainer = styled.ul`
     & li {
         list-style: none;
         margin-right: 10px;
+        margin-bottom: 10px;
     }
 `
 

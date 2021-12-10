@@ -18,7 +18,7 @@ const ChatBar = () => {
     const userTeamUser = team.team_users.find(teamUser => teamUser.user_id === user.id)
     const [allChatrooms, setAllChatrooms] = useState([])
     //subscribe to the create chatroom channel here
-
+    console.log(allChatrooms)
     useEffect(() => {
         fetch(`/team_users/${userTeamUser.id}/chatrooms`)
         .then(resp => resp.json())
@@ -30,16 +30,43 @@ const ChatBar = () => {
         },
         {
             received: (newChatroom) => {
+                console.log(newChatroom)
                 if (newChatroom.chat_members.find(chat_member => chat_member.team_user.id === userTeamUser.id)){
                     setAllChatrooms(allChatrooms => [...allChatrooms, newChatroom])
                 }
             }
         })
         setChannel(channel)
+
+        // allChatrooms.forEach(chatroom => {
+        //     cable.subscriptions.create({
+        //         channel: "MessagesChannel",
+        //         chatroom_id: chatroom.id
+        //     },
+        //     {
+        //         received: (newMessage) => {
+        //             setAllChatrooms(allChatrooms => allChatrooms.map(chatroom => {
+        //                 if (chatroom.id === currentChatroom.id) {
+        //                     return ({
+        //                         ...chatroom,
+        //                         last_message: newMessage
+        //                     })
+        //                 }
+        //                 else {
+        //                     return ({
+        //                         ...chatroom
+        //                     })
+        //                 }
+        //             }))
+        //             setAllChatrooms(allChatrooms => allChatrooms.filter((v,i,a)=>a.findIndex(t=>(t.id===v.id))===i))
+        //         }
+        //     }
+        //     )
+        // })
         // return () => {
         //     channel.unsubscribe()
         // }
-    }, [team])
+    }, [team]);
     
     const currentChatroom = currentReceiver ? allChatrooms.find(chatroom => chatroom.chat_members.some(chat_member => chat_member.team_user.id === currentReceiver.id)) : null
     

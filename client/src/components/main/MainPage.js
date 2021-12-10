@@ -23,7 +23,7 @@ const MainPage = () => {
         //fetch projects every 15 seconds
         const interval = setInterval(() => {
             dispatch(fetchTeam(`/teams/${team.id}`))
-        }, MINUTE_MS/0.75);
+        }, MINUTE_MS/1);
         
         return () => clearInterval(interval);
     }, [])

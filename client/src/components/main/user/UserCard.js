@@ -4,7 +4,7 @@ import Avatar from 'react-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTeam, fetchTeam } from '../../../redux/teamSlice'
 import { getUser } from '../../../redux/userSlice'
-import CloudinaryUpload from './CloudinaryUpload'
+// import CloudinaryUpload from './CloudinaryUpload'
 import {BsFillPencilFill} from 'react-icons/bs'
 
 const UserCard = ({user, team_user}) => {
@@ -124,11 +124,11 @@ const UserCard = ({user, team_user}) => {
                         <Avatar key={user.id}  src={user.profile_picture_url} name={user.first_name + ' ' +  user.last_name} round={true} size="120" textSizeRatio={1.75}/>
                     </AvatarDiv>
                     <div className="changePic">
-                        <CloudinaryUpload
+                        {/* <CloudinaryUpload
                             preset="k3o6vpxz"
                             buttonText="Update Picture"
                             handleUpload={handleUpload}
-                        />
+                        /> */}
                         <button onClick={removePicture}>Remove Picture</button>
                     </div> 
                     <div className="name-admin" >

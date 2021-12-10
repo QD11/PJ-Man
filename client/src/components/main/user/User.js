@@ -4,10 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { RiArrowRightSFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
-import CloudinaryUpload from './CloudinaryUpload'
-import { getUser } from '../../../redux/userSlice'
-import {RiMoreFill, RiCheckboxCircleFill, RiCloseCircleFill} from 'react-icons/ri'
-import Avatar from 'react-avatar'
+import { RiCheckboxCircleFill, RiCloseCircleFill} from 'react-icons/ri'
 import {AiFillDelete} from 'react-icons/ai'
 import CustomSelect from '../home/project/detail_project/PJDropdown'
 
@@ -16,7 +13,6 @@ const User = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    const isAdmin = useSelector(state => state.isAdmin)
     const team = useSelector(state => state.team)
     const team_user = team.team_users.find(team_user => team_user.user_id === user.id)
     const [tasks, setTasks] = useState([])

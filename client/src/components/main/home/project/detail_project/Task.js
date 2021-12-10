@@ -151,6 +151,8 @@ const SubmitBtn = styled.button`
     }
     &:disabled {
         background-color: #d3d3d3;
+        box-shadow: none;
+        transform: translate(-2px, 2px);
     }
 `
 
@@ -256,13 +258,13 @@ const TaskMessageDiv = styled.div`
 const TaskDiv = styled.div`
     // box-shadow: 0 0px 20px -6px rgb(0 0 0 / 30%);
     box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
-    margin-top: 2em;
-    margin-bottom: 2em;
+    // margin-top: 2em;
+    margin-bottom: 80px;
     border: 1px solid #e2d9d5;
     border-radius: 20px;
     background-color: #fff;
-    padding: 2em;
-    width: 50em;
+    padding: 40px;
+    width: 85%;
     display: flex;
     flex-direction: column;
     h2 {

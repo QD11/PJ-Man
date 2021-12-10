@@ -80,7 +80,7 @@ const ProjectDiv = styled.div`
     height: fit-content;
     transition: 0.5s;
     margin-top: 0px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
     box-shadow: -8px 8px 0px 3px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     // &:hover {
     //     box-shadow: -20px 0px 0px 0px ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};

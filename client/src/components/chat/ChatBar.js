@@ -35,31 +35,7 @@ const ChatBar = () => {
         })
         setChannel(channel)
 
-        // allChatrooms.forEach(chatroom => {
-        //     cable.subscriptions.create({
-        //         channel: "MessagesChannel",
-        //         chatroom_id: chatroom.id
-        //     },
-        //     {
-        //         received: (newMessage) => {
-        //             setAllChatrooms(allChatrooms => allChatrooms.map(chatroom => {
-        //                 if (chatroom.id === currentChatroom.id) {
-        //                     return ({
-        //                         ...chatroom,
-        //                         last_message: newMessage
-        //                     })
-        //                 }
-        //                 else {
-        //                     return ({
-        //                         ...chatroom
-        //                     })
-        //                 }
-        //             }))
-        //             setAllChatrooms(allChatrooms => allChatrooms.filter((v,i,a)=>a.findIndex(t=>(t.id===v.id))===i))
-        //         }
-        //     }
-        //     )
-        // })
+        
         // return () => {
         //     channel.unsubscribe()
         // }

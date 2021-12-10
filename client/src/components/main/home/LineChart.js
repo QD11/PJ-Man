@@ -33,7 +33,7 @@ const LineChart = () => {
         .then(resp => resp.json())
         .then(data => setWeekTasks(data))
     }, [team])
-
+    console.log(weekTasks)
     const completedCount = [0,0,0,0,0,0,0]
     weekTasks.forEach(task => completedCount[(parseISO(task.completed_date).getDay())] += 1)
     
@@ -41,7 +41,7 @@ const LineChart = () => {
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         datasets: [
             {
-                label: 'Completed Tasks',
+                // label: 'Completed Tasks',
                 data: completedCount,
                 backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',
@@ -89,6 +89,7 @@ const LineChart = () => {
                     beginAtZero: true,
                 },
                 legend: {
+                    display: false,
                     labels: {
                         // This more specific font property overrides the global property
                         display: false,
@@ -98,10 +99,10 @@ const LineChart = () => {
                     }
                 },
                 title: {
-                    display: false,
-                    text: 'Spending',
+                    display: true,
+                    text: 'Completed Tasks This Week',
                     font: {
-                        size: 40
+                        size: 30
                     }
                 }
             }
@@ -110,7 +111,7 @@ const LineChart = () => {
 
     return (
         <>
-            <Line options={options} data={data} width={500} height={400}/>
+            <Line options={options} data={data} width={450} height={400}/>
         </>
     )
 }

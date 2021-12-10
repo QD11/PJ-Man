@@ -193,6 +193,22 @@ const OptionDiv = styled.div`
         height: 100%;
         flex-direction: column;
         align-items: center;
+        & button {
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+            color: rgb(60,66,87);
+            background-color: rgb(255,255,255);
+            box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+            border-radius: 4px;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 4px 8px;
+            display: inline-block;
+            min-height: 28px;
+            -webkit-transition: background-color .24s,box-shadow .24s;
+            transition: background-color .24s,box-shadow .24s;
+        }
     }
     .edit-form {
         display: flex;
@@ -200,20 +216,53 @@ const OptionDiv = styled.div`
         align-items: center;
         height: 100%;
         justify-content: space-evenly;
+        & span {
+
+            width: 80px;
+        }
         .edit-input {
             margin-left: 200px;
             display: flex;
             width: 100%;
             justify-content: flex-start;
+            & input, select {
+                // font-size: 18px;
+                width: 150px;
+                padding: 7px;
+                border-radius: 6px;
+                background: #fbfbfb;
+                border: 2px solid transparent;
+                height: fit-content;
+                box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0 / 7%), 0 1px 1.5px 0 rgb(0 0 0 / 5%);
+                :focus{
+                    border: 2px solid #000;
+                    border-radius: 4px;
+                }
+            }
         }
         & span {
             font-size: 20px;
             // width: 200px;
         }
         & button {
-            padding: 5px;
+            // padding: 5px;
             width: fit-content;
-        }
+            // button {
+                border: 0;
+                outline: 0;
+                cursor: pointer;
+                color: rgb(60,66,87);
+                background-color: rgb(255,255,255);
+                box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+                border-radius: 4px;
+                font-size: 20px;
+                font-weight: 500;
+                padding: 4px 8px;
+                display: inline-block;
+                min-height: 28px;
+                -webkit-transition: background-color .24s,box-shadow .24s;
+                transition: background-color .24s,box-shadow .24s;
+    }
     }
     & button {
         width: 300px;

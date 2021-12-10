@@ -52,14 +52,28 @@ const CreateRoom = ({setCurrentReceiver, allChatrooms, channel}) => {
 
 const SearchHolder = styled.div`
     .list-container {
-        overflow-y: scroll;
+        margin-right: 15px;
         height: 100px;
+        overflow-y: scroll;
+        &::-webkit-scrollbar { 
+            width:12px;
+            }
+        &::-webkit-scrollbar-thumb {
+            margin-top: 5px;
+            border-radius: 10px;
+            background: #1289fe; 
+            }
+        &::-webkit-scrollbar-track-piece {
+            margin-top: 15px;
+    }
     }
     .members {
         display: flex;
         justify-content: space-between;
-        width: 280px;
-        margin: 10px;
+        // width: 280px;
+        width: 80%;
+        margin: 20px;
+        
     }
 `
 

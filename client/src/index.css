@@ -20,6 +20,20 @@ body {
   background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+
+
+::-webkit-scrollbar { 
+  width:12px;
+  }
+::-webkit-scrollbar-thumb {
+    /* margin-top: 5px; */
+    /* border-radius: 10px; */
+    background: rgb(37, 56, 88);
+    }
+/* ::-webkit-scrollbar-track-piece {
+    margin-top: 15px;
+} */
+
 /* canvas[Attributes Style] {
   aspect-ratio: auto 400 / 400 !important;
 } */

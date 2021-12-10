@@ -138,7 +138,7 @@ const CreateProject = () => {
 }
 
 const InputMotion = styled(motion.input)`
-    background-color: ${props => props.priority === "low" ? "#b3ffe5" : props.priority === "medium"? "#b7cbfb": "#fdb4b4"};
+    background-color: ${props => props.priority === "low" ? "#93d36b" : props.priority === "medium"? "#6ac9f4": "#f0ada8"};
     font-size: 30px;
 `
 

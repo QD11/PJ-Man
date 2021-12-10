@@ -104,11 +104,12 @@ const NavDiv = styled.div`
         display: flex;
         width: fit-content;
         align-items: center;
-        // color: ${props => props.active === "user" ? "#fe7f7f" : "#fff"};
-        color: ${props => props.active === "user" ? "#ff7070" : "#fff"};
+        // color: ${props => props.active === "user" ? "#" : "#fff"};
+        color: #fff;
         // font-weight: ${props => props.active === "user" && 700}
         & span {
             margin-right: 5px;
+            font-weight: ${props => props.active === "user"? "650" : null};
         }
     }
     .team {
@@ -117,9 +118,10 @@ const NavDiv = styled.div`
         display: flex;
         width: fit-content;
         align-items: center;
-        color: ${props => props.active !== "user"? "#ff7070" : "#fff"};
+        color: #fff;
         & span {
             margin-right: 5px;
+            font-weight: ${props => props.active !== "user"? "650" : null};
         }
     }
     .logout {

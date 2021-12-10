@@ -24,6 +24,8 @@ const Modal = ({projectInfo}) => {
         team_id: team.id,
     })     
 
+    console.log(due)
+
     const members = team.team_users.map(team_user => team_user.user)
     const teamUsers = team.team_users.map(team_user => team_user.id)
 
@@ -70,7 +72,8 @@ const Modal = ({projectInfo}) => {
         
         const submitForm = {
             ...taskForm,
-            member : columns.assigned_members.items
+            member : columns.assigned_members.items,
+            due_date: due,
         }
         
         fetch("/tasks", {

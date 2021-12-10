@@ -20,7 +20,6 @@ const MainPage = () => {
         dispatch(isAdmin(team.team_users.find(team_user => team_user.user_id === user.id).admin))
         //fetch projects every 15 seconds
         const interval = setInterval(() => {
-            console.log('hey')
             dispatch(fetchTeam(`/teams/${team.id}`))
             dispatch(isAdmin(team.team_users.find(team_user => team_user.user_id === user.id).admin))
         }, MINUTE_MS/1);

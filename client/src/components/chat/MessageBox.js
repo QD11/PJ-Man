@@ -54,6 +54,10 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser, setAllChatr
         setMsgToSend('')
     }
     
+    const messagesInOrder = messages.sort(function(a, b) {
+        return (a.id - b.id);
+    })
+
     return (
         <MessageDiv>
             {currentReceiver && <div className="name">
@@ -61,7 +65,7 @@ const MessageBox = ({currentReceiver, currentChatroom, userTeamUser, setAllChatr
                 <span>{currentReceiver.user.first_name + ' ' +  currentReceiver.user.last_name}</span>
             </div>}
             <div className="messages-div">
-                {messages.map(message => <Message key={message.id} teamUser={userTeamUser} message={message} />)}
+                {messagesInOrder.map(message => <Message key={message.id} teamUser={userTeamUser} message={message} />)}
             </div>
             <div className="message-send">
                 <form onSubmit={submitMsg}>

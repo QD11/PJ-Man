@@ -15,7 +15,7 @@ const UserCard = ({user, team_user}) => {
     const team = useSelector(state => state.team)
     const [title, setTitle] = useState('')
     const [changeTitle, setChangeTitle] = useState(false)
-    
+
     useEffect(() => {
         setTitle(user.title)
     }, [titleInput])
@@ -156,6 +156,7 @@ const UserCard = ({user, team_user}) => {
 
 const ChangeTitle = styled(BsFillPencilFill)`
     margin-left: 10px;
+    cursor: pointer;
 `
 
 const CardDIV = styled.div`
@@ -177,6 +178,9 @@ const CardDIV = styled.div`
         display: flex;
         margin-top: 20px;
         justify-content: center;
+        & button {
+            cursor: pointer;
+        }
     }
     .name-admin {
         display: flex;

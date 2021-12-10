@@ -6,6 +6,8 @@ import {FaUserSlash} from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { fetchTeam, getTeam } from '../../redux/teamSlice'
 import { getAllProjects } from '../../redux/projectSlice'
+import DeleteModal from './DeleteModal'
+
 
 const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
     //userInfo points to logged in user
@@ -70,6 +72,7 @@ const Card = ({user, team_user, userInfo, teamUserCurrentInfo, showRemove}) => {
                 <span className="title">{team_user.title ? team_user.title : "---"}</span>
                 <span className="email">{user.email}</span>
             </div>
+            {/* <DeleteModal /> */}
             { userInfo.id !== user.id && <div className="message-admin">
                 <div className="msg">
                     < RiMessage3Line />

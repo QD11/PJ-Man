@@ -8,6 +8,7 @@ import { RiAddCircleLine} from 'react-icons/ri'
 import DndAssign from './DndAssign'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+
 const Modal = ({projectInfo}) => {
     const [modal, setModal] = useState(false);
     const dispatch = useDispatch()

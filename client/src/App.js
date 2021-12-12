@@ -26,10 +26,10 @@ function App() {
             {/* {user && <button onClick={handleClick}>Log Out</button>} */}
             <Routes>
                 <Route path="/" element={user? <TeamsLayout /> : <LoginForm />} />
-                <Route path="/signup" element={<SignupForm />} />
-                {/* {user && team && */}
-                    <Route path='/:team/*' element={<MainPage/>}/>
-                {/* } */}
+                <Route path="signup" element={<SignupForm />} />
+                {user && team &&
+                    <Route path=':team/*' element={<MainPage/>}/>
+                }
             </Routes>
         </>
     )

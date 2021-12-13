@@ -12,3 +12,11 @@ A project management app that gives you and your team the necessary tools to com
 * Promote/demote/remove members from the team
 * A users page that allows you to upload your picture, modify your title, and look at all of your tasks
 * Real-time chat between your members
+
+## Technologies
+### Front-End
+* [React](https://reactjs.org/): Javascript Framework
+* [Framer-Motion](https://www.framer.com/motion/): Motion Library for React
+### Back-End
+* [Ruby on Rails](https://rubyonrails.org/): server-side web application framework
+* [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html): integrates WebSocket, allowing real-time features

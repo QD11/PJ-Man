@@ -16,7 +16,8 @@ A project management app that gives you and your team the necessary tools to com
 ## Technologies
 ### Front-End
 * [React](https://reactjs.org/): Javascript Framework
-* [Framer-Motion](https://www.framer.com/motion/): Motion Library for React
+* [Framer-Motion](https://www.framer.com/motion/): motion library for React
 ### Back-End
 * [Ruby on Rails](https://rubyonrails.org/): server-side web application framework
 * [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html): integrates WebSocket, allowing real-time features
+* [PostgreSQL](https://www.postgresql.org/): relational database

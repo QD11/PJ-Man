@@ -1,6 +1,10 @@
 # [PJ Man](https://pj-man.herokuapp.com/)
 
 A project management app that gives users and their team the necessary tools to complete their projects.
+For demonstration, use the login info below:
+email: guest@guest.com
+password: 1234
+
 ![Screenshot (1)](https://user-images.githubusercontent.com/88467268/145734868-51db9167-c5ae-4a95-96c8-86fceed91964.png)
 
 ## Features
